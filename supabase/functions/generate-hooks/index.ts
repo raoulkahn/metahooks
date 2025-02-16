@@ -22,7 +22,7 @@ serve(async (req) => {
       throw new Error('OpenAI API key not found in environment variables');
     }
 
-    console.log('Attempting to call OpenAI API...');
+    console.log('Attempting to call OpenAI API with content:', content);
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -31,7 +31,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "gpt-4",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -53,6 +53,8 @@ serve(async (req) => {
     }
 
     const data = await response.json();
+    console.log('OpenAI API response:', data);
+    
     const hookText = data.choices[0].message.content;
     
     // Parse the JSON string from GPT's response
@@ -68,6 +70,8 @@ serve(async (req) => {
       ];
     }
 
+    console.log('Processed hooks:', hooks);
+
     return new Response(
       JSON.stringify({ hooks }),
       { 
@@ -75,7 +79,7 @@ serve(async (req) => {
       },
     );
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Error in generate-hooks function:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

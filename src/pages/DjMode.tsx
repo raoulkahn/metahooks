@@ -129,7 +129,7 @@ const DjMode = () => {
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   
-  const [tempBpmRange, setTempBpmRange] = useState(bpmRange);
+  const [tempBpmRange, setTempBpmRange] = useState<[number, number]>(bpmRange);
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
@@ -217,17 +217,12 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[0]}
                         onChange={(e) => {
-                          const newValue = e.target.value === '' ? '' : Number(e.target.value);
-                          if (newValue === '') {
-                            setTempBpmRange(['', tempBpmRange[1]]);
-                          } else {
-                            const value = Math.min(Math.max(Number(newValue), 60), tempBpmRange[1]);
-                            setTempBpmRange([value, tempBpmRange[1]]);
-                          }
-                        }}
-                        onBlur={() => {
-                          if (tempBpmRange[0] === '') {
-                            setTempBpmRange([60, tempBpmRange[1]]);
+                          const value = e.target.value === '' ? tempBpmRange[0] : Number(e.target.value);
+                          if (!isNaN(value)) {
+                            setTempBpmRange([
+                              Math.max(60, Math.min(value, tempBpmRange[1])),
+                              tempBpmRange[1]
+                            ]);
                           }
                         }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
@@ -241,7 +236,7 @@ const DjMode = () => {
                           min={60}
                           step={1}
                           value={tempBpmRange}
-                          onValueChange={setTempBpmRange}
+                          onValueChange={(value: [number, number]) => setTempBpmRange(value)}
                           className="flex-1"
                         />
                       </div>
@@ -249,17 +244,12 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[1]}
                         onChange={(e) => {
-                          const newValue = e.target.value === '' ? '' : Number(e.target.value);
-                          if (newValue === '') {
-                            setTempBpmRange([tempBpmRange[0], '']);
-                          } else {
-                            const value = Math.min(Math.max(Number(newValue), tempBpmRange[0]), 160);
-                            setTempBpmRange([tempBpmRange[0], value]);
-                          }
-                        }}
-                        onBlur={() => {
-                          if (tempBpmRange[1] === '') {
-                            setTempBpmRange([tempBpmRange[0], 160]);
+                          const value = e.target.value === '' ? tempBpmRange[1] : Number(e.target.value);
+                          if (!isNaN(value)) {
+                            setTempBpmRange([
+                              tempBpmRange[0],
+                              Math.min(160, Math.max(value, tempBpmRange[0]))
+                            ]);
                           }
                         }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"

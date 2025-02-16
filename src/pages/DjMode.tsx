@@ -155,6 +155,7 @@ const DjMode = () => {
     setHasUsedFilters(false);
     setIsSelectingTracks(false);
     setSelectedTracks(new Set());
+    setShowPlaylistNameDialog(false);
   };
 
   const handleApplyFilters = () => {
@@ -164,6 +165,11 @@ const DjMode = () => {
     setBpmRange(tempBpmRange);
     setSelectedKey(tempKey);
     setHasUsedFilters(!isDefaultBpm || !isDefaultKey);
+    if (isDefaultBpm && isDefaultKey) {
+      setIsSelectingTracks(false);
+      setSelectedTracks(new Set());
+      setShowPlaylistNameDialog(false);
+    }
   };
 
   const handleTrackSelection = (trackId: string) => {
@@ -192,6 +198,8 @@ const DjMode = () => {
     setHasUsedFilters(false);
     setBpmRange([90, 140]);
     setSelectedKey("");
+    setTempBpmRange([90, 140]);
+    setTempKey("");
   };
 
   return (

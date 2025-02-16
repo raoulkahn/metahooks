@@ -63,7 +63,7 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="font-medium">Show BPM and Key</p>
-                    <Badge className="bg-green-500 text-[10px] px-1.5 py-0.5">NEW</Badge>
+                    <Badge className="bg-purple-500 text-[10px] px-1.5 py-0.5">NEW</Badge>
                   </div>
                   <p className="text-sm text-neutral-400 mt-1">
                     Filter playlist tracks by BPM and/or Key and also create new playlists.

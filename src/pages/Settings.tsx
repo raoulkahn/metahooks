@@ -1,5 +1,5 @@
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Settings() {
@@ -19,7 +19,14 @@ export default function Settings() {
           </div>
           
           <div className="h-[calc(100%-2rem)] bg-black text-white">
-            <div className="p-6 flex items-center gap-4">
+            <button 
+              onClick={() => navigate('/')}
+              className="absolute top-14 left-6 text-white hover:text-white/80"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+
+            <div className="p-6 flex items-center gap-4 mt-8">
               <img 
                 src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png"
                 alt="Profile"

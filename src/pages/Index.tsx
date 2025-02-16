@@ -174,7 +174,7 @@ const Index = () => {
                   )}
 
                   {/* Caption Overlay */}
-                  <div className="absolute bottom-16 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                  <div className="absolute bottom-24 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
                     <p className="text-white text-sm">
                       {activeTab === 'image' && sampleContent.image.caption}
                       {activeTab === 'video' && sampleContent.video.caption}
@@ -185,7 +185,7 @@ const Index = () => {
                   </div>
 
                   {/* Story Actions */}
-                  <div className="absolute bottom-28 right-4 flex flex-col items-center gap-6">
+                  <div className="absolute bottom-32 right-4 flex flex-col items-center gap-6">
                     <button className="text-white flex flex-col items-center gap-1">
                       <Heart className="w-7 h-7" />
                     </button>
@@ -201,7 +201,7 @@ const Index = () => {
                   </div>
 
                   {/* Message Input */}
-                  <div className="absolute bottom-4 left-0 right-0 px-4 flex items-center gap-2">
+                  <div className="absolute bottom-6 left-0 right-0 px-4 flex items-center gap-2">
                     <input
                       type="text"
                       placeholder="Send message..."

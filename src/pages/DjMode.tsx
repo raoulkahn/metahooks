@@ -8,7 +8,7 @@ import { Track, Playlist } from "@/types/music";
 import { useNavigate } from "react-router-dom";
 
 export default function DjMode() {
-  const [view, setView] = useState<"list" | "grid">("grid"); // Changed default to grid
+  const [view, setView] = useState<"list" | "grid">("grid");
   const [selectedKey, setSelectedKey] = useState("");
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
@@ -22,7 +22,7 @@ export default function DjMode() {
       id: "1",
       title: "Adams Hill",
       artist: "Tensnake",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       bpm: 128,
       key: "1A",
       duration: "3:00",
@@ -32,7 +32,7 @@ export default function DjMode() {
       id: "2",
       title: "Cielo - Fulltone Remix",
       artist: "Double Touch, Bross (RO), Fulltone",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
       bpm: 130,
       key: "2A",
       duration: "3:30",
@@ -42,7 +42,7 @@ export default function DjMode() {
       id: "3",
       title: "Without - Tim Green Remix",
       artist: "BAILE, Tim Green, Felicia Douglass",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
       bpm: 132,
       key: "3A",
       duration: "4:00",
@@ -52,7 +52,7 @@ export default function DjMode() {
       id: "4",
       title: "Liberator - Extended Mix",
       artist: "Marsh",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
       bpm: 125,
       key: "4A",
       duration: "3:45",
@@ -62,7 +62,7 @@ export default function DjMode() {
       id: "5",
       title: "Le Saint Graal - Original Mix",
       artist: "Volen Sentir",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       bpm: 126,
       key: "5A",
       duration: "3:15",
@@ -72,7 +72,7 @@ export default function DjMode() {
       id: "6",
       title: "Reborn - Volen Sentir Sunset Mix",
       artist: "Armen Miran, Volen Sentir",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
       bpm: 124,
       key: "6A",
       duration: "3:50",
@@ -82,7 +82,7 @@ export default function DjMode() {
       id: "7",
       title: "Alas",
       artist: "Matias Fittipaldi",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
       bpm: 124,
       key: "6A",
       duration: "3:50",
@@ -92,7 +92,7 @@ export default function DjMode() {
       id: "8",
       title: "Moss",
       artist: "Tim Green",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
       bpm: 124,
       key: "6A",
       duration: "3:50",
@@ -102,7 +102,7 @@ export default function DjMode() {
       id: "9",
       title: "Adam - Kamilo Sanclemente Remix",
       artist: "Jiminy Hop, Kamilo Sanclemente",
-      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      albumArt: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       bpm: 124,
       key: "6A",
       duration: "3:50",
@@ -173,7 +173,7 @@ export default function DjMode() {
         }}
       />
       
-      <div className="flex-1 relative overflow-auto p-4">
+      <div className="flex-1 relative overflow-auto p-4 pb-32">
         {view === "list" ? (
           <TrackList
             tracks={displayedTracks}

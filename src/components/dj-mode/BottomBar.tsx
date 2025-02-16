@@ -1,7 +1,7 @@
 
 import { Track } from "@/types/music";
 import { Button } from "@/components/ui/button";
-import { Library, FilePlus, Play, Home, Search } from "lucide-react";
+import { Library, FilePlus, Play, Pause, SkipForward, Home, Search } from "lucide-react";
 
 type BottomBarProps = {
   currentlyPlaying: Track | null;
@@ -13,19 +13,22 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-black/90 border-t border-neutral-800">
       {currentlyPlaying && (
-        <div className="flex items-center gap-4 px-4 py-2 border-b border-neutral-800 bg-neutral-900/50">
+        <div className="flex items-center gap-4 p-3 border-b border-neutral-800 bg-neutral-900/50">
           <img
             src={currentlyPlaying.albumArt}
             alt={currentlyPlaying.title}
-            className="w-12 h-12 rounded object-cover"
+            className="w-14 h-14 rounded object-cover"
           />
           <div className="flex-1 min-w-0">
             <div className="text-sm font-medium truncate">{currentlyPlaying.title}</div>
             <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="h-8 w-8 flex items-center justify-center bg-neutral-800 rounded-full hover:bg-neutral-700">
-              <Play className="h-4 w-4 fill-current" />
+          <div className="flex items-center gap-4">
+            <button className="h-10 w-10 flex items-center justify-center bg-white rounded-full hover:scale-105 transition-transform">
+              <Play className="h-5 w-5 fill-black text-black" />
+            </button>
+            <button className="h-10 w-10 flex items-center justify-center text-white">
+              <SkipForward className="h-5 w-5" />
             </button>
           </div>
         </div>

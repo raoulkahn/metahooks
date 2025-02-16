@@ -32,26 +32,26 @@ export function Header({
   const navigate = useNavigate();
   
   return (
-    <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4">
+    <header className="sticky top-0 bg-black/90 backdrop-blur-md p-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white"
+            className="text-white hover:bg-neutral-800"
             onClick={() => navigate('/')}
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <span className="text-white font-medium">{title}</span>
+          <span className="text-white text-lg font-medium">{title}</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {view === "list" && (
             <>
               <Button
                 variant="outline"
-                className="bg-neutral-800/50 hover:bg-neutral-700/50 border-none text-white"
-                onClick={() => null} // This would toggle BPM/KEY visibility
+                size="sm"
+                className="h-9 bg-neutral-800 hover:bg-neutral-700 border-none text-white font-medium px-4"
               >
                 BPM KEY
               </Button>
@@ -59,18 +59,19 @@ export function Header({
               <Dialog>
                 <DialogTrigger asChild>
                   <Button 
-                    variant={hasActiveFilters ? "default" : "outline"}
+                    variant="outline"
+                    size="sm"
                     className={cn(
-                      "px-3",
+                      "h-9 px-4 font-medium",
                       hasActiveFilters 
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
-                        : "bg-neutral-800/50 hover:bg-neutral-700/50 border-none"
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
+                        : "bg-neutral-800 hover:bg-neutral-700 border-none text-white"
                     )}
                     onClick={onFilterClick}
                   >
                     <Filter className={cn(
-                      "h-5 w-5 mr-2",
-                      hasActiveFilters && "text-white"
+                      "h-4 w-4 mr-2",
+                      hasActiveFilters ? "text-white" : "text-neutral-400"
                     )} />
                     Filter{selectedKey ? ` (${selectedKey})` : ""}
                   </Button>

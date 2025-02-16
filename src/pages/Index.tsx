@@ -197,17 +197,8 @@ const Index = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="w-16 flex flex-row md:flex-col gap-4 invisible">
-              {activeTab === 'image' && mediaResults && mediaResults.slice(1, 4).map((media) => (
+              {(activeTab === 'image' || activeTab === 'video') && mediaResults && mediaResults.slice(1, 4).map((media) => (
                 <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden gradient-purple cursor-pointer hover:ring-2 ring-primary">
-                  <img 
-                    src={media.preview_url || media.thumbnail_url}
-                    alt={media.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-              {activeTab === 'video' && mediaResults && mediaResults.slice(1, 2).map((media) => (
-                <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden gradient-purple cursor-pointer">
                   <img 
                     src={media.preview_url || media.thumbnail_url}
                     alt={media.title}
@@ -218,34 +209,36 @@ const Index = () => {
             </div>
 
             <div className="flex-1 w-full max-w-2xl">
-              <div className="content-card">
-                <div className="aspect-video gradient-purple">
-                  {activeTab === 'image' && mediaResults && mediaResults[0] && (
-                    <img 
-                      src={mediaResults[0].url}
-                      alt={mediaResults[0].title}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  {activeTab === 'video' && mediaResults && mediaResults[0] && (
-                    <video
-                      controls
-                      className="w-full h-full object-cover"
-                      poster={mediaResults[0].preview_url || mediaResults[0].thumbnail_url}
-                    >
-                      <source src={mediaResults[0].url} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                  {isLoadingMedia && (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-                    </div>
-                  )}
+              {(activeTab === 'image' || activeTab === 'video') && (
+                <div className="content-card mb-8">
+                  <div className="aspect-video gradient-purple">
+                    {activeTab === 'image' && mediaResults && mediaResults[0] && (
+                      <img 
+                        src={mediaResults[0].url}
+                        alt={mediaResults[0].title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    {activeTab === 'video' && mediaResults && mediaResults[0] && (
+                      <video
+                        controls
+                        className="w-full h-full object-cover"
+                        poster={mediaResults[0].preview_url || mediaResults[0].thumbnail_url}
+                      >
+                        <source src={mediaResults[0].url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                    {isLoadingMedia && (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="mobile-frame mt-8">
+              <div className="mobile-frame">
                 <div className="mobile-notch"></div>
                 <div className="mobile-screen">
                   <div className="mobile-status-bar">

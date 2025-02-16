@@ -156,8 +156,8 @@ const DjMode = () => {
     if (mode === 'all') {
       toast.success(`Created new playlist with ${filteredTracks.length} tracks`);
     } else {
+      setSelectedTracks(new Set(filteredTracks.map(track => track.id)));
       setIsSelectingTracks(true);
-      setSelectedTracks(new Set());
     }
   };
 
@@ -360,7 +360,7 @@ const DjMode = () => {
                     onClick={() => handleCreatePlaylist('select')} 
                     className="w-full bg-white text-black hover:bg-neutral-200"
                   >
-                    Select individual tracks
+                    Select tracks to remove
                   </Button>
                 </div>
               </DialogContent>

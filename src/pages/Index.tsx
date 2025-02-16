@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Image, Type, Music, Video, Heart, MessageCircle, Bookmark, Send, MoreHorizontal, X } from "lucide-react";
+import { Image, Type, Music, Video, Heart, MessageCircle, Bookmark, Send, MoreHorizontal, X, UploadCloud } from "lucide-react";
 
 const Index = () => {
   const [selectedFormats, setSelectedFormats] = useState({
@@ -26,6 +26,7 @@ const Index = () => {
   const [selectedVoice, setSelectedVoice] = useState('alloy');
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [generatedAudioUrl, setGeneratedAudioUrl] = useState('');
+  const [audioText, setAudioText] = useState('');
 
   const sampleContent = {
     image: {
@@ -75,6 +76,12 @@ const Index = () => {
     console.log('Generating content for:', selectedFormats);
     console.log('Main description:', mainDescription);
     console.log('Format details:', formatDetails);
+  };
+
+  const generateAudio = async () => {
+    setIsGeneratingAudio(true);
+    // Audio generation logic will be implemented later
+    setIsGeneratingAudio(false);
   };
 
   return (
@@ -267,12 +274,6 @@ const Index = () => {
                       <p className="text-white text-center whitespace-pre-line">{sampleContent.text.preview}</p>
                     </div>
                   )}
-                  {activeTab === 'style' && (
-                    <div className="grid grid-cols-2 h-full">
-                      <img src={sampleContent.style.before} alt="Before style transfer" className="object-cover" />
-                      <img src={sampleContent.style.after} alt="After style transfer" className="object-cover" />
-                    </div>
-                  )}
                   {activeTab === 'audio' && (
                     <div className="w-full h-full relative">
                       <img 
@@ -304,7 +305,6 @@ const Index = () => {
                       {activeTab === 'image' && sampleContent.image.caption}
                       {activeTab === 'video' && sampleContent.video.caption}
                       {activeTab === 'text' && sampleContent.text.caption}
-                      {activeTab === 'style' && sampleContent.style.caption}
                       {activeTab === 'audio' && sampleContent.audio.caption}
                     </p>
                   </div>
@@ -385,7 +385,7 @@ const Index = () => {
                       </Button>
                     </div>
                     <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                      <Upload className="h-12 w-12 text-primary/40 mb-4" />
+                      <UploadCloud className="h-12 w-12 text-primary/40 mb-4" />
                       <p className="text-primary/60">Generated image will appear here</p>
                     </div>
                   </div>
@@ -407,7 +407,7 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                      <Upload className="h-12 w-12 text-primary/40 mb-4" />
+                      <UploadCloud className="h-12 w-12 text-primary/40 mb-4" />
                       <p className="text-primary/60">Generated video will appear here</p>
                     </div>
                   </div>
@@ -430,27 +430,6 @@ const Index = () => {
                     </div>
                     <div className="bg-secondary/50 rounded-lg p-6">
                       <p className="text-primary/60">Generated text will appear here</p>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="style" className="m-0">
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Style Transfer</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <div className="flex flex-col items-center justify-center min-h-[200px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                        <Upload className="h-12 w-12 text-primary/40 mb-4" />
-                        <p className="text-primary/60">Upload an image to transform</p>
-                      </div>
-                      <Button className="w-full py-6 text-lg">
-                        Apply Style
-                      </Button>
-                    </div>
-                    <div className="flex flex-col items-center justify-center min-h-[200px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                      <Upload className="h-12 w-12 text-primary/40 mb-4" />
-                      <p className="text-primary/60">Transformed image will appear here</p>
                     </div>
                   </div>
                 </div>
@@ -491,7 +470,7 @@ const Index = () => {
                         <span className="px-4 text-sm text-gray-500">or</span>
                       </div>
                       <div className="flex flex-col items-center justify-center min-h-[100px] bg-secondary/50 rounded-lg border-2 border-dashed cursor-pointer">
-                        <Upload className="h-8 w-8 text-primary/40 mb-2" />
+                        <UploadCloud className="h-8 w-8 text-primary/40 mb-2" />
                         <p className="text-primary/60 text-sm">Upload your own audio file</p>
                       </div>
                     </div>

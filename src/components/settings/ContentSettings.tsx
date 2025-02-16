@@ -22,35 +22,35 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
         <div className="space-y-8">
           <div className="space-y-6">
             <h2 className="text-xl">Canvas</h2>
-            <div className="flex items-center justify-between opacity-50">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="text-[15px]">Displays short, looping visuals in the Now Playing View.</p>
               </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
+              <Switch checked={true} className="data-[state=checked]:bg-green-500" />
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="flex items-center justify-between opacity-50">
+            <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl mb-1">Allow explicit content</h2>
                 <p className="text-[15px] text-neutral-400">
                   Explicit content (labeled with the E tag) is playable.
                 </p>
               </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
+              <Switch checked={true} className="data-[state=checked]:bg-green-500" />
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="flex items-center justify-between opacity-50">
+            <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl mb-1">Show unplayable songs</h2>
                 <p className="text-[15px] text-neutral-400">
                   Songs that aren't available (e.g., due to artist removal or region) are still visible.
                 </p>
               </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
+              <Switch checked={true} className="data-[state=checked]:bg-green-500" />
             </div>
           </div>
 

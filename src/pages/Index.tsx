@@ -1,10 +1,9 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send } from "lucide-react";
+import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send, Video } from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('image');
@@ -18,8 +17,8 @@ const Index = () => {
             AI Content Studio
           </h1>
           <p className="text-lg text-primary/80 max-w-2xl mx-auto mb-12">
-            Create stunning content for Meta platforms with the power of AI.
-            Generate images, captions, and more - all optimized for maximum engagement.
+            Create stunning images, videos, and more for Meta platforms with AI.
+            Generate content optimized for maximum engagement across all formats.
           </p>
 
           {/* Search Term Display */}
@@ -101,13 +100,20 @@ const Index = () => {
 
         {/* Main Content Area */}
         <Tabs defaultValue="image" className="space-y-8" onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-transparent h-auto p-0">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-4 bg-transparent h-auto p-0">
             <TabsTrigger 
               value="image" 
               className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-8 py-3"
             >
               <Image className="mr-2 h-4 w-4" />
               Image
+            </TabsTrigger>
+            <TabsTrigger 
+              value="video" 
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-8 py-3"
+            >
+              <Video className="mr-2 h-4 w-4" />
+              Video
             </TabsTrigger>
             <TabsTrigger 
               value="text" 
@@ -150,6 +156,28 @@ const Index = () => {
                     <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
                       <Upload className="h-12 w-12 text-primary/40 mb-4" />
                       <p className="text-primary/60">Generated image will appear here</p>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="video" className="m-0">
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-semibold">Generate Video Content</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <Textarea 
+                        placeholder="Describe the video you want to generate..."
+                        className="min-h-[120px] text-lg"
+                      />
+                      <div className="grid grid-cols-2 gap-4">
+                        <Button className="py-6 text-lg">Full Video</Button>
+                        <Button className="py-6 text-lg">Video Hook</Button>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
+                      <Upload className="h-12 w-12 text-primary/40 mb-4" />
+                      <p className="text-primary/60">Generated video will appear here</p>
                     </div>
                   </div>
                 </div>

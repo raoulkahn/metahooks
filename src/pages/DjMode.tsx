@@ -1,4 +1,3 @@
-
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
@@ -135,6 +134,13 @@ const DjMode = () => {
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
+
+  const filteredTracks = demoTracks.filter((track) => {
+    const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
+    const matchesKey = !selectedKey || track.key === selectedKey;
+    return matchesBpm && matchesKey;
+  });
+
   const hasMatchingTracks = filteredTracks.length > 0;
 
   const handleResetFilters = () => {
@@ -148,12 +154,6 @@ const DjMode = () => {
     setBpmRange(tempBpmRange);
     setSelectedKey(tempKey);
   };
-
-  const filteredTracks = demoTracks.filter((track) => {
-    const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
-    const matchesKey = !selectedKey || track.key === selectedKey;
-    return matchesBpm && matchesKey;
-  });
 
   const handleCreatePlaylist = (mode: 'all' | 'select') => {
     if (mode === 'all') {

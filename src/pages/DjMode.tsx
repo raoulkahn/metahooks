@@ -171,6 +171,7 @@ export default function DjMode() {
             handleTrackPlay(displayedTracks[0]);
           }
         }}
+        view={view}
       />
       
       <div className="flex-1 relative overflow-auto p-4 pb-32">

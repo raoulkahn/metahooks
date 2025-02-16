@@ -15,6 +15,7 @@ type HeaderProps = {
   title?: string;
   onPlayClick?: () => void;
   showPlayButton?: boolean;
+  view?: "list" | "grid";
 };
 
 export function Header({ 
@@ -24,7 +25,8 @@ export function Header({
   onAvatarClick, 
   title = "Library",
   onPlayClick,
-  showPlayButton = false
+  showPlayButton = false,
+  view = "grid"
 }: HeaderProps) {
   const { showBpmKey } = useSettings();
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ export function Header({
           <span className="text-white font-medium">{title}</span>
         </div>
         <div className="flex items-center gap-4">
-          {showBpmKey && (
+          {showBpmKey && view === "list" && (
             <Dialog>
               <DialogTrigger asChild>
                 <Button 

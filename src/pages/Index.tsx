@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,7 +71,6 @@ const Index = () => {
   };
 
   const generateContent = () => {
-    // This will be implemented later with API integration
     console.log('Generating content for:', selectedFormats);
     console.log('Main description:', mainDescription);
     console.log('Format details:', formatDetails);
@@ -80,7 +78,6 @@ const Index = () => {
 
   const generateAudio = async () => {
     setIsGeneratingAudio(true);
-    // Audio generation logic will be implemented later
     setIsGeneratingAudio(false);
   };
 
@@ -373,20 +370,11 @@ const Index = () => {
             <CardContent className="p-6">
               <TabsContent value="image" className="m-0">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Generate Images</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <Textarea 
-                        placeholder="Describe the image you want to generate..."
-                        className="min-h-[120px] text-lg"
-                      />
-                      <Button className="w-full py-6 text-lg">
-                        Generate Image
-                      </Button>
-                    </div>
-                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                      <UploadCloud className="h-12 w-12 text-primary/40 mb-4" />
-                      <p className="text-primary/60">Generated image will appear here</p>
+                  <h2 className="text-2xl font-semibold">Generated Images</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="aspect-square bg-secondary/50 rounded-lg border-2 border-dashed flex flex-col items-center justify-center">
+                      <UploadCloud className="h-8 w-8 text-primary/40 mb-2" />
+                      <p className="text-primary/60 text-sm text-center">Generated images will appear here</p>
                     </div>
                   </div>
                 </div>
@@ -394,21 +382,11 @@ const Index = () => {
 
               <TabsContent value="video" className="m-0">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Generate Video Content</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <Textarea 
-                        placeholder="Describe the video you want to generate..."
-                        className="min-h-[120px] text-lg"
-                      />
-                      <div className="grid grid-cols-2 gap-4">
-                        <Button className="py-6 text-lg">Full Video</Button>
-                        <Button className="py-6 text-lg">Video Hook</Button>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                      <UploadCloud className="h-12 w-12 text-primary/40 mb-4" />
-                      <p className="text-primary/60">Generated video will appear here</p>
+                  <h2 className="text-2xl font-semibold">Generated Videos</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="aspect-video bg-secondary/50 rounded-lg border-2 border-dashed flex flex-col items-center justify-center">
+                      <UploadCloud className="h-8 w-8 text-primary/40 mb-2" />
+                      <p className="text-primary/60 text-sm text-center">Generated videos will appear here</p>
                     </div>
                   </div>
                 </div>
@@ -416,79 +394,30 @@ const Index = () => {
 
               <TabsContent value="text" className="m-0">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Generate Text Content</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <Textarea 
-                        placeholder="What would you like to write about?"
-                        className="min-h-[120px] text-lg"
-                      />
-                      <div className="grid grid-cols-2 gap-4">
-                        <Button className="py-6 text-lg">Caption</Button>
-                        <Button className="py-6 text-lg">Hashtags</Button>
-                      </div>
-                    </div>
-                    <div className="bg-secondary/50 rounded-lg p-6">
-                      <p className="text-primary/60">Generated text will appear here</p>
-                    </div>
+                  <h2 className="text-2xl font-semibold">Generated Text</h2>
+                  <div className="bg-secondary/50 rounded-lg p-6 min-h-[200px] flex items-center justify-center">
+                    <p className="text-primary/60">Generated text will appear here</p>
                   </div>
                 </div>
               </TabsContent>
 
               <TabsContent value="audio" className="m-0">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Generate Audio Content</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <Textarea 
-                        placeholder="Enter the text you want to convert to speech..."
-                        className="min-h-[120px] text-lg"
-                        value={audioText}
-                        onChange={(e) => setAudioText(e.target.value)}
-                      />
-                      <div className="flex gap-4">
-                        <select
-                          className="flex-1 rounded-md border border-input bg-background px-3 py-2"
-                          value={selectedVoice}
-                          onChange={(e) => setSelectedVoice(e.target.value)}
-                        >
-                          {voices.map(voice => (
-                            <option key={voice.id} value={voice.id}>
-                              {voice.name}
-                            </option>
-                          ))}
-                        </select>
-                        <Button 
-                          className="flex-1 py-6 text-lg"
-                          onClick={generateAudio}
-                          disabled={isGeneratingAudio || !audioText.trim()}
-                        >
-                          {isGeneratingAudio ? "Generating..." : "Generate Audio"}
-                        </Button>
+                  <h2 className="text-2xl font-semibold">Generated Audio</h2>
+                  <div className="flex flex-col items-center justify-center min-h-[200px] bg-secondary/50 rounded-lg">
+                    {generatedAudioUrl ? (
+                      <div className="w-full p-6 space-y-4">
+                        <audio controls className="w-full" src={generatedAudioUrl} />
+                        <p className="text-center text-sm text-primary/60">
+                          Generated audio preview
+                        </p>
                       </div>
-                      <div className="flex items-center justify-center">
-                        <span className="px-4 text-sm text-gray-500">or</span>
+                    ) : (
+                      <div className="text-center p-6">
+                        <Music className="h-12 w-12 text-primary/40 mx-auto mb-4" />
+                        <p className="text-primary/60">Generated audio will appear here</p>
                       </div>
-                      <div className="flex flex-col items-center justify-center min-h-[100px] bg-secondary/50 rounded-lg border-2 border-dashed cursor-pointer">
-                        <UploadCloud className="h-8 w-8 text-primary/40 mb-2" />
-                        <p className="text-primary/60 text-sm">Upload your own audio file</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg">
-                      {generatedAudioUrl ? (
-                        <div className="w-full p-6 space-y-4">
-                          <audio controls className="w-full" src={generatedAudioUrl} />
-                          <p className="text-center text-sm text-primary/60">
-                            Generated audio preview
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="text-center p-6">
-                          <Music className="h-12 w-12 text-primary/40 mx-auto mb-4" />
-                          <p className="text-primary/60">Generated audio will appear here</p>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
               </TabsContent>
@@ -501,4 +430,3 @@ const Index = () => {
 };
 
 export default Index;
-

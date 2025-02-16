@@ -71,7 +71,7 @@ const DjMode = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
+      {/* Header with search and filters */}
       <header className="sticky top-0 bg-gradient-to-b from-neutral-900 to-black p-4">
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="p-2">
@@ -130,40 +130,61 @@ const DjMode = () => {
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-medium">Key</h4>
-                  <div className="grid grid-cols-3 gap-2">
-                    {["C", "D♭", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"].map((note) => (
+                  <div className="space-y-2">
+                    <div className="flex gap-1.5">
+                      {["D♭", "E♭", "G♭", "A♭", "B♭"].map((note) => (
+                        <Button
+                          key={note}
+                          variant={selectedKey.startsWith(note) ? "default" : "outline"}
+                          onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
+                          size="sm"
+                          className={cn(
+                            "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
+                            selectedKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
+                          )}
+                        >
+                          {note}
+                        </Button>
+                      ))}
+                    </div>
+                    <div className="flex gap-1.5">
+                      {["C", "D", "E", "F", "G", "A", "B"].map((note) => (
+                        <Button
+                          key={note}
+                          variant={selectedKey.startsWith(note) ? "default" : "outline"}
+                          onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
+                          size="sm"
+                          className={cn(
+                            "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
+                            selectedKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
+                          )}
+                        >
+                          {note}
+                        </Button>
+                      ))}
+                    </div>
+                    <div className="flex gap-1.5 mt-2">
                       <Button
-                        key={note}
-                        variant={selectedKey.startsWith(note) ? "default" : "outline"}
-                        onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
-                        className="relative h-20 group"
-                      >
-                        <div className="text-lg">{note}</div>
-                        <div className="text-xs text-neutral-400 mt-1">
-                          <div>{note}maj</div>
-                          <div>{note}min</div>
-                        </div>
-                        {selectedKey.startsWith(note) && (
-                          <div className="absolute inset-0 bg-emerald-500/10 rounded-md" />
+                        variant={!selectedKey.includes("m") && selectedKey ? "default" : "outline"}
+                        onClick={() => setSelectedKey(prev => prev.replace("m", ""))}
+                        className={cn(
+                          "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
+                          !selectedKey.includes("m") && selectedKey && "bg-blue-500 hover:bg-blue-600 border-none"
                         )}
+                      >
+                        Major
                       </Button>
-                    ))}
-                  </div>
-                  <div className="flex gap-2 mt-4">
-                    <Button
-                      variant={selectedKey.includes("m") ? "default" : "outline"}
-                      onClick={() => setSelectedKey(prev => prev ? prev + "m" : "")}
-                      className="flex-1 bg-neutral-800 hover:bg-neutral-700"
-                    >
-                      Minor
-                    </Button>
-                    <Button
-                      variant={!selectedKey.includes("m") && selectedKey ? "default" : "outline"}
-                      onClick={() => setSelectedKey(prev => prev.replace("m", ""))}
-                      className="flex-1 bg-neutral-800 hover:bg-neutral-700"
-                    >
-                      Major
-                    </Button>
+                      <Button
+                        variant={selectedKey.includes("m") ? "default" : "outline"}
+                        onClick={() => setSelectedKey(prev => prev ? prev + "m" : "")}
+                        className={cn(
+                          "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
+                          selectedKey.includes("m") && "bg-blue-500 hover:bg-blue-600 border-none"
+                        )}
+                      >
+                        Minor
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

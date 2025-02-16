@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -74,7 +75,7 @@
 }
 
 .mobile-frame {
-  @apply relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl overflow-hidden;
+  @apply relative mx-auto w-[390px] h-[844px] bg-black rounded-[45px] border-[14px] border-black shadow-xl overflow-hidden;
 }
 
 .mobile-notch {

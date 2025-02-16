@@ -7,7 +7,7 @@ import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { TrackList } from "@/components/dj-mode/TrackList";
 import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
-import { Track } from "@/types/music";
+import { Track, Playlist } from "@/types/music";
 
 export default function DjMode() {
   const [view, setView] = useState<"list" | "grid">("list");
@@ -26,8 +26,9 @@ export default function DjMode() {
       artist: "Artist 1",
       albumArt: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=300",
       bpm: 128,
-      key: "C",
-      duration: 180
+      key: "1A",
+      duration: "3:00",
+      energy: 7
     },
     {
       id: "2",
@@ -35,17 +36,18 @@ export default function DjMode() {
       artist: "Artist 2",
       albumArt: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300",
       bpm: 130,
-      key: "G",
-      duration: 210
+      key: "2A",
+      duration: "3:30",
+      energy: 8
     }
   ];
 
-  const playlists = [
-    { id: "1", name: "House Vibes", tracks: new Set(["1", "2"]) },
-    { id: "2", name: "Deep House", tracks: new Set(["1"]) },
-    { id: "3", name: "Techno", tracks: new Set(["2"]) },
-    { id: "4", name: "Melodic House", tracks: new Set(["1", "2"]) },
-    { id: "5", name: "Progressive", tracks: new Set(["1"]) }
+  const playlists: Playlist[] = [
+    { id: "1", name: "House Vibes", tracks: new Set(["1", "2"]), createdAt: new Date() },
+    { id: "2", name: "Deep House", tracks: new Set(["1"]), createdAt: new Date() },
+    { id: "3", name: "Techno", tracks: new Set(["2"]), createdAt: new Date() },
+    { id: "4", name: "Melodic House", tracks: new Set(["1", "2"]), createdAt: new Date() },
+    { id: "5", name: "Progressive", tracks: new Set(["1"]), createdAt: new Date() }
   ];
 
   const handleTrackPlay = (track: Track) => {
@@ -62,7 +64,7 @@ export default function DjMode() {
     setSelectedTracks(newSelectedTracks);
   };
 
-  const handlePlaylistClick = (playlist: typeof playlists[0]) => {
+  const handlePlaylistClick = (playlist: Playlist) => {
     // Handle playlist click
     console.log("Playlist clicked:", playlist.name);
   };

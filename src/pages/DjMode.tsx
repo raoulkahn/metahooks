@@ -60,8 +60,24 @@ const DjMode = () => {
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
+  
+  // Add temporary state for the filter modal
+  const [tempBpmRange, setTempBpmRange] = useState(bpmRange);
+  const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
+
+  const handleApplyFilters = () => {
+    setBpmRange(tempBpmRange);
+    setSelectedKey(tempKey);
+  };
+
+  const handleResetFilters = () => {
+    setTempBpmRange([90, 140]);
+    setTempKey("");
+    setBpmRange([90, 140]);
+    setSelectedKey("");
+  };
 
   const filteredTracks = demoTracks.filter((track) => {
     const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
@@ -105,25 +121,25 @@ const DjMode = () => {
                     <div className="flex items-center gap-4">
                       <input 
                         type="number"
-                        value={bpmRange[0]}
-                        onChange={(e) => setBpmRange([Number(e.target.value), bpmRange[1]])}
+                        value={tempBpmRange[0]}
+                        onChange={(e) => setTempBpmRange([Number(e.target.value), tempBpmRange[1]])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                       />
                       <div className="flex-1 px-2">
                         <Slider
-                          defaultValue={bpmRange}
+                          defaultValue={tempBpmRange}
                           max={200}
                           min={60}
                           step={1}
-                          value={bpmRange}
-                          onValueChange={setBpmRange}
+                          value={tempBpmRange}
+                          onValueChange={setTempBpmRange}
                           className="flex-1"
                         />
                       </div>
                       <input 
                         type="number"
-                        value={bpmRange[1]}
-                        onChange={(e) => setBpmRange([bpmRange[0], Number(e.target.value)])}
+                        value={tempBpmRange[1]}
+                        onChange={(e) => setTempBpmRange([tempBpmRange[0], Number(e.target.value)])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                       />
                     </div>
@@ -135,12 +151,12 @@ const DjMode = () => {
                         {["D♭", "E♭", "G♭", "A♭", "B♭"].map((note) => (
                           <Button
                             key={note}
-                            variant={selectedKey.startsWith(note) ? "default" : "outline"}
-                            onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
+                            variant={tempKey.startsWith(note) ? "default" : "outline"}
+                            onClick={() => setTempKey(tempKey === note ? "" : note)}
                             size="sm"
                             className={cn(
                               "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                              selectedKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
+                              tempKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
                             )}
                           >
                             {note}
@@ -151,12 +167,12 @@ const DjMode = () => {
                         {["C", "D", "E", "F", "G", "A", "B"].map((note) => (
                           <Button
                             key={note}
-                            variant={selectedKey.startsWith(note) ? "default" : "outline"}
-                            onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
+                            variant={tempKey.startsWith(note) ? "default" : "outline"}
+                            onClick={() => setTempKey(tempKey === note ? "" : note)}
                             size="sm"
                             className={cn(
                               "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                              selectedKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
+                              tempKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
                             )}
                           >
                             {note}
@@ -165,21 +181,21 @@ const DjMode = () => {
                       </div>
                       <div className="flex gap-1.5 mt-2">
                         <Button
-                          variant={!selectedKey.includes("m") && selectedKey ? "default" : "outline"}
-                          onClick={() => setSelectedKey(prev => prev.replace("m", ""))}
+                          variant={!tempKey.includes("m") && tempKey ? "default" : "outline"}
+                          onClick={() => setTempKey(prev => prev.replace("m", ""))}
                           className={cn(
                             "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                            !selectedKey.includes("m") && selectedKey && "bg-blue-500 hover:bg-blue-600 border-none"
+                            !tempKey.includes("m") && tempKey && "bg-blue-500 hover:bg-blue-600 border-none"
                           )}
                         >
                           Major
                         </Button>
                         <Button
-                          variant={selectedKey.includes("m") ? "default" : "outline"}
-                          onClick={() => setSelectedKey(prev => prev ? prev + "m" : "")}
+                          variant={tempKey.includes("m") ? "default" : "outline"}
+                          onClick={() => setTempKey(prev => prev ? prev + "m" : "")}
                           className={cn(
                             "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                            selectedKey.includes("m") && "bg-blue-500 hover:bg-blue-600 border-none"
+                            tempKey.includes("m") && "bg-blue-500 hover:bg-blue-600 border-none"
                           )}
                         >
                           Minor
@@ -188,6 +204,23 @@ const DjMode = () => {
                     </div>
                   </div>
                 </div>
+                <DialogFooter className="flex justify-between sm:justify-between border-t border-neutral-800 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={handleResetFilters}
+                    className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+                  >
+                    Reset
+                  </Button>
+                  <DialogClose asChild>
+                    <Button
+                      onClick={handleApplyFilters}
+                      className="bg-emerald-600 hover:bg-emerald-700"
+                    >
+                      Apply Filters
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
               </DialogContent>
             </Dialog>
             <Avatar className="h-8 w-8">

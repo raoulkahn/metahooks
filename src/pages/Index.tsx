@@ -94,6 +94,49 @@ const Index = () => {
     setIsGeneratingAudio(false);
   };
 
+  const generateVideo = async (prompt: string) => {
+    setIsGenerating(true);
+    setError(null);
+    
+    try {
+      // const { data, error } = await supabase.functions.invoke('generate-video', {
+      //   body: { prompt }
+      // });
+
+      // if (error) {
+      //   throw error;
+      // }
+
+      // if (data.error) {
+      //   throw new Error(data.error);
+      // }
+
+      // Process successful response
+      // setGeneratedVideoUrl(data.output);
+      // toast({
+      //   title: "Video Generated!",
+      //   description: "Your AI-generated video is ready to view.",
+      // });
+
+    } catch (err: any) {
+      console.error('Video generation error:', err);
+      
+      const errorMessage = err.message?.includes('credit') 
+        ? "You've exceeded your free credits. Please add a payment method in Replicate to continue generating videos."
+        : err.message || 'Failed to generate video';
+      
+      toast({
+        title: "Video Generation Failed",
+        description: errorMessage,
+        variant: "destructive"
+      });
+      
+      setError(errorMessage);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto pt-8 pb-20">

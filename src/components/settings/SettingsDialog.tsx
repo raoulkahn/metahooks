@@ -9,7 +9,7 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose: () =
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[460px] p-0 bg-neutral-900/95 text-white">
+      <DialogContent className="max-w-[600px] min-h-[85vh] p-0 bg-neutral-900/95 text-white">
         {currentView === "main" ? (
           <div>
             <div className="p-6 flex items-center gap-4">
@@ -24,42 +24,42 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose: () =
               </div>
             </div>
 
-            <div className="space-y-1">
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+            <div className="space-y-0.5">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Account
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Data Saver
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Playback
               </button>
               <button
-                className="w-full px-6 py-3 flex items-center justify-between hover:bg-white/5 text-[15px]"
+                className="w-full px-6 py-3.5 flex items-center justify-between hover:bg-white/5 text-[15px]"
                 onClick={() => setCurrentView("content")}
               >
                 <span>Content and display</span>
                 <ChevronRight className="h-5 w-5 text-neutral-400" />
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Privacy and social
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Audio Quality
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Video Quality
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Storage
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Notifications
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 Apps and devices
               </button>
-              <button className="w-full px-6 py-3 text-left text-[15px] text-neutral-400 cursor-not-allowed">
+              <button className="w-full px-6 py-3.5 text-left text-[15px] text-neutral-400 cursor-not-allowed hover:bg-white/5">
                 About
               </button>
             </div>

@@ -40,6 +40,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
+      <div className="flex items-center justify-center gap-2 pt-8">
+        <span className="text-primary font-medium">Powered by OpenAI</span>
+      </div>
       <div className="max-w-4xl mx-auto pt-8 pb-24 animate-fade-up">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-primary mb-4">

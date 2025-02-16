@@ -152,7 +152,7 @@ const DjMode = () => {
     setTempKey("");
     setBpmRange([90, 140]);
     setSelectedKey("");
-    setHasUsedFilters(true);
+    setHasUsedFilters(false);
   };
 
   const handleApplyFilters = () => {

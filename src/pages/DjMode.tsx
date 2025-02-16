@@ -161,10 +161,9 @@ const DjMode = () => {
   const handleApplyFilters = () => {
     setBpmRange(tempBpmRange);
     setSelectedKey(tempKey);
+    setHasUsedFilters(true);
     
     const willHaveActiveFilters = tempKey !== "" || tempBpmRange[0] !== 90 || tempBpmRange[1] !== 140;
-    setHasUsedFilters(willHaveActiveFilters);
-    
     if (!willHaveActiveFilters) {
       setIsSelectingTracks(false);
       setSelectedTracks(new Set());
@@ -344,11 +343,14 @@ const DjMode = () => {
       </header>
 
       <div className="px-4 pb-32">
-        {hasActiveFilters && hasMatchingTracks && !isSelectingTracks && (
+        {hasUsedFilters && hasMatchingTracks && !isSelectingTracks && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">
-                Found {filteredTracks.length} matching tracks
+                {hasActiveFilters 
+                  ? `Found ${filteredTracks.length} matching tracks`
+                  : "All tracks match your criteria"
+                }
               </h3>
               <p className="text-sm text-neutral-400">Create a new playlist with these tracks?</p>
             </div>

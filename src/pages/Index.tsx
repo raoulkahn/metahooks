@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader2, Copy, RefreshCw } from "lucide-react";
 import PlatformButton from '@/components/PlatformButton';
+import { supabase } from "@/integrations/supabase/client";
 
 interface Hook {
   type: 'visual' | 'verbal';
@@ -30,21 +31,14 @@ const Index = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/functions/v1/generate-hooks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: content.trim(),
-        }),
+      const { data, error } = await supabase.functions.invoke('generate-hooks', {
+        body: { content: content.trim() }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to generate hooks');
+      if (error) {
+        throw error;
       }
 
-      const data = await response.json();
       setGeneratedHooks(data.hooks);
       
       toast({

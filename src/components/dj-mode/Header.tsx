@@ -67,13 +67,9 @@ export function Header({
           )}
 
           {showPlayButton && (
-            <Button
-              size="icon"
-              className="h-12 w-12 rounded-full bg-green-500 hover:bg-green-600 hover:scale-105 transition-all"
-              onClick={onPlayClick}
-            >
-              <Play className="h-6 w-6 fill-current" />
-            </Button>
+            <div className="h-12 w-12 rounded-full bg-green-500/50 flex items-center justify-center">
+              <Play className="h-6 w-6 text-green-500/50" />
+            </div>
           )}
 
           <button 

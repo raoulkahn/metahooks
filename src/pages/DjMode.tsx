@@ -2,14 +2,10 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Dialog,
   DialogContent,
+  DialogClose,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -52,6 +48,76 @@ const demoTracks: Track[] = [
     energy: 9,
     albumArt: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
   },
+  {
+    id: "4",
+    title: "Dreamcatcher",
+    artist: "Lane 8",
+    bpm: 122,
+    key: "6A",
+    duration: "7:20",
+    energy: 8,
+    albumArt: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17",
+  },
+  {
+    id: "5",
+    title: "Bloom",
+    artist: "Ben Böhmer",
+    bpm: 124,
+    key: "11A",
+    duration: "6:55",
+    energy: 7,
+    albumArt: "https://images.unsplash.com/photo-1598387993441-a364f854c3e1",
+  },
+  {
+    id: "6",
+    title: "Atlas",
+    artist: "Massane",
+    bpm: 120,
+    key: "2B",
+    duration: "5:45",
+    energy: 6,
+    albumArt: "https://images.unsplash.com/photo-1553356084-58ef4a67b2a7",
+  },
+  {
+    id: "7",
+    title: "Sirens of Jupiter",
+    artist: "Stephan Bodzin",
+    bpm: 126,
+    key: "4A",
+    duration: "7:30",
+    energy: 9,
+    albumArt: "https://images.unsplash.com/photo-1534447677768-be436bb09401",
+  },
+  {
+    id: "8",
+    title: "Breathe",
+    artist: "CamelPhat",
+    bpm: 125,
+    key: "7B",
+    duration: "6:15",
+    energy: 8,
+    albumArt: "https://images.unsplash.com/photo-1544175832-6d40b32d6d05",
+  },
+  {
+    id: "9",
+    title: "Dawn",
+    artist: "Yotto",
+    bpm: 123,
+    key: "9A",
+    duration: "6:40",
+    energy: 7,
+    albumArt: "https://images.unsplash.com/photo-1588974269162-4c0d5a23418d",
+  },
+  {
+    id: "10",
+    title: "Cycles",
+    artist: "Joris Voorn",
+    bpm: 128,
+    key: "1B",
+    duration: "7:10",
+    energy: 8,
+    albumArt: "https://images.unsplash.com/photo-1608734265656-f035d3e7bcbf",
+  }
 ];
 
 const DjMode = () => {

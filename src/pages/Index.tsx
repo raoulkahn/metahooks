@@ -113,32 +113,55 @@ const Index = () => {
         <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Examples Column */}
           <div className="space-y-12">
-            <h2 className="text-3xl font-bold text-primary">Examples</h2>
-            <div className="space-y-6">
-              <div className="glass p-6 rounded-xl space-y-4">
-                <h3 className="text-xl font-semibold text-primary">Food & Recipe</h3>
-                <p className="text-primary/80">Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie</p>
+            <h2 className="text-3xl font-bold text-primary">Hook Examples</h2>
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-primary flex items-center gap-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" fill="currentColor"/>
+                    <path d="M19 12C19 12 15.5 18 12 18C8.5 18 5 12 5 12C5 12 8.5 6 12 6C15.5 6 19 12 19 12Z" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                  Visual Captions
+                </h3>
+                <div className="glass p-6 rounded-xl space-y-4">
+                  <p className="text-primary/80">"Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie"</p>
+                  <p className="text-sm text-primary/60">Perfect for: Recipe video captions</p>
+                </div>
               </div>
-              <div className="glass p-6 rounded-xl space-y-4">
-                <h3 className="text-xl font-semibold text-primary">Fitness</h3>
-                <p className="text-primary/80">3 exercises to build strong core muscles without equipment! 💪 #fitness #workout</p>
-              </div>
-              <div className="glass p-6 rounded-xl space-y-4">
-                <h3 className="text-xl font-semibold text-primary">Travel</h3>
-                <p className="text-primary/80">Hidden gems in Bali you won't find in tourist guides! 🌴 #travel #wanderlust</p>
+
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-primary flex items-center gap-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                    <path d="M12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 8.41015 15.5899 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5Z" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                  Verbal Hooks
+                </h3>
+                <div className="glass p-6 rounded-xl space-y-4">
+                  <p className="text-primary/80">"Hey fitness fam! Ever wondered how to get killer abs without any equipment? In this video, I'm sharing my top 3 bodyweight exercises that transformed my core."</p>
+                  <p className="text-sm text-primary/60">Perfect for: Video intro speech</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Mobile App Preview Column */}
           <div className="flex flex-col items-center justify-center space-y-4">
-            <img
-              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
-              alt="Mobile App Preview"
-              className="rounded-2xl shadow-2xl max-w-md"
-            />
+            <div className="relative max-w-[280px] mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 rounded-[32px]" />
+              <img
+                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                alt="Mobile App Preview"
+                className="rounded-[32px] w-full aspect-[9/16] object-cover"
+              />
+              <div className="absolute bottom-6 left-4 right-4">
+                <p className="text-white text-sm leading-snug">
+                  Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie
+                </p>
+              </div>
+            </div>
             <p className="text-sm text-primary/70 text-center max-w-sm">
-              Our AI-powered platform helps you create engaging hooks that resonate with your audience
+              Get both verbal hooks and captions for your videos
             </p>
           </div>
         </div>

@@ -118,37 +118,37 @@ const demoTracks: Track[] = [
 const demoPLaylists: Playlist[] = [
   {
     id: "1",
-    name: "Genting Gathering",
+    name: "Liked Songs",
     tracks: new Set(["1", "2", "3"]),
     createdAt: new Date()
   },
   {
     id: "2",
-    name: "Studio Mix",
+    name: "Discover Weekly",
     tracks: new Set(["4", "5", "6"]),
     createdAt: new Date()
   },
   {
     id: "3",
-    name: "Deep House Vibing",
+    name: "U2",
     tracks: new Set(["7", "8", "9"]),
     createdAt: new Date()
   },
   {
     id: "4",
-    name: "Upbeat Flow",
+    name: "The Cure",
     tracks: new Set(["1", "4", "7", "10"]),
     createdAt: new Date()
   },
   {
     id: "5",
-    name: "Melodic Desert",
+    name: "Retro 80s",
     tracks: new Set(["2", "5", "8"]),
     createdAt: new Date()
   },
   {
     id: "6",
-    name: "Lunar Vibes",
+    name: "Release Radar",
     tracks: new Set(["3", "6", "9"]),
     createdAt: new Date()
   }

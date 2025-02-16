@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -177,7 +178,7 @@ export default function DjMode() {
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(demoPLaylists[0]);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
 
@@ -272,7 +273,7 @@ export default function DjMode() {
         hasActiveFilters={!showPlaylists && hasActiveFilters && showBpmKey}
         selectedKey={selectedKey}
         onFilterClick={() => {}}
-        onAvatarClick={() => setSettingsOpen(true)}
+        onAvatarClick={() => setIsSettingsOpen(true)}
       />
 
       <div className="px-4 pb-32">
@@ -375,10 +376,14 @@ export default function DjMode() {
         }}
       />
 
-      <SettingsDialog 
-        open={settingsOpen} 
-        onClose={() => setSettingsOpen(false)} 
-      />
+      <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+        <DialogContent className="p-0 bg-transparent border-none">
+          <SettingsDialog 
+            open={isSettingsOpen} 
+            onClose={() => setIsSettingsOpen(false)} 
+          />
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>
         <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">

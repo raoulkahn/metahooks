@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -148,16 +147,83 @@ const Index = () => {
           {/* Mobile App Preview Column */}
           <div className="flex flex-col items-center justify-center space-y-4">
             <div className="relative max-w-[280px] mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 rounded-[32px]" />
-              <img
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
-                alt="Mobile App Preview"
-                className="rounded-[32px] w-full aspect-[9/16] object-cover"
-              />
-              <div className="absolute bottom-6 left-4 right-4">
-                <p className="text-white text-sm leading-snug">
-                  Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie
-                </p>
+              {/* iOS Status Bar */}
+              <div className="absolute top-0 left-0 right-0 h-11 z-20 px-5 flex items-center justify-between text-white">
+                <span className="text-sm font-medium">9:41</span>
+                <div className="flex items-center gap-1">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
+                    <path d="M12.5 2.75H11.5C7.77208 2.75 4.75 5.77208 4.75 9.5V14.5C4.75 18.2279 7.77208 21.25 11.5 21.25H12.5C16.2279 21.25 19.25 18.2279 19.25 14.5V9.5C19.25 5.77208 16.2279 2.75 12.5 2.75Z" stroke="currentColor" strokeWidth="1.5"/>
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
+                    <path d="M3 12C3 7.02944 3 7 4 7H20C21.1046 7 22 7.89543 22 9V15C22 16.1046 21.1046 17 20 17H4C2.89543 17 2 16.1046 2 15V9ZM20 9H4V15H20V9Z" fill="currentColor"/>
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M2 9C2 7.89543 2.89543 7 4 7H20C21.1046 7 22 7.89543 22 9V15C22 16.1046 21.1046 17 20 17H4C2.89543 17 2 16.1046 2 15V9ZM20 9H4V15H20V9Z" fill="currentColor"/>
+                    <path d="M18 13C18.5523 13 19 12.5523 19 12C19 11.4477 18.5523 11 18 11C17.4477 11 17 11.4477 17 12C17 12.5523 17.4477 13 18 13Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Instagram Story Header */}
+              <div className="absolute top-11 left-0 right-0 h-14 z-20 px-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-pink-600 p-[2px]">
+                    <div className="w-full h-full rounded-full bg-black">
+                      <img
+                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                        alt="User Avatar"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-white text-sm font-semibold">foodie_creator</span>
+                    <span className="text-white/60 text-sm">17h</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button className="text-white hover:text-white/80">•••</button>
+                  <button className="text-white hover:text-white/80">✕</button>
+                </div>
+              </div>
+
+              {/* Main Content */}
+              <div className="relative w-full aspect-[9/16] rounded-[32px] overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+                <img
+                  src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                  alt="Story Content"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-16 left-4 right-4">
+                  <p className="text-white text-sm leading-snug">
+                    Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie
+                  </p>
+                </div>
+
+                {/* Instagram Story Footer */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-between">
+                  <div className="flex-1 bg-white/10 backdrop-blur-md rounded-full">
+                    <input
+                      type="text"
+                      placeholder="Send message..."
+                      className="w-full bg-transparent text-white placeholder-white/60 text-sm py-2 px-4 focus:outline-none"
+                      readOnly
+                    />
+                  </div>
+                  <div className="flex items-center gap-4 ml-4">
+                    <button className="text-white hover:text-white/80">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                    </button>
+                    <button className="text-white hover:text-white/80">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 3L9.218 10.083M11.698 20.334L22 3.001H2L9.218 10.084L11.698 20.334Z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <p className="text-sm text-primary/70 text-center max-w-sm">

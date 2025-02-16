@@ -387,17 +387,17 @@ const DjMode = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button 
-              variant="ghost" 
-              size="icon" 
+              variant="outline" 
+              size="sm"
               onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-              className="text-neutral-400 hover:text-white"
-              title={showTechnicalDetails ? "Hide BPM and Key" : "Show BPM and Key"}
-            >
-              {showTechnicalDetails ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
+              className={cn(
+                "text-sm",
+                showTechnicalDetails 
+                  ? "bg-neutral-800 text-white border-neutral-700" 
+                  : "bg-transparent text-neutral-400 border-neutral-700"
               )}
+            >
+              BPM-Key
             </Button>
             <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
               <Play className="h-8 w-8 fill-current" />

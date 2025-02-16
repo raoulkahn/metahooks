@@ -10,17 +10,17 @@ const PlatformButton = ({ platform }: PlatformButtonProps) => {
   return (
     <div
       className={`
-        relative flex items-center justify-center gap-3 px-6 py-8
+        relative flex items-center justify-center gap-2 px-4 py-4
         bg-primary/5 rounded-lg border border-primary/10
         transition-all duration-300 hover:bg-primary/10
       `}
     >
       {platform === 'instagram' ? (
-        <Instagram className="w-8 h-8 text-primary" />
+        <Instagram className="w-6 h-6 text-primary" />
       ) : (
-        <Facebook className="w-8 h-8 text-primary" />
+        <Facebook className="w-6 h-6 text-primary" />
       )}
-      <span className="text-xl font-medium text-primary">
+      <span className="text-base font-medium text-primary">
         {platform === 'instagram' ? 'Instagram' : 'Facebook'} Reels/Stories
       </span>
     </div>

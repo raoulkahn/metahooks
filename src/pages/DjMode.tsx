@@ -61,6 +61,8 @@ const DjMode = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
 
+  const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
+
   const filteredTracks = demoTracks.filter((track) => {
     const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
     const matchesKey = !selectedKey || track.key === selectedKey;
@@ -78,11 +80,19 @@ const DjMode = () => {
             <Dialog>
               <DialogTrigger asChild>
                 <Button 
-                  variant="outline" 
-                  className="px-3 bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+                  variant={hasActiveFilters ? "default" : "outline"}
+                  className={cn(
+                    "px-3",
+                    hasActiveFilters 
+                      ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+                      : "bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+                  )}
                 >
-                  <Filter className="h-5 w-5 mr-2" />
-                  Filter
+                  <Filter className={cn(
+                    "h-5 w-5 mr-2",
+                    hasActiveFilters && "text-white"
+                  )} />
+                  Filter{hasActiveFilters ? ` (${selectedKey || "BPM"})` : ""}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">

@@ -364,7 +364,7 @@ const DjMode = () => {
                   setIsSelectingTracks(false);
                   setSelectedTracks(new Set());
                 }}
-                className="border-neutral-700"
+                className="border-neutral-700 text-white bg-neutral-700 hover:bg-neutral-600"
               >
                 Cancel
               </Button>

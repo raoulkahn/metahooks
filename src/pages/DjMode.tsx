@@ -288,7 +288,7 @@ const DjMode = () => {
               </DialogContent>
             </Dialog>
             <Avatar className="h-8 w-8">
-              <AvatarImage src="/lovable-uploads/f6332a55-9e65-4605-a92a-75aa91f2d0f2.png" alt="DJ" />
+              <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
               <AvatarFallback>DJ</AvatarFallback>
             </Avatar>
           </div>
@@ -301,7 +301,7 @@ const DjMode = () => {
             <h1 className="text-3xl font-bold">Running</h1>
             <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
               <Avatar className="h-6 w-6">
-                <AvatarImage src="/lovable-uploads/f6332a55-9e65-4605-a92a-75aa91f2d0f2.png" alt="DJ" />
+                <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
                 <AvatarFallback>DJ</AvatarFallback>
               </Avatar>
               <span>DJ Mode • 1h 45m</span>

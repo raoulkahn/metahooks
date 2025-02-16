@@ -129,6 +129,7 @@ const DjMode = () => {
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
+  const [hasUsedFilters, setHasUsedFilters] = useState(false);
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
@@ -148,11 +149,13 @@ const DjMode = () => {
     setTempKey("");
     setBpmRange([90, 140]);
     setSelectedKey("");
+    setHasUsedFilters(true);
   };
 
   const handleApplyFilters = () => {
     setBpmRange(tempBpmRange);
     setSelectedKey(tempKey);
+    setHasUsedFilters(true);
   };
 
   const handleCreatePlaylist = (mode: 'all' | 'select') => {
@@ -324,10 +327,15 @@ const DjMode = () => {
       </header>
 
       <div className="px-4 pb-32">
-        {hasMatchingTracks && !isSelectingTracks && (
+        {hasUsedFilters && hasMatchingTracks && !isSelectingTracks && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
-              <h3 className="font-medium">Found {filteredTracks.length} matching tracks</h3>
+              <h3 className="font-medium">
+                {hasActiveFilters 
+                  ? `Found ${filteredTracks.length} matching tracks`
+                  : "All tracks match your criteria"
+                }
+              </h3>
               <p className="text-sm text-neutral-400">Create a new playlist with these tracks?</p>
             </div>
             <Button 

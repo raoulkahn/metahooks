@@ -32,13 +32,13 @@ export function Header({
   const navigate = useNavigate();
   
   return (
-    <header className="sticky top-0 bg-black/95 z-10">
+    <header className="sticky top-0 bg-gradient-to-b from-black/95 to-black/0 z-10">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-neutral-800 -ml-3"
+            className="text-white hover:bg-neutral-800/50 -ml-3"
             onClick={() => navigate('/')}
           >
             <ChevronLeft className="h-6 w-6" />
@@ -51,7 +51,7 @@ export function Header({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 bg-neutral-800/50 hover:bg-neutral-700 border-none text-white font-medium px-4 rounded-3xl text-sm"
+                className="h-8 bg-black/50 hover:bg-black/70 border-none text-white font-medium px-4 rounded-3xl text-sm"
               >
                 BPM KEY
               </Button>
@@ -65,7 +65,7 @@ export function Header({
                       "h-8 px-4 font-medium rounded-3xl text-sm",
                       hasActiveFilters 
                         ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
-                        : "bg-neutral-800/50 hover:bg-neutral-700 border-none text-white"
+                        : "bg-black/50 hover:bg-black/70 border-none text-white"
                     )}
                     onClick={onFilterClick}
                   >
@@ -92,7 +92,7 @@ export function Header({
               variant="ghost"
               size="icon"
               onClick={onPlayClick}
-              className="h-12 w-12 rounded-full bg-green-500 hover:bg-green-600 text-black transition-colors"
+              className="h-12 w-12 rounded-full bg-[#1DB954] hover:bg-[#1DB954]/90 text-black transition-colors"
             >
               <Play className="h-6 w-6 fill-current" />
             </Button>

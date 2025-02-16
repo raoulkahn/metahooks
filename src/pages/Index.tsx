@@ -131,12 +131,15 @@ const Index = () => {
           </div>
 
           {/* Mobile App Preview Column */}
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center space-y-4">
             <img
               src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
               alt="Mobile App Preview"
               className="rounded-2xl shadow-2xl max-w-md"
             />
+            <p className="text-sm text-primary/70 text-center max-w-sm">
+              Our AI-powered platform helps you create engaging hooks that resonate with your audience
+            </p>
           </div>
         </div>
       </div>

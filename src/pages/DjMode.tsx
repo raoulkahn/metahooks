@@ -1,4 +1,3 @@
-
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
@@ -13,7 +12,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat } from "lucide-react";
+import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 
@@ -127,7 +126,6 @@ const DjMode = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   
-  // Add temporary state for the filter modal
   const [tempBpmRange, setTempBpmRange] = useState(bpmRange);
   const [tempKey, setTempKey] = useState(selectedKey);
 
@@ -362,14 +360,7 @@ const DjMode = () => {
               <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8">
-                <svg viewBox="0 0 24 24" className="h-full w-full text-white">
-                  <path
-                    fill="currentColor"
-                    d="M4.5 5H2v14h2.5v-5.897h5V19h2.5V5H9.5v5.103h-5V5z M19.5 5h-2.25l-1.75 6.897L13.75 5H11.5l2.75 14h2.5l2.75-14z"
-                  />
-                </svg>
-              </div>
+              <AudioWaveform className="h-8 w-8 text-white" />
               <Button size="icon" className="rounded-full bg-white hover:bg-white/90 text-black h-8 w-8">
                 <Play className="h-5 w-5 fill-current" />
               </Button>
@@ -391,7 +382,7 @@ const DjMode = () => {
           </Button>
           <Button variant="ghost" className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
-              <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z" fill="currentColor"/>
+              <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1h6a1 1 0 0 1 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z" fill="currentColor"/>
             </svg>
             <span className="text-xs">Your Library</span>
           </Button>

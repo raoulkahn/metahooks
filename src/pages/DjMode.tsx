@@ -1,3 +1,4 @@
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
@@ -12,7 +13,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check } from "lucide-react";
+import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 import { toast } from "sonner";
@@ -128,6 +129,7 @@ const DjMode = () => {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
+  const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
@@ -383,9 +385,24 @@ const DjMode = () => {
               <span>DJ Mode • 1h 45m</span>
             </div>
           </div>
-          <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
-            <Play className="h-8 w-8 fill-current" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
+              className="text-neutral-400 hover:text-white"
+              title={showTechnicalDetails ? "Hide BPM and Key" : "Show BPM and Key"}
+            >
+              {showTechnicalDetails ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </Button>
+            <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
+              <Play className="h-8 w-8 fill-current" />
+            </Button>
+          </div>
         </div>
 
         {filteredTracks.map((track) => (
@@ -417,13 +434,18 @@ const DjMode = () => {
               )}>{track.title}</div>
               <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
             </div>
-            <div className="flex items-center gap-4 text-sm ml-auto">
-              <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
-              <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
-              {!isSelectingTracks && (
-                <span className="text-neutral-400">•••</span>
-              )}
-            </div>
+            {showTechnicalDetails && (
+              <div className="flex items-center gap-4 text-sm ml-auto">
+                <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
+                <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
+                {!isSelectingTracks && (
+                  <span className="text-neutral-400">•••</span>
+                )}
+              </div>
+            )}
+            {!showTechnicalDetails && !isSelectingTracks && (
+              <span className="text-neutral-400 ml-auto">•••</span>
+            )}
           </div>
         ))}
       </div>

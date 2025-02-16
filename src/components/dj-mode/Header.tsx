@@ -32,7 +32,7 @@ export function Header({
   const navigate = useNavigate();
   
   return (
-    <header className="sticky top-0 bg-black/90 backdrop-blur-md p-4">
+    <header className="sticky top-0 bg-black p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button 
@@ -51,7 +51,7 @@ export function Header({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 bg-neutral-800 hover:bg-neutral-700 border-none text-white font-medium px-4"
+                className="h-8 bg-neutral-800 hover:bg-neutral-700 border-none text-white font-medium px-4"
               >
                 BPM KEY
               </Button>
@@ -62,7 +62,7 @@ export function Header({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 px-4 font-medium",
+                      "h-8 px-4 font-medium",
                       hasActiveFilters 
                         ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
                         : "bg-neutral-800 hover:bg-neutral-700 border-none text-white"

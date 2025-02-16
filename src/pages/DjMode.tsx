@@ -352,14 +352,13 @@ const DjMode = () => {
                 <div className="space-y-4 py-4">
                   <Button 
                     onClick={() => handleCreatePlaylist('all')} 
-                    className="w-full bg-neutral-800 hover:bg-neutral-700"
+                    className="w-full bg-neutral-700 hover:bg-neutral-600 text-white border border-neutral-600"
                   >
                     Add all {filteredTracks.length} tracks
                   </Button>
                   <Button 
                     onClick={() => handleCreatePlaylist('select')} 
-                    variant="outline" 
-                    className="w-full border-neutral-700"
+                    className="w-full bg-white text-black hover:bg-neutral-200"
                   >
                     Select individual tracks
                   </Button>

@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/dj-mode/Header";
-import BottomBar from "@/components/dj-mode/BottomBar";
-import TrackList from "@/components/dj-mode/TrackList";
-import PlaylistGrid from "@/components/dj-mode/PlaylistGrid";
+import { Header } from "@/components/dj-mode/Header";
+import { BottomBar } from "@/components/dj-mode/BottomBar";
+import { TrackList } from "@/components/dj-mode/TrackList";
+import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
 
 export default function DjMode() {
   const [view, setView] = useState<"list" | "grid">("list");

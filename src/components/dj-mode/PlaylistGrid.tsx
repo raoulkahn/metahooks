@@ -3,6 +3,8 @@ import { Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
 import { Library } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Image from "@/components/ui/image";
 
 type PlaylistGridProps = {
   playlists: Playlist[];
@@ -63,8 +65,19 @@ export function PlaylistGrid({ playlists, onPlaylistClick }: PlaylistGridProps) 
             className="group flex items-center gap-3 p-2 rounded-md hover:bg-white/5 transition-colors cursor-pointer"
             onClick={() => onPlaylistClick(playlist)}
           >
-            <div className="h-12 w-12 bg-neutral-800 rounded-md flex items-center justify-center flex-shrink-0">
-              <Library className="h-6 w-6 text-white/70" />
+            <div className="h-12 w-12 rounded-md overflow-hidden flex-shrink-0">
+              <AspectRatio ratio={1}>
+                <img 
+                  src={`https://images.unsplash.com/photo-${playlist.id === "1" ? "1582562124811-c09040d0a901" : 
+                    playlist.id === "2" ? "1501286353178-1ec881214838" :
+                    playlist.id === "3" ? "1485833077593-4278bba3f11f" :
+                    playlist.id === "4" ? "1438565434616-3ef039228b15" :
+                    playlist.id === "5" ? "1472396961693-142e6e269027" :
+                    "1582562124811-c09040d0a901"}`}
+                  alt={playlist.name}
+                  className="object-cover w-full h-full"
+                />
+              </AspectRatio>
             </div>
             <div className="min-w-0">
               <h3 className="font-medium truncate">{playlist.name}</h3>

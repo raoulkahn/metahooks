@@ -11,7 +11,7 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose: () =
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="fixed w-screen h-screen p-0 bg-neutral-900 text-white overflow-y-auto inset-0 max-w-none rounded-none border-none">
         {currentView === "main" ? (
-          <div>
+          <div className="h-full">
             <div className="p-6 flex items-center gap-4">
               <img 
                 src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png"

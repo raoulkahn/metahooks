@@ -99,7 +99,9 @@ const Index = () => {
 
         <div className="mt-12 text-center">
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">Example Analysis</h2>
-          <p className="text-gray-600 mb-8">See how the AI generates engaging hooks from your content</p>
+          <p className="text-gray-600 mb-8">
+            See how the AI generates hooks you can use as verbal intros or on-screen captions
+          </p>
         </div>
 
         <div className="glass rounded-2xl p-8 space-y-8">
@@ -111,19 +113,44 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-4">
               <h3 className="font-semibold text-gray-900">Generated Hooks:</h3>
-              <div className="space-y-3">
-                <p className="text-gray-600">
-                  "🚀 Want to 10x your productivity as a developer? My morning routine changed everything..."
-                </p>
-                <p className="text-gray-600">
-                  "The 5AM routine that helped me land my dream tech job (productivity hacks included) 💻"
-                </p>
-                <p className="text-gray-600">
-                  "POV: You're about to discover the morning habits of a software engineer 👩‍💻 #techlife #coding"
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-gray-700">For Verbal Intros:</h4>
+                  <p className="text-gray-600 p-3 bg-gray-50 rounded-lg">
+                    "Want to 10x your productivity as a developer? My morning routine changed everything..."
+                  </p>
+                  <p className="text-gray-600 p-3 bg-gray-50 rounded-lg">
+                    "Ever wondered how top engineers stay productive? Let me show you my secret..."
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-gray-700">For On-Screen Text:</h4>
+                  <div className="relative aspect-[9/16] bg-gray-100 rounded-lg overflow-hidden">
+                    <img 
+                      src="/placeholder.svg" 
+                      alt="Video thumbnail example" 
+                      className="object-cover w-full h-full"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                      <p className="text-white text-center font-medium">
+                        The 5AM routine that helped me land my dream tech job 💻
+                      </p>
+                      <p className="text-white/80 text-sm text-center mt-1">
+                        #techlife #coding #productivity
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-700">
+                <strong>Pro Tip:</strong> Use verbal hooks in your first 3 seconds of speaking, and overlay text hooks during key moments or as opening cards. Combine both for maximum engagement!
+              </p>
             </div>
           </div>
         </div>

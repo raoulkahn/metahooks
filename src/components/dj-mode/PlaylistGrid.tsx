@@ -6,9 +6,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 type PlaylistGridProps = {
   playlists: Playlist[];
+  onPlaylistClick: (playlist: Playlist) => void;
 };
 
-export function PlaylistGrid({ playlists }: PlaylistGridProps) {
+export function PlaylistGrid({ playlists, onPlaylistClick }: PlaylistGridProps) {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
@@ -53,6 +54,7 @@ export function PlaylistGrid({ playlists }: PlaylistGridProps) {
           <div
             key={playlist.id}
             className="group bg-neutral-800/30 hover:bg-neutral-800/50 rounded-lg p-3 transition-colors cursor-pointer"
+            onClick={() => onPlaylistClick(playlist)}
           >
             <div className="aspect-square bg-neutral-800 rounded-md mb-4 group-hover:bg-neutral-700/80 transition-colors flex items-center justify-center">
               <Library className="h-10 w-10 text-white/70" />

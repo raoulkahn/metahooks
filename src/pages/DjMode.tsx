@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,6 @@ import { TrackList } from "@/components/dj-mode/TrackList";
 import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Play } from "lucide-react";
@@ -128,16 +126,24 @@ const DjMode = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
 
-  const filteredTracks = demoTracks.filter((track) => {
-    const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
-    const matchesKey = !selectedKey || track.key === selectedKey;
-    return matchesBpm && matchesKey;
-  });
+  const filteredTracks = selectedPlaylist 
+    ? demoTracks.filter(track => selectedPlaylist.tracks.has(track.id))
+    : demoTracks.filter((track) => {
+        const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
+        const matchesKey = !selectedKey || track.key === selectedKey;
+        return matchesBpm && matchesKey;
+      });
+
+  const handlePlaylistClick = (playlist: Playlist) => {
+    setSelectedPlaylist(playlist);
+    setShowPlaylists(false);
+  };
 
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
@@ -210,7 +216,7 @@ const DjMode = () => {
       />
 
       <div className="px-4 pb-32">
-        {hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && (
+        {hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && !selectedPlaylist && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">
@@ -238,9 +244,9 @@ const DjMode = () => {
           <>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-4xl font-bold">Running</h1>
+                <h1 className="text-4xl font-bold">{selectedPlaylist?.name || "Running"}</h1>
                 <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
-                  <span>DJ Mode • 1h 45m</span>
+                  <span>{selectedPlaylist ? `${filteredTracks.length} tracks` : "DJ Mode • 1h 45m"}</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -277,14 +283,20 @@ const DjMode = () => {
             />
           </>
         ) : (
-          <PlaylistGrid playlists={playlists} />
+          <PlaylistGrid 
+            playlists={playlists} 
+            onPlaylistClick={handlePlaylistClick}
+          />
         )}
       </div>
 
       <BottomBar
         currentlyPlaying={currentlyPlaying}
         showPlaylists={showPlaylists}
-        onLibraryClick={() => setShowPlaylists(!showPlaylists)}
+        onLibraryClick={() => {
+          setShowPlaylists(!showPlaylists);
+          setSelectedPlaylist(null);
+        }}
       />
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>

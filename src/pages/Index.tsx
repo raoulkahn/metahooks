@@ -1,16 +1,13 @@
-
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Loader2, ChevronDown, ChevronUp } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import PlatformButton from '@/components/PlatformButton';
 
 const Index = () => {
-  const [platform, setPlatform] = useState<'instagram' | 'facebook'>('instagram');
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showExample, setShowExample] = useState(true);
   const { toast } = useToast();
 
   const handleSubmit = async () => {
@@ -69,17 +66,9 @@ const Index = () => {
         </div>
 
         <div className="glass rounded-2xl p-8 space-y-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <PlatformButton
-              platform="instagram"
-              isSelected={platform === 'instagram'}
-              onClick={() => setPlatform('instagram')}
-            />
-            <PlatformButton
-              platform="facebook"
-              isSelected={platform === 'facebook'}
-              onClick={() => setPlatform('facebook')}
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <PlatformButton platform="instagram" />
+            <PlatformButton platform="facebook" />
           </div>
 
           <div className="space-y-4">

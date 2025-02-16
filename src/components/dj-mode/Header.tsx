@@ -5,6 +5,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { ChevronLeft, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
+import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   hasActiveFilters: boolean;
@@ -15,12 +16,18 @@ type HeaderProps = {
 
 export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarClick }: HeaderProps) {
   const { showBpmKey } = useSettings();
+  const navigate = useNavigate();
   
   return (
     <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="text-white">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-white"
+            onClick={() => navigate('/')}
+          >
             <ChevronLeft className="h-6 w-6" />
           </Button>
           <span className="text-white font-medium">Running</span>

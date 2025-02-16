@@ -82,7 +82,7 @@ const Index = () => {
           </div>
 
           <Button
-            className="w-full py-6 text-lg font-medium"
+            className="w-full py-2 sm:py-6 text-base sm:text-lg font-medium px-3"
             onClick={handleSubmit}
             disabled={isLoading}
           >

@@ -122,14 +122,14 @@ const demoTracks: Track[] = [
 
 const DjMode = () => {
   const isMobile = useIsMobile();
-  const [bpmRange, setBpmRange] = useState([90, 140]);
+  const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   
-  const [tempBpmRange, setTempBpmRange] = useState<[number, number]>(bpmRange);
+  const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
@@ -214,20 +214,29 @@ const DjMode = () => {
                     <h4 className="font-medium">BPM Range</h4>
                     <div className="flex items-center gap-4">
                       <input 
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={tempBpmRange[0]}
                         onChange={(e) => {
-                          const value = e.target.value === '' ? tempBpmRange[0] : Number(e.target.value);
-                          if (!isNaN(value)) {
+                          const inputValue = e.target.value;
+                          const numValue = parseInt(inputValue);
+                          
+                          if (inputValue === '') {
+                            setTempBpmRange([0, tempBpmRange[1]]);
+                          } else if (!isNaN(numValue)) {
                             setTempBpmRange([
-                              Math.max(60, Math.min(value, tempBpmRange[1])),
+                              Math.max(60, Math.min(numValue, tempBpmRange[1])),
                               tempBpmRange[1]
                             ]);
                           }
                         }}
+                        onBlur={() => {
+                          if (tempBpmRange[0] < 60) {
+                            setTempBpmRange([60, tempBpmRange[1]]);
+                          }
+                        }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        min={60}
-                        max={tempBpmRange[1]}
                       />
                       <div className="flex-1 px-2">
                         <Slider
@@ -241,20 +250,29 @@ const DjMode = () => {
                         />
                       </div>
                       <input 
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={tempBpmRange[1]}
                         onChange={(e) => {
-                          const value = e.target.value === '' ? tempBpmRange[1] : Number(e.target.value);
-                          if (!isNaN(value)) {
+                          const inputValue = e.target.value;
+                          const numValue = parseInt(inputValue);
+                          
+                          if (inputValue === '') {
+                            setTempBpmRange([tempBpmRange[0], 0]);
+                          } else if (!isNaN(numValue)) {
                             setTempBpmRange([
                               tempBpmRange[0],
-                              Math.min(160, Math.max(value, tempBpmRange[0]))
+                              Math.min(160, Math.max(numValue, tempBpmRange[0]))
                             ]);
                           }
                         }}
+                        onBlur={() => {
+                          if (tempBpmRange[1] > 160) {
+                            setTempBpmRange([tempBpmRange[0], 160]);
+                          }
+                        }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        min={tempBpmRange[0]}
-                        max={160}
                       />
                     </div>
                   </div>

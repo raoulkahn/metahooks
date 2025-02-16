@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -99,11 +98,11 @@
 }
 
 .social-buttons {
-  @apply absolute bottom-32 right-4 flex flex-col items-center gap-6;
+  @apply absolute bottom-32 right-4 flex flex-col items-center gap-4;
 }
 
 .social-button {
-  @apply text-white flex flex-col items-center gap-1;
+  @apply text-white flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-white/10 transition-colors;
 }
 
 .message-input {
@@ -113,4 +112,3 @@
 .message-input-field {
   @apply w-full bg-transparent border border-white/20 rounded-full px-4 py-2 text-white text-sm placeholder-white/60;
 }
-

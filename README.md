@@ -1,69 +1,87 @@
-# Welcome to your Lovable project
 
-## Project info
+# Meta Video Hook Generator
 
-**URL**: https://lovable.dev/projects/30eb1c20-6cbc-4256-adb1-4e19d0a1a91e
+## Overview
 
-## How can I edit this code?
+A modern web application that leverages AI to generate engaging hooks for Meta platforms (Instagram and Facebook) video content. The application uses OpenAI's GPT models through Supabase Edge Functions to create both visual captions and verbal hooks optimized for social media engagement.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Dual Hook Generation**: Creates both visual (caption) and verbal (speech) hooks
+- **Platform-Specific**: Optimized for Instagram and Facebook content
+- **AI-Powered**: Utilizes OpenAI's GPT models for intelligent content generation
+- **Real-Time Processing**: Instant hook generation with loading states
+- **Copy-to-Clipboard**: Easy one-click copying of generated hooks
+- **Responsive Design**: Works seamlessly on all devices
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/30eb1c20-6cbc-4256-adb1-4e19d0a1a91e) and start prompting.
+## Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**:
+  - React 18
+  - TypeScript
+  - Tailwind CSS
+  - shadcn/ui components
+  - Vite
 
-**Use your preferred IDE**
+- **Backend**:
+  - Supabase Edge Functions
+  - OpenAI API integration
+  - CORS-enabled API endpoints
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Local Development
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
+1. Clone the repository:
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone <your-repo-url>
+cd meta-video-hook-generator
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+```sh
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Set up environment variables:
+   - Create a `.env` file in the root directory
+   - Add your Supabase and OpenAI API credentials
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Start the development server:
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit `http://localhost:8080` to see the application running locally.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Architecture
 
-**Use GitHub Codespaces**
+The application follows a modern, component-based architecture:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Frontend**: React components with TypeScript for type safety
+- **Edge Functions**: Serverless functions for API interactions
+- **State Management**: React's useState for local state
+- **API Integration**: Supabase client for Edge Function calls
+- **UI Components**: shadcn/ui for consistent design
 
-## What technologies are used for this project?
+## API Integration
 
-This project is built with .
+The application integrates with OpenAI's GPT models through a secure Edge Function, which:
+- Accepts video content descriptions
+- Processes them through the AI model
+- Returns formatted hook suggestions
+- Handles errors gracefully with fallback responses
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Future Enhancements
 
-## How can I deploy this project?
+- User authentication
+- Hook history saving
+- More platform integrations
+- Custom hook templates
+- Analytics dashboard
 
-Simply open [Lovable](https://lovable.dev/projects/30eb1c20-6cbc-4256-adb1-4e19d0a1a91e) and click on Share -> Publish.
+## Contributing
 
-## I want to use a custom domain - is that possible?
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

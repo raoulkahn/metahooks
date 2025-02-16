@@ -197,7 +197,7 @@ const Index = () => {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="w-16 flex flex-row md:flex-col gap-4 invisible">
-              {(activeTab === 'image' || activeTab === 'video') && mediaResults && mediaResults.slice(1, 4).map((media) => (
+              {mediaResults && mediaResults.length > 0 && mediaResults.slice(1, 4).map((media) => (
                 <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden gradient-purple cursor-pointer hover:ring-2 ring-primary">
                   <img 
                     src={media.preview_url || media.thumbnail_url}
@@ -209,17 +209,17 @@ const Index = () => {
             </div>
 
             <div className="flex-1 w-full max-w-2xl">
-              {(activeTab === 'image' || activeTab === 'video') && (
+              {mediaResults && mediaResults.length > 0 && (
                 <div className="content-card mb-8">
                   <div className="aspect-video gradient-purple">
-                    {activeTab === 'image' && mediaResults && mediaResults[0] && (
+                    {activeTab === 'image' && mediaResults[0] && (
                       <img 
                         src={mediaResults[0].url}
                         alt={mediaResults[0].title}
                         className="w-full h-full object-cover"
                       />
                     )}
-                    {activeTab === 'video' && mediaResults && mediaResults[0] && (
+                    {activeTab === 'video' && mediaResults[0] && (
                       <video
                         controls
                         className="w-full h-full object-cover"

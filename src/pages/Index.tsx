@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,7 +15,7 @@ const Index = () => {
       caption: "Beautiful sunset captured by AI 🌅 Perfect moment where nature meets technology ✨ #Sunset #AIArt #NatureMagic"
     },
     video: {
-      preview: "https://i.giphy.com/media/YWUpVw86AtIbe/giphy.gif", // Sunset timelapse gif
+      preview: "https://i.giphy.com/media/YWUpVw86AtIbe/giphy.gif",
       caption: "Stunning sunset timelapse created with AI 🌅✨ Watch how the colors transform! #Timelapse #AIVideo #SunsetMagic"
     },
     text: {
@@ -30,7 +29,8 @@ const Index = () => {
     },
     audio: {
       preview: "🎵 Sample Transcription:\n'The gentle sounds of waves crashing against the shore, as the sun sets on another beautiful day...'",
-      caption: "Convert speech to text with AI accuracy"
+      caption: "Convert speech to text with AI accuracy",
+      background: "https://images.unsplash.com/photo-1472396961693-142e6e269027"
     }
   };
 
@@ -161,13 +161,20 @@ const Index = () => {
                     </div>
                   )}
                   {activeTab === 'audio' && (
-                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-blue-400 to-purple-500">
-                      <p className="text-white text-center whitespace-pre-line">{sampleContent.audio.preview}</p>
+                    <div className="w-full h-full relative">
+                      <img 
+                        src={sampleContent.audio.background}
+                        alt="Sunset background"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-8">
+                        <p className="text-white text-center whitespace-pre-line text-lg">{sampleContent.audio.preview}</p>
+                      </div>
                     </div>
                   )}
 
                   {/* Caption Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                  <div className="absolute bottom-16 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
                     <p className="text-white text-sm">
                       {activeTab === 'image' && sampleContent.image.caption}
                       {activeTab === 'video' && sampleContent.video.caption}
@@ -178,7 +185,7 @@ const Index = () => {
                   </div>
 
                   {/* Story Actions */}
-                  <div className="absolute bottom-20 right-4 flex flex-col items-center gap-6">
+                  <div className="absolute bottom-28 right-4 flex flex-col items-center gap-6">
                     <button className="text-white flex flex-col items-center gap-1">
                       <Heart className="w-7 h-7" />
                     </button>
@@ -194,7 +201,7 @@ const Index = () => {
                   </div>
 
                   {/* Message Input */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-2">
+                  <div className="absolute bottom-4 left-0 right-0 px-4 flex items-center gap-2">
                     <input
                       type="text"
                       placeholder="Send message..."

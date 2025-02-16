@@ -234,7 +234,7 @@ const DjMode = () => {
                     "px-3",
                     hasActiveFilters 
                       ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
-                      : "bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+                      : "bg-neutral-800/50 hover:bg-neutral-700/50 border-none"
                   )}
                 >
                   <Filter className={cn(
@@ -418,7 +418,7 @@ const DjMode = () => {
           <>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-3xl font-bold">Running</h1>
+                <h1 className="text-4xl font-bold">Running</h1>
                 <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
                   <Avatar className="h-6 w-6">
                     <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
@@ -433,27 +433,30 @@ const DjMode = () => {
                   size="sm"
                   onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
                   className={cn(
-                    "text-sm",
+                    "text-sm rounded-full px-4",
                     showTechnicalDetails 
-                      ? "bg-neutral-800 text-white border-neutral-700" 
-                      : "bg-transparent text-neutral-400 border-neutral-700"
+                      ? "bg-neutral-800/50 text-white border-none" 
+                      : "bg-neutral-800/50 text-neutral-400 border-none"
                   )}
                 >
                   BPM-Key
                 </Button>
-                <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
+                <Button 
+                  size="icon" 
+                  className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14"
+                >
                   <Play className="h-8 w-8 fill-current" />
                 </Button>
               </div>
             </div>
 
-            <div className="flex gap-3 mb-6">
+            <div className="space-y-2">
               {filteredTracks.map((track) => (
                 <div
                   key={track.id}
                   className={cn(
                     "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
-                    currentlyPlaying?.id === track.id && "bg-white/20",
+                    currentlyPlaying?.id === track.id && "bg-white/10",
                     isSelectingTracks && selectedTracks.has(track.id) && "bg-emerald-500/20 border border-emerald-500/50"
                   )}
                   onClick={() => isSelectingTracks ? handleTrackSelection(track.id) : setCurrentlyPlaying(track)}
@@ -462,7 +465,7 @@ const DjMode = () => {
                     <img
                       src={track.albumArt}
                       alt={track.title}
-                      className="w-10 h-10 rounded"
+                      className="w-12 h-12 rounded object-cover"
                     />
                     {isSelectingTracks && selectedTracks.has(track.id) && (
                       <div className="absolute inset-0 bg-emerald-500/80 rounded flex items-center justify-center">
@@ -470,12 +473,16 @@ const DjMode = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0 pr-8">
+                  <div className="flex-1 min-w-0">
                     <div className={cn(
-                      "text-base font-normal truncate",
+                      "text-base font-medium truncate",
                       currentlyPlaying?.id === track.id && "text-green-500"
-                    )}>{track.title}</div>
-                    <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
+                    )}>
+                      {track.title}
+                    </div>
+                    <div className="text-sm text-neutral-400 truncate">
+                      {track.artist}
+                    </div>
                   </div>
                   {showTechnicalDetails && (
                     <div className="flex items-center gap-4 text-sm ml-auto">

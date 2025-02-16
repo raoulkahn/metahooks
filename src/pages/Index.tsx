@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -81,20 +80,22 @@ const Index = () => {
             </div>
           </div>
 
-          <Button
-            className="w-full py-2 sm:py-6 text-base sm:text-lg font-medium px-3"
-            onClick={handleSubmit}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              'Generate Hooks'
-            )}
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              className="py-2 sm:py-6 text-base sm:text-lg font-medium px-8 sm:px-12"
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                'Generate Hooks'
+              )}
+            </Button>
+          </div>
         </div>
 
         <div className="mt-12 text-center">

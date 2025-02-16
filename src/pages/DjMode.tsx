@@ -30,7 +30,7 @@ const demoTracks: Track[] = [
     key: "8A",
     duration: "6:45",
     energy: 7,
-    albumArt: "/placeholder.svg",
+    albumArt: "https://images.unsplash.com/photo-1582562124811-c09040d0a901",
   },
   {
     id: "2",
@@ -40,7 +40,7 @@ const demoTracks: Track[] = [
     key: "3A",
     duration: "7:15",
     energy: 8,
-    albumArt: "/placeholder.svg",
+    albumArt: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
   },
   {
     id: "3",
@@ -50,7 +50,7 @@ const demoTracks: Track[] = [
     key: "11B",
     duration: "6:30",
     energy: 9,
-    albumArt: "/placeholder.svg",
+    albumArt: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1",
   },
 ];
 

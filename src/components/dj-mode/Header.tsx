@@ -12,9 +12,10 @@ type HeaderProps = {
   selectedKey: string;
   onFilterClick: () => void;
   onAvatarClick: () => void;
+  title?: string;
 };
 
-export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarClick }: HeaderProps) {
+export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarClick, title = "Library" }: HeaderProps) {
   const { showBpmKey } = useSettings();
   const navigate = useNavigate();
   
@@ -30,7 +31,7 @@ export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarC
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
-          <span className="text-white font-medium">Running</span>
+          <span className="text-white font-medium">{title}</span>
         </div>
         <div className="flex items-center gap-4">
           {showBpmKey && (

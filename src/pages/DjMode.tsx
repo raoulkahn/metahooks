@@ -125,6 +125,7 @@ export default function DjMode() {
         selectedKey={selectedKey}
         onFilterClick={() => setHasActiveFilters(!hasActiveFilters)}
         onAvatarClick={handleAvatarClick}
+        title={view === "grid" ? "Library" : (selectedPlaylist?.name || "Library")}
       />
       
       <div className="flex-1 relative overflow-auto p-4">

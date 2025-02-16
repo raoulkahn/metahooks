@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,8 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Play, ChevronLeft } from "lucide-react";
+import { SettingsDialog } from "@/components/settings/SettingsDialog";
+import { useSettings } from "@/contexts/SettingsContext";
 
 const demoTracks: Track[] = [
   {
@@ -161,6 +162,8 @@ const demoPLaylists: Playlist[] = [
 ];
 
 const DjMode = () => {
+  const { showBpmKey } = useSettings();
+  const [showSettings, setShowSettings] = useState(false);
   const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
@@ -171,8 +174,8 @@ const DjMode = () => {
   const [showPlaylistNameDialog, setShowPlaylistNameDialog] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
   const [playlists, setPlaylists] = useState<Playlist[]>(demoPLaylists);
-  const [showPlaylists, setShowPlaylists] = useState(false); // Changed to false to start in Running playlist
-  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(demoPLaylists[0]); // Set Running as initial playlist
+  const [showPlaylists, setShowPlaylists] = useState(false);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(demoPLaylists[0]);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
@@ -266,9 +269,10 @@ const DjMode = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
       <Header 
-        hasActiveFilters={!showPlaylists && hasActiveFilters}
+        hasActiveFilters={!showPlaylists && hasActiveFilters && showBpmKey}
         selectedKey={selectedKey}
         onFilterClick={() => {}}
+        onAvatarClick={() => setShowSettings(true)}
       />
 
       <div className="px-4 pb-32">
@@ -286,7 +290,7 @@ const DjMode = () => {
           </div>
         )}
 
-        {!showPlaylists && hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && (
+        {!showPlaylists && hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && showBpmKey && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">
@@ -325,19 +329,21 @@ const DjMode = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-                  className={cn(
-                    "text-sm rounded-full px-4",
-                    showTechnicalDetails 
-                      ? "bg-neutral-800/50 text-white border-none" 
-                      : "bg-neutral-800/50 text-neutral-400 border-none"
-                  )}
-                >
-                  BPM-Key
-                </Button>
+                {showBpmKey && (
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
+                    className={cn(
+                      "text-sm rounded-full px-4",
+                      showTechnicalDetails 
+                        ? "bg-neutral-800/50 text-white border-none" 
+                        : "bg-neutral-800/50 text-neutral-400 border-none"
+                    )}
+                  >
+                    BPM-Key
+                  </Button>
+                )}
                 <Button 
                   size="icon" 
                   className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14"
@@ -350,7 +356,7 @@ const DjMode = () => {
             <TrackList
               tracks={filteredTracks}
               currentlyPlaying={currentlyPlaying}
-              showTechnicalDetails={showTechnicalDetails}
+              showTechnicalDetails={showTechnicalDetails && showBpmKey}
               isSelectingTracks={isSelectingTracks}
               selectedTracks={selectedTracks}
               onTrackSelect={handleTrackSelection}
@@ -367,6 +373,11 @@ const DjMode = () => {
           setShowPlaylists(!showPlaylists);
           setSelectedPlaylist(null);
         }}
+      />
+
+      <SettingsDialog 
+        open={showSettings} 
+        onClose={() => setShowSettings(false)} 
       />
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
@@ -13,6 +14,7 @@ export default function DjMode() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const navigate = useNavigate();
 
   const tracks: Track[] = [
@@ -103,11 +105,18 @@ export default function DjMode() {
 
   const handlePlaylistClick = (playlist: Playlist) => {
     console.log("Playlist clicked:", playlist.name);
+    setSelectedPlaylist(playlist);
+    setView("list");
   };
 
   const handleAvatarClick = () => {
     navigate('/settings');
   };
+
+  // Filter tracks based on selected playlist
+  const displayedTracks = selectedPlaylist
+    ? tracks.filter(track => selectedPlaylist.tracks.has(track.id))
+    : tracks;
 
   return (
     <div className="h-screen flex flex-col bg-black text-white">
@@ -121,7 +130,7 @@ export default function DjMode() {
       <div className="flex-1 relative overflow-auto p-4">
         {view === "list" ? (
           <TrackList
-            tracks={tracks}
+            tracks={displayedTracks}
             currentlyPlaying={currentlyPlaying}
             showTechnicalDetails={true}
             isSelectingTracks={isSelectingTracks}
@@ -140,7 +149,12 @@ export default function DjMode() {
       <BottomBar
         currentlyPlaying={currentlyPlaying}
         showPlaylists={view === "grid"}
-        onLibraryClick={() => setView(view === "list" ? "grid" : "list")}
+        onLibraryClick={() => {
+          setView(view === "list" ? "grid" : "list");
+          if (view === "list") {
+            setSelectedPlaylist(null);
+          }
+        }}
       />
     </div>
   );

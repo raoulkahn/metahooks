@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,6 +8,31 @@ import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('image');
+
+  // Sample content for each tab type
+  const sampleContent = {
+    image: {
+      preview: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+      caption: "Beautiful sunset captured by AI 🌅 Perfect moment where nature meets technology ✨ #Sunset #AIArt #NatureMagic"
+    },
+    video: {
+      preview: "https://i.giphy.com/media/YWUpVw86AtIbe/giphy.gif", // Sunset timelapse gif
+      caption: "Stunning sunset timelapse created with AI 🌅✨ Watch how the colors transform! #Timelapse #AIVideo #SunsetMagic"
+    },
+    text: {
+      preview: "✍️ AI-Generated Caption Example:\n\nChasing sunsets and dreams 🌅\nNature's daily masterpiece painted across the sky.\nWhere golden hours meet infinite possibilities.\n\n#SunsetLover #NatureMoments #GoldenHour",
+      caption: "Let AI craft the perfect words for your content"
+    },
+    style: {
+      before: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+      after: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+      caption: "Transform your photos with AI style transfer"
+    },
+    audio: {
+      preview: "🎵 Sample Transcription:\n'The gentle sounds of waves crashing against the shore, as the sun sets on another beautiful day...'",
+      caption: "Convert speech to text with AI accuracy"
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
@@ -32,27 +58,42 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             {/* Thumbnails Column */}
             <div className="flex flex-row md:flex-col gap-4">
-              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer hover:ring-2 ring-primary">
-                <img 
-                  src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" 
-                  alt="Sunset option 1"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
-                <img 
-                  src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" 
-                  alt="Sunset option 2"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
-                <img 
-                  src="https://images.unsplash.com/photo-1472396961693-142e6e269027" 
-                  alt="Sunset option 3"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {activeTab === 'image' && (
+                <>
+                  <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer hover:ring-2 ring-primary">
+                    <img 
+                      src={sampleContent.image.preview}
+                      alt="Sunset option 1"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                    <img 
+                      src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" 
+                      alt="Sunset option 2"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                    <img 
+                      src="https://images.unsplash.com/photo-1472396961693-142e6e269027" 
+                      alt="Sunset option 3"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              )}
+              {activeTab === 'video' && (
+                <>
+                  <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                    <img 
+                      src={sampleContent.video.preview}
+                      alt="Video preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              )}
             </div>
 
             {/* iPhone Mockup */}
@@ -70,13 +111,38 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Post Image (now in portrait) */}
+                {/* Post Content - Changes based on active tab */}
                 <div className="aspect-[4/5] bg-gradient-to-br from-orange-400 to-purple-500 relative overflow-hidden">
-                  <img 
-                    src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" 
-                    alt="Generated sunset"
-                    className="w-full h-full object-cover"
-                  />
+                  {activeTab === 'image' && (
+                    <img 
+                      src={sampleContent.image.preview}
+                      alt="Generated sunset"
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {activeTab === 'video' && (
+                    <img 
+                      src={sampleContent.video.preview}
+                      alt="Video preview"
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {activeTab === 'text' && (
+                    <div className="w-full h-full flex items-center justify-center p-6 text-white text-center">
+                      <p className="whitespace-pre-line">{sampleContent.text.preview}</p>
+                    </div>
+                  )}
+                  {activeTab === 'style' && (
+                    <div className="grid grid-cols-2 h-full">
+                      <img src={sampleContent.style.before} alt="Before style transfer" className="object-cover" />
+                      <img src={sampleContent.style.after} alt="After style transfer" className="object-cover" />
+                    </div>
+                  )}
+                  {activeTab === 'audio' && (
+                    <div className="w-full h-full flex items-center justify-center p-6 text-white text-center bg-gradient-to-br from-blue-400 to-purple-500">
+                      <p className="whitespace-pre-line">{sampleContent.audio.preview}</p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Post Actions */}
@@ -90,7 +156,12 @@ const Index = () => {
                     <Bookmark className="w-6 h-6" />
                   </div>
                   <p className="text-sm">
-                    <span className="font-semibold">aicontentstudio</span> Beautiful sunset captured by AI 🌅 Perfect moment where nature meets technology ✨ #Sunset #AIArt #NatureMagic
+                    <span className="font-semibold">aicontentstudio</span>{' '}
+                    {activeTab === 'image' && sampleContent.image.caption}
+                    {activeTab === 'video' && sampleContent.video.caption}
+                    {activeTab === 'text' && sampleContent.text.caption}
+                    {activeTab === 'style' && sampleContent.style.caption}
+                    {activeTab === 'audio' && sampleContent.audio.caption}
                   </p>
                 </div>
               </div>

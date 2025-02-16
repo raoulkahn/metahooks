@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -376,14 +375,10 @@ export default function DjMode() {
         }}
       />
 
-      <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
-        <DialogContent className="p-0 bg-transparent border-none">
-          <SettingsDialog 
-            open={isSettingsOpen} 
-            onClose={() => setIsSettingsOpen(false)} 
-          />
-        </DialogContent>
-      </Dialog>
+      <SettingsDialog 
+        open={isSettingsOpen} 
+        onClose={() => setIsSettingsOpen(false)} 
+      />
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>
         <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">

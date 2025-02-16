@@ -216,7 +216,7 @@ const DjMode = () => {
             <img
               src={track.albumArt}
               alt={track.title}
-              className="w-12 h-12 rounded"
+              className="w-10 h-10 rounded"
             />
             <div className="flex-1 min-w-0">
               <div className={cn(

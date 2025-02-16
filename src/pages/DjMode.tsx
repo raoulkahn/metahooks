@@ -432,13 +432,7 @@ const DjMode = () => {
               <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
               <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
               {!isSelectingTracks && (
-                <Button
-                  variant="ghost"
-                  className="text-neutral-400"
-                  size="icon"
-                >
-                  •••
-                </Button>
+                <span className="text-neutral-400">•••</span>
               )}
             </div>
           </div>

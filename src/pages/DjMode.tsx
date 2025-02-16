@@ -390,23 +390,6 @@ const DjMode = () => {
               </DialogContent>
             </Dialog>
 
-            <label className="cursor-pointer">
-              <input
-                type="file"
-                accept="video/*"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-              <Button 
-                variant="outline" 
-                className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
-                disabled={isUploading}
-              >
-                <Upload className="h-5 w-5 mr-2" />
-                {isUploading ? 'Uploading...' : 'Upload Video'}
-              </Button>
-            </label>
-
             <Avatar className="h-8 w-8">
               <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
               <AvatarFallback>DJ</AvatarFallback>

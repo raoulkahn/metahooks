@@ -8,7 +8,7 @@ import { Track, Playlist } from "@/types/music";
 import { useNavigate } from "react-router-dom";
 
 export default function DjMode() {
-  const [view, setView] = useState<"list" | "grid">("list");
+  const [view, setView] = useState<"list" | "grid">("grid"); // Changed default to grid
   const [selectedKey, setSelectedKey] = useState("");
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
@@ -143,6 +143,15 @@ export default function DjMode() {
     navigate('/settings');
   };
 
+  const handleLibraryClick = () => {
+    if (view === "list") {
+      setView("grid");
+      setSelectedPlaylist(null);
+    } else {
+      setView("list");
+    }
+  };
+
   // Filter tracks based on selected playlist
   const displayedTracks = selectedPlaylist
     ? tracks.filter(track => selectedPlaylist.tracks.has(track.id))
@@ -186,12 +195,7 @@ export default function DjMode() {
       <BottomBar
         currentlyPlaying={currentlyPlaying}
         showPlaylists={view === "grid"}
-        onLibraryClick={() => {
-          setView(view === "list" ? "grid" : "list");
-          if (view === "list") {
-            setSelectedPlaylist(null);
-          }
-        }}
+        onLibraryClick={handleLibraryClick}
       />
     </div>
   );

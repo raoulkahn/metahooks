@@ -24,10 +24,8 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
             <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="bg-neutral-800 rounded p-1 hover:bg-neutral-700">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 17V7l10 5-10 5Z" fill="currentColor"/>
-              </svg>
+            <button className="h-8 w-8 flex items-center justify-center bg-neutral-800 rounded-full hover:bg-neutral-700">
+              <Play className="h-4 w-4 fill-current" />
             </button>
           </div>
         </div>
@@ -43,7 +41,7 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
         </Button>
         <Button 
           variant="ghost" 
-          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent"
+          className={`flex flex-col items-center gap-1 hover:bg-transparent ${showPlaylists ? 'text-white' : 'text-neutral-400 hover:text-white'}`}
           onClick={onLibraryClick}
         >
           <Library className="h-6 w-6" />

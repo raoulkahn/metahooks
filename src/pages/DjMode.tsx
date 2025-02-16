@@ -339,7 +339,7 @@ const DjMode = () => {
               <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
               <Button
                 variant="ghost"
-                className="opacity-0 group-hover:opacity-100"
+                className="text-neutral-400"
                 size="icon"
               >
                 •••

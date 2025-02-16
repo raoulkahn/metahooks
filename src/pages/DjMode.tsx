@@ -153,12 +153,17 @@ const DjMode = () => {
     setBpmRange([90, 140]);
     setSelectedKey("");
     setHasUsedFilters(false);
+    setIsSelectingTracks(false);
+    setSelectedTracks(new Set());
   };
 
   const handleApplyFilters = () => {
+    const isDefaultBpm = tempBpmRange[0] === 90 && tempBpmRange[1] === 140;
+    const isDefaultKey = tempKey === "";
+    
     setBpmRange(tempBpmRange);
     setSelectedKey(tempKey);
-    setHasUsedFilters(true);
+    setHasUsedFilters(!isDefaultBpm || !isDefaultKey);
   };
 
   const handleTrackSelection = (trackId: string) => {
@@ -185,6 +190,8 @@ const DjMode = () => {
     setIsSelectingTracks(false);
     setSelectedTracks(new Set());
     setHasUsedFilters(false);
+    setBpmRange([90, 140]);
+    setSelectedKey("");
   };
 
   return (
@@ -344,6 +351,7 @@ const DjMode = () => {
               onClick={() => {
                 setSelectedTracks(new Set(filteredTracks.map(track => track.id)));
                 setIsSelectingTracks(true);
+                setHasUsedFilters(false);
               }}
               className="bg-emerald-600 hover:bg-emerald-700"
             >

@@ -134,16 +134,16 @@ const DjMode = () => {
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
 
-  const handleApplyFilters = () => {
-    setBpmRange(tempBpmRange);
-    setSelectedKey(tempKey);
-  };
-
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
     setTempKey("");
     setBpmRange([90, 140]);
     setSelectedKey("");
+  };
+
+  const handleApplyFilters = () => {
+    setBpmRange(tempBpmRange);
+    setSelectedKey(tempKey);
   };
 
   const filteredTracks = demoTracks.filter((track) => {

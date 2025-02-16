@@ -109,7 +109,7 @@ const DjMode = () => {
                       onChange={(e) => setBpmRange([Number(e.target.value), bpmRange[1]])}
                       className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                     />
-                    <div className="relative flex-1">
+                    <div className="flex-1 px-2">
                       <Slider
                         defaultValue={bpmRange}
                         max={200}
@@ -118,10 +118,6 @@ const DjMode = () => {
                         value={bpmRange}
                         onValueChange={setBpmRange}
                         className="flex-1"
-                        style={{
-                          '--slider-handle': 'block',
-                          '--slider-handle-ring': 'none',
-                        }}
                       />
                     </div>
                     <input 

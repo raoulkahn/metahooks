@@ -8,6 +8,8 @@ import { SettingsProvider } from "./contexts/SettingsContext";
 import Index from "./pages/Index";
 import DjMode from "./pages/DjMode";
 import NotFound from "./pages/NotFound";
+import Settings from "./pages/Settings";
+import ContentAndDisplay from "./pages/ContentAndDisplay";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/dj-mode" element={<DjMode />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/content-and-display" element={<ContentAndDisplay />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

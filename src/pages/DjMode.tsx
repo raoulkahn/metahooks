@@ -12,11 +12,10 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check, Upload } from "lucide-react";
+import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 const demoTracks: Track[] = [
   {
@@ -129,44 +128,11 @@ const DjMode = () => {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
-  const [isUploading, setIsUploading] = useState(false);
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
-
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('video/')) {
-      toast.error('Please select a video file');
-      return;
-    }
-
-    setIsUploading(true);
-    try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('videos')
-        .upload(filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      toast.success('Video uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading video:', error);
-      toast.error('Failed to upload video');
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
@@ -247,31 +213,9 @@ const DjMode = () => {
                   <div className="space-y-2">
                     <h4 className="font-medium">BPM Range</h4>
                     <div className="flex items-center gap-4">
-                      <input 
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        value={tempBpmRange[0]}
-                        onChange={(e) => {
-                          const inputValue = e.target.value;
-                          const numValue = parseInt(inputValue);
-                          
-                          if (inputValue === '') {
-                            setTempBpmRange([0, tempBpmRange[1]]);
-                          } else if (!isNaN(numValue)) {
-                            setTempBpmRange([
-                              Math.max(60, Math.min(numValue, tempBpmRange[1])),
-                              tempBpmRange[1]
-                            ]);
-                          }
-                        }}
-                        onBlur={() => {
-                          if (tempBpmRange[0] < 60) {
-                            setTempBpmRange([60, tempBpmRange[1]]);
-                          }
-                        }}
-                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                      />
+                      <div className="w-16 bg-neutral-800 border-none text-white text-center rounded-md py-2">
+                        {tempBpmRange[0]}
+                      </div>
                       <div className="flex-1 px-2">
                         <Slider
                           defaultValue={tempBpmRange}
@@ -283,31 +227,9 @@ const DjMode = () => {
                           className="flex-1"
                         />
                       </div>
-                      <input 
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        value={tempBpmRange[1]}
-                        onChange={(e) => {
-                          const inputValue = e.target.value;
-                          const numValue = parseInt(inputValue);
-                          
-                          if (inputValue === '') {
-                            setTempBpmRange([tempBpmRange[0], 0]);
-                          } else if (!isNaN(numValue)) {
-                            setTempBpmRange([
-                              tempBpmRange[0],
-                              Math.min(160, Math.max(numValue, tempBpmRange[0]))
-                            ]);
-                          }
-                        }}
-                        onBlur={() => {
-                          if (tempBpmRange[1] > 160) {
-                            setTempBpmRange([tempBpmRange[0], 160]);
-                          }
-                        }}
-                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                      />
+                      <div className="w-16 bg-neutral-800 border-none text-white text-center rounded-md py-2">
+                        {tempBpmRange[1]}
+                      </div>
                     </div>
                   </div>
                   <div className="space-y-2">

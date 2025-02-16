@@ -20,7 +20,6 @@ interface PixabayHit {
     medium: { url: string; size: number };
     large: { url: string; size: number };
   };
-  userImageURL: string;
   previewURL?: string;
   previewWidth?: number;
   previewHeight?: number;
@@ -64,11 +63,11 @@ export async function searchPixabayMedia(query: string, type: 'image' | 'video' 
     }
 
     // If not in cache or cache is old, fetch from Pixabay
-    const { PIXABAY_API_KEY } = await supabase.functions.invoke('get-secret', {
+    const { data, error } = await supabase.functions.invoke('get-secret', {
       body: { key: 'PIXABAY_API_KEY' }
     });
 
-    if (!PIXABAY_API_KEY) {
+    if (error || !data?.PIXABAY_API_KEY) {
       throw new Error('Pixabay API key not found');
     }
 
@@ -76,17 +75,17 @@ export async function searchPixabayMedia(query: string, type: 'image' | 'video' 
     const endpoint = type === 'video' ? `${baseUrl}/videos` : baseUrl;
     
     const response = await fetch(
-      `${endpoint}?key=${PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&page=${page}&per_page=20`
+      `${endpoint}?key=${data.PIXABAY_API_KEY}&q=${encodeURIComponent(query)}&page=${page}&per_page=20`
     );
 
     if (!response.ok) {
       throw new Error('Failed to fetch from Pixabay');
     }
 
-    const data: PixabayMediaResponse = await response.json();
+    const pixabayData: PixabayMediaResponse = await response.json();
 
     // Transform and cache the results
-    const transformedResults = data.hits.map(hit => ({
+    const transformedResults = pixabayData.hits.map(hit => ({
       pixabay_id: hit.id.toString(),
       media_type: type,
       title: hit.tags,

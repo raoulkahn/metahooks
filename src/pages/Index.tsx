@@ -6,9 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Image, Type, Music, Video, Heart, MessageCircle, Bookmark, Send, MoreHorizontal, X, UploadCloud } from "lucide-react";
-import { useQuery } from 'react-query';
-import { searchPixabayMedia } from '@/utils/pixabay';
-import { useToast } from '@/components/ui/use-toast';
+import { useQuery } from '@tanstack/react-query';
+import { searchPixabayMedia } from '@/services/pixabay';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [query, setQuery] = useState('');
@@ -217,7 +217,7 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="flex-1 w-full max-w 2xl">
+            <div className="flex-1 w-full max-w-2xl">
               <div className="aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500">
                 {activeTab === 'image' && mediaResults && mediaResults[0] && (
                   <img 
@@ -367,7 +367,7 @@ const Index = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="image" className="space-y-8" onValueChange={setActiveTab}>
+        <Tabs defaultValue="image" className="space-y-8" onValueChange={(value) => setActiveTab(value as 'image' | 'video' | 'text' | 'audio')}>
           <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-transparent h-auto p-0">
             <TabsTrigger 
               value="image" 

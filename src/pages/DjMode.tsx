@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Track } from "@/types/music";
+import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogClose, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Header } from "@/components/dj-mode/Header";

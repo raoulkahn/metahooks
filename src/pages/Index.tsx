@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Image, Wand2, Type, Music, Upload } from "lucide-react";
+import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send } from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('image');
@@ -12,15 +12,52 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
       <div className="max-w-6xl mx-auto pt-8 pb-20">
-        {/* Header Section */}
-        <div className="text-center mb-12">
+        {/* Header Section with iPhone Mockup */}
+        <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-primary mb-3">
             AI Content Studio
           </h1>
-          <p className="text-lg text-primary/80 max-w-2xl mx-auto">
+          <p className="text-lg text-primary/80 max-w-2xl mx-auto mb-12">
             Create stunning content for Meta platforms with the power of AI.
             Generate images, captions, and more - all optimized for maximum engagement.
           </p>
+
+          {/* iPhone Mockup */}
+          <div className="relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl">
+            {/* iPhone Notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
+            
+            {/* Screen Content */}
+            <div className="h-full w-full bg-white rounded-[32px] overflow-hidden">
+              {/* Instagram Header */}
+              <div className="flex items-center p-4 border-b">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600"></div>
+                  <span className="font-semibold">aicontentstudio</span>
+                </div>
+              </div>
+
+              {/* Post Image */}
+              <div className="aspect-square bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                <Image className="w-16 h-16 text-white" />
+              </div>
+
+              {/* Post Actions */}
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-4">
+                    <Heart className="w-6 h-6" />
+                    <MessageCircle className="w-6 h-6" />
+                    <Send className="w-6 h-6" />
+                  </div>
+                  <Bookmark className="w-6 h-6" />
+                </div>
+                <p className="text-sm">
+                  <span className="font-semibold">aicontentstudio</span> Create engaging content with AI-powered tools 🚀 #AIContent #SocialMedia
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Main Content Area */}

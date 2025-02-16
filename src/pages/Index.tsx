@@ -40,26 +40,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
-      <div className="flex items-center justify-center gap-2 pt-8">
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="text-primary"
-        >
-          <path
-            d="M10.5 3.75H7.5C6.67157 3.75 6 4.42157 6 5.25V18.75C6 19.5784 6.67157 20.25 7.5 20.25H10.5C11.3284 20.25 12 19.5784 12 18.75V5.25C12 4.42157 11.3284 3.75 10.5 3.75Z"
-            fill="currentColor"
-          />
-          <path
-            d="M16.5 3.75H13.5C12.6716 3.75 12 4.42157 12 5.25V18.75C12 19.5784 12.6716 20.25 13.5 20.25H16.5C17.3284 20.25 18 19.5784 18 18.75V5.25C18 4.42157 17.3284 3.75 16.5 3.75Z"
-            fill="currentColor"
-          />
-        </svg>
-        <span className="text-primary font-medium">Powered by OpenAI</span>
-      </div>
       <div className="max-w-4xl mx-auto pt-8 pb-24 animate-fade-up">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-primary mb-4">

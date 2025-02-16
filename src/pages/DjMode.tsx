@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
@@ -14,7 +13,6 @@ export default function DjMode() {
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
 
-  // Sample data - in a real app this would come from your backend
   const tracks: Track[] = [
     {
       id: "1",
@@ -39,6 +37,7 @@ export default function DjMode() {
   ];
 
   const playlists: Playlist[] = [
+    { id: "0", name: "Running", tracks: new Set(["1", "2"]), createdAt: new Date() },
     { id: "1", name: "House Vibes", tracks: new Set(["1", "2"]), createdAt: new Date() },
     { id: "2", name: "Deep House", tracks: new Set(["1"]), createdAt: new Date() },
     { id: "3", name: "Techno", tracks: new Set(["2"]), createdAt: new Date() },
@@ -61,7 +60,6 @@ export default function DjMode() {
   };
 
   const handlePlaylistClick = (playlist: Playlist) => {
-    // Handle playlist click
     console.log("Playlist clicked:", playlist.name);
   };
 

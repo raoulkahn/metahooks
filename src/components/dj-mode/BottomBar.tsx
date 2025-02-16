@@ -1,7 +1,6 @@
 
 import { Track } from "@/types/music";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Library, FilePlus, Play } from "lucide-react";
 
 type BottomBarProps = {
@@ -48,10 +47,7 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
         </Button>
         <Button 
           variant="ghost" 
-          className={cn(
-            "flex flex-col items-center gap-1 hover:bg-transparent",
-            showPlaylists ? "text-white" : "text-neutral-400 hover:text-white"
-          )}
+          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent"
           onClick={onLibraryClick}
         >
           <Library className="h-6 w-6" />

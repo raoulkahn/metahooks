@@ -1,4 +1,3 @@
-
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   DropdownMenu,
@@ -24,7 +23,6 @@ import { ArrowUpDown, Search, Filter } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 
-// Static demo data
 const demoTracks: Track[] = [
   {
     id: "1",
@@ -111,15 +109,21 @@ const DjMode = () => {
                       onChange={(e) => setBpmRange([Number(e.target.value), bpmRange[1]])}
                       className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                     />
-                    <Slider
-                      defaultValue={bpmRange}
-                      max={200}
-                      min={60}
-                      step={1}
-                      value={bpmRange}
-                      onValueChange={setBpmRange}
-                      className="flex-1 [&>[role=slider]]:h-4 [&>[role=slider]]:w-4 [&>[role=slider]]:bg-emerald-500 [&>[role=slider]]:border-none [&_[data-orientation=horizontal]]:h-2 [&_[data-orientation=horizontal]]:bg-neutral-700 [&_[class*=SliderRange]]:bg-emerald-500"
-                    />
+                    <div className="relative flex-1">
+                      <Slider
+                        defaultValue={bpmRange}
+                        max={200}
+                        min={60}
+                        step={1}
+                        value={bpmRange}
+                        onValueChange={setBpmRange}
+                        className="flex-1"
+                        style={{
+                          '--slider-handle': 'block',
+                          '--slider-handle-ring': 'none',
+                        }}
+                      />
+                    </div>
                     <input 
                       type="number"
                       value={bpmRange[1]}

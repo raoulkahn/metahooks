@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { TrackList } from "@/components/dj-mode/TrackList";
 import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
 import { Track, Playlist } from "@/types/music";
+import { useNavigate } from "react-router-dom";
 
 export default function DjMode() {
   const [view, setView] = useState<"list" | "grid">("list");
@@ -13,6 +13,7 @@ export default function DjMode() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
+  const navigate = useNavigate();
 
   const tracks: Track[] = [
     {
@@ -105,8 +106,7 @@ export default function DjMode() {
   };
 
   const handleAvatarClick = () => {
-    console.log("Avatar clicked");
-    // Add your avatar click logic here
+    navigate('/settings');
   };
 
   return (

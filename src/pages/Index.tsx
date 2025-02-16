@@ -191,7 +191,7 @@ const Index = () => {
               <div className="relative w-full aspect-[9/16] rounded-[32px] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
                 <img
-                  src="https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                  src="/lovable-uploads/21c333f2-339a-4898-9886-99ba9a7f52e0.png"
                   alt="Story Content"
                   className="w-full h-full object-cover"
                 />

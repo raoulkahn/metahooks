@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -130,6 +131,8 @@ const DjMode = () => {
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
   const [hasUsedFilters, setHasUsedFilters] = useState(false);
+  const [showPlaylistNameDialog, setShowPlaylistNameDialog] = useState(false);
+  const [playlistName, setPlaylistName] = useState("");
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
@@ -158,15 +161,6 @@ const DjMode = () => {
     setHasUsedFilters(true);
   };
 
-  const handleCreatePlaylist = (mode: 'all' | 'select') => {
-    if (mode === 'all') {
-      toast.success(`Created new playlist with ${filteredTracks.length} tracks`);
-    } else {
-      setSelectedTracks(new Set(filteredTracks.map(track => track.id)));
-      setIsSelectingTracks(true);
-    }
-  };
-
   const handleTrackSelection = (trackId: string) => {
     setSelectedTracks(prev => {
       const newSet = new Set(prev);
@@ -179,8 +173,15 @@ const DjMode = () => {
     });
   };
 
-  const handleSaveSelection = () => {
-    toast.success(`Created new playlist with ${selectedTracks.size} tracks`);
+  const handleCreatePlaylist = () => {
+    if (!playlistName.trim()) {
+      toast.error("Please enter a playlist name");
+      return;
+    }
+    
+    toast.success(`Created new playlist "${playlistName}" with ${selectedTracks.size} tracks`);
+    setShowPlaylistNameDialog(false);
+    setPlaylistName("");
     setIsSelectingTracks(false);
     setSelectedTracks(new Set());
   };
@@ -369,11 +370,7 @@ const DjMode = () => {
                 Cancel
               </Button>
               <Button 
-                onClick={() => {
-                  toast.success(`Created new playlist with ${selectedTracks.size} tracks`);
-                  setIsSelectingTracks(false);
-                  setSelectedTracks(new Set());
-                }}
+                onClick={() => setShowPlaylistNameDialog(true)}
                 disabled={selectedTracks.size === 0}
                 className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50"
               >
@@ -503,6 +500,45 @@ const DjMode = () => {
           </Button>
         </div>
       </div>
+
+      <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>
+        <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
+          <DialogHeader>
+            <DialogTitle>Name your playlist</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Input
+                id="playlist-name"
+                placeholder="Enter playlist name"
+                value={playlistName}
+                onChange={(e) => setPlaylistName(e.target.value)}
+                className="bg-neutral-800 border-neutral-700 text-white"
+                autoFocus
+              />
+            </div>
+          </div>
+          <DialogFooter className="flex justify-between sm:justify-between">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowPlaylistNameDialog(false);
+                setPlaylistName("");
+              }}
+              className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleCreatePlaylist}
+              disabled={!playlistName.trim()}
+              className="bg-emerald-600 hover:bg-emerald-700"
+            >
+              Create Playlist
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -19,9 +19,12 @@ export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarC
   return (
     <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="icon" className="text-white">
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" className="text-white">
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <span className="text-white font-medium">Running</span>
+        </div>
         <div className="flex items-center gap-4">
           {showBpmKey && (
             <Dialog>

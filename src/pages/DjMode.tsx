@@ -1,8 +1,5 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { TrackList } from "@/components/dj-mode/TrackList";
@@ -16,7 +13,6 @@ export default function DjMode() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
-  const navigate = useNavigate();
 
   // Sample data - in a real app this would come from your backend
   const tracks: Track[] = [
@@ -95,15 +91,6 @@ export default function DjMode() {
             onPlaylistClick={handlePlaylistClick}
           />
         )}
-        
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4 text-white hover:text-white/80"
-          onClick={() => navigate("/settings")}
-        >
-          <Settings className="h-6 w-6" />
-        </Button>
       </div>
 
       <BottomBar

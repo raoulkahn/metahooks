@@ -1,14 +1,13 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { TrackList } from "@/components/dj-mode/TrackList";
-import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
 import { Track, Playlist } from "@/types/music";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function DjMode() {
-  const [view, setView] = useState<"list" | "grid">("grid");
+  const [searchParams] = useSearchParams();
+  const [view, setView] = useState<"list">("list");
   const [selectedKey, setSelectedKey] = useState("");
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(null);
@@ -119,6 +118,16 @@ export default function DjMode() {
     { id: "5", name: "Progressive", tracks: new Set(["1"]), createdAt: new Date() }
   ];
 
+  useEffect(() => {
+    const playlistParam = searchParams.get('playlist');
+    if (playlistParam === 'running') {
+      const runningPlaylist = playlists.find(p => p.name.toLowerCase() === 'running');
+      if (runningPlaylist) {
+        setSelectedPlaylist(runningPlaylist);
+      }
+    }
+  }, [searchParams]);
+
   const handleTrackPlay = (track: Track) => {
     setCurrentlyPlaying(track);
   };
@@ -133,26 +142,10 @@ export default function DjMode() {
     setSelectedTracks(newSelectedTracks);
   };
 
-  const handlePlaylistClick = (playlist: Playlist) => {
-    console.log("Playlist clicked:", playlist.name);
-    setSelectedPlaylist(playlist);
-    setView("list");
-  };
-
   const handleAvatarClick = () => {
     navigate('/settings');
   };
 
-  const handleLibraryClick = () => {
-    if (view === "list") {
-      setView("grid");
-      setSelectedPlaylist(null);
-    } else {
-      setView("list");
-    }
-  };
-
-  // Filter tracks based on selected playlist
   const displayedTracks = selectedPlaylist
     ? tracks.filter(track => selectedPlaylist.tracks.has(track.id))
     : tracks;
@@ -164,8 +157,8 @@ export default function DjMode() {
         selectedKey={selectedKey}
         onFilterClick={() => setHasActiveFilters(!hasActiveFilters)}
         onAvatarClick={handleAvatarClick}
-        title={view === "grid" ? "Library" : (selectedPlaylist?.name || "Library")}
-        showPlayButton={view === "list" && selectedPlaylist !== null}
+        title={selectedPlaylist?.name || "Library"}
+        showPlayButton={selectedPlaylist !== null}
         onPlayClick={() => {
           if (displayedTracks.length > 0) {
             handleTrackPlay(displayedTracks[0]);
@@ -175,28 +168,21 @@ export default function DjMode() {
       />
       
       <div className="flex-1 relative overflow-auto p-4 pb-32">
-        {view === "list" ? (
-          <TrackList
-            tracks={displayedTracks}
-            currentlyPlaying={currentlyPlaying}
-            showTechnicalDetails={true}
-            isSelectingTracks={isSelectingTracks}
-            selectedTracks={selectedTracks}
-            onTrackSelect={handleTrackSelect}
-            onTrackPlay={handleTrackPlay}
-          />
-        ) : (
-          <PlaylistGrid
-            playlists={playlists}
-            onPlaylistClick={handlePlaylistClick}
-          />
-        )}
+        <TrackList
+          tracks={displayedTracks}
+          currentlyPlaying={currentlyPlaying}
+          showTechnicalDetails={true}
+          isSelectingTracks={isSelectingTracks}
+          selectedTracks={selectedTracks}
+          onTrackSelect={handleTrackSelect}
+          onTrackPlay={handleTrackPlay}
+        />
       </div>
 
       <BottomBar
         currentlyPlaying={currentlyPlaying}
-        showPlaylists={view === "grid"}
-        onLibraryClick={handleLibraryClick}
+        showPlaylists={false}
+        onLibraryClick={() => {}}
       />
     </div>
   );

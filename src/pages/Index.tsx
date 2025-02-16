@@ -21,7 +21,7 @@ export default function Index() {
           </p>
         </div>
         
-        <Link to="/dj-mode" className="block">
+        <Link to="/dj-mode?playlist=running" className="block">
           <Button 
             variant="default" 
             size="lg"

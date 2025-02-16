@@ -135,6 +135,7 @@ const DjMode = () => {
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
+  const hasMatchingTracks = filteredTracks.length > 0;
 
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
@@ -323,7 +324,7 @@ const DjMode = () => {
       </header>
 
       <div className="px-4 pb-32">
-        {hasActiveFilters && filteredTracks.length > 0 && !isSelectingTracks && (
+        {hasMatchingTracks && !isSelectingTracks && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">Found {filteredTracks.length} matching tracks</h3>

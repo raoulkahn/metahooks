@@ -8,6 +8,7 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  // Handle CORS
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -18,22 +19,19 @@ serve(async (req) => {
     // Get the OpenAI key from environment
     const openAIKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIKey) {
-      throw new Error('OpenAI API key not configured');
+      throw new Error('OpenAI API key not found in environment variables');
     }
 
-    // Remove the sk-proj prefix if present
-    const actualKey = openAIKey.startsWith('sk-proj') 
-      ? openAIKey.replace('sk-proj', 'sk-') 
-      : openAIKey;
+    console.log('Attempting to call OpenAI API...');
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${actualKey}`,
+        'Authorization': `Bearer ${openAIKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -49,7 +47,9 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
+      const errorData = await response.text();
+      console.error('OpenAI API error:', errorData);
+      throw new Error(`OpenAI API error: ${response.status} - ${errorData}`);
     }
 
     const data = await response.json();
@@ -60,6 +60,7 @@ serve(async (req) => {
     try {
       hooks = JSON.parse(hookText);
     } catch (e) {
+      console.error('Error parsing GPT response:', e);
       // If parsing fails, format the response manually
       hooks = [
         { type: 'visual', content: hookText.split('\n')[0] },
@@ -74,7 +75,7 @@ serve(async (req) => {
       },
     );
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

@@ -1,13 +1,13 @@
 
 import { Switch } from "@/components/ui/switch";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
 
 export function ContentSettings({ onBack }: { onBack: () => void }) {
   const { showBpmKey, setShowBpmKey } = useSettings();
 
   return (
-    <div>
+    <div className="bg-neutral-900">
       <button
         onClick={onBack}
         className="flex items-center gap-2 p-4 text-neutral-400 hover:text-white"
@@ -21,37 +21,21 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
 
         <div className="space-y-8">
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Display preferences</h3>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Show BPM and Key</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Filter playlist tracks by BPM and/or Key and also create new playlists.
-                </p>
-              </div>
-              <Switch
-                checked={showBpmKey}
-                onCheckedChange={setShowBpmKey}
-                className="data-[state=checked]:bg-green-500"
-              />
-            </div>
-
+            <h2 className="text-xl">Canvas</h2>
             <div className="flex items-center justify-between opacity-50">
               <div>
-                <p className="font-medium">Show unplayed episodes</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Show episodes you haven't played yet.
-                </p>
+                <p className="text-[15px]">Displays short, looping visuals in the Now Playing View.</p>
               </div>
               <Switch checked={false} className="data-[state=checked]:bg-green-500" />
             </div>
+          </div>
 
+          <div className="space-y-6">
             <div className="flex items-center justify-between opacity-50">
               <div>
-                <p className="font-medium">Show friend activity</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Let friends see what you're listening to.
+                <h2 className="text-xl mb-1">Allow explicit content</h2>
+                <p className="text-[15px] text-neutral-400">
+                  Explicit content (labeled with the E tag) is playable.
                 </p>
               </div>
               <Switch checked={false} className="data-[state=checked]:bg-green-500" />
@@ -59,60 +43,44 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Playback</h3>
-
             <div className="flex items-center justify-between opacity-50">
               <div>
-                <p className="font-medium">Autoplay</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Keep listening to similar tracks when your music ends.
-                </p>
-              </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
-            </div>
-
-            <div className="flex items-center justify-between opacity-50">
-              <div>
-                <p className="font-medium">Audio Quality</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Control your streaming audio quality.
-                </p>
-              </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
-            </div>
-
-            <div className="flex items-center justify-between opacity-50">
-              <div>
-                <p className="font-medium">Crossfade</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Allow smooth transitions between songs.
+                <h2 className="text-xl mb-1">Show unplayable songs</h2>
+                <p className="text-[15px] text-neutral-400">
+                  Songs that aren't available (e.g., due to artist removal or region) are still visible.
                 </p>
               </div>
               <Switch checked={false} className="data-[state=checked]:bg-green-500" />
             </div>
           </div>
 
-          <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Languages</h3>
-
-            <div className="flex items-center justify-between opacity-50">
-              <div>
-                <p className="font-medium">Preferred language</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Choose your preferred language for the app.
-                </p>
+          <div className="pt-4">
+            <h2 className="text-2xl font-bold mb-6">Display preferences</h2>
+            
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">Show BPM and Key</p>
+                  <p className="text-sm text-neutral-400 mt-1">
+                    Filter playlist tracks by BPM and/or Key and also create new playlists.
+                  </p>
+                </div>
+                <Switch
+                  checked={showBpmKey}
+                  onCheckedChange={setShowBpmKey}
+                  className="data-[state=checked]:bg-green-500"
+                />
               </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
             </div>
 
-            <div className="flex items-center justify-between opacity-50">
+            <div className="flex items-center justify-between mt-6 opacity-50">
               <div>
-                <p className="font-medium">Show music in your language</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Hear more music in languages you prefer.
+                <h2 className="text-xl">App language</h2>
+                <p className="text-[15px] text-neutral-400">
+                  Set your default language for the Spotify app, plus notifications and emails.
                 </p>
               </div>
-              <Switch checked={false} className="data-[state=checked]:bg-green-500" />
+              <ChevronRight className="h-5 w-5 text-neutral-400" />
             </div>
           </div>
         </div>

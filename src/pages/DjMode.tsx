@@ -217,8 +217,18 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[0]}
                         onChange={(e) => {
-                          const value = Math.min(Math.max(Number(e.target.value), 60), tempBpmRange[1]);
-                          setTempBpmRange([value, tempBpmRange[1]]);
+                          const newValue = e.target.value === '' ? '' : Number(e.target.value);
+                          if (newValue === '') {
+                            setTempBpmRange(['', tempBpmRange[1]]);
+                          } else {
+                            const value = Math.min(Math.max(Number(newValue), 60), tempBpmRange[1]);
+                            setTempBpmRange([value, tempBpmRange[1]]);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (tempBpmRange[0] === '') {
+                            setTempBpmRange([60, tempBpmRange[1]]);
+                          }
                         }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                         min={60}
@@ -239,8 +249,18 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[1]}
                         onChange={(e) => {
-                          const value = Math.min(Math.max(Number(e.target.value), tempBpmRange[0]), 160);
-                          setTempBpmRange([tempBpmRange[0], value]);
+                          const newValue = e.target.value === '' ? '' : Number(e.target.value);
+                          if (newValue === '') {
+                            setTempBpmRange([tempBpmRange[0], '']);
+                          } else {
+                            const value = Math.min(Math.max(Number(newValue), tempBpmRange[0]), 160);
+                            setTempBpmRange([tempBpmRange[0], value]);
+                          }
+                        }}
+                        onBlur={() => {
+                          if (tempBpmRange[1] === '') {
+                            setTempBpmRange([tempBpmRange[0], 160]);
+                          }
                         }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
                         min={tempBpmRange[0]}

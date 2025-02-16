@@ -1,3 +1,4 @@
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
@@ -58,6 +59,7 @@ const DjMode = () => {
   const [bpmRange, setBpmRange] = useState([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [showFilters, setShowFilters] = useState(false);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
 
   const filteredTracks = demoTracks.filter((track) => {
     const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
@@ -67,7 +69,7 @@ const DjMode = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
-      <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4 space-y-4">
+      <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4">
         <div className="flex items-center justify-between">
           <Button variant="ghost" size="icon" className="text-white">
             <ChevronLeft className="h-6 w-6" />
@@ -205,7 +207,11 @@ const DjMode = () => {
         {filteredTracks.map((track) => (
           <div
             key={track.id}
-            className="flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group"
+            className={cn(
+              "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
+              currentlyPlaying?.id === track.id && "bg-white/20"
+            )}
+            onClick={() => setCurrentlyPlaying(track)}
           >
             <img
               src={track.albumArt}
@@ -213,7 +219,10 @@ const DjMode = () => {
               className="w-12 h-12 rounded"
             />
             <div className="flex-1 min-w-0">
-              <div className="text-base font-normal truncate">{track.title}</div>
+              <div className={cn(
+                "text-base font-normal truncate",
+                currentlyPlaying?.id === track.id && "text-green-500"
+              )}>{track.title}</div>
               <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
             </div>
             <div className="flex items-center gap-3 text-sm">
@@ -232,6 +241,19 @@ const DjMode = () => {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-black/90 border-t border-neutral-800">
+        {currentlyPlaying && (
+          <div className="flex items-center gap-4 px-4 py-2 border-b border-neutral-800">
+            <img
+              src={currentlyPlaying.albumArt}
+              alt={currentlyPlaying.title}
+              className="w-14 h-14 rounded"
+            />
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-medium truncate">{currentlyPlaying.title}</div>
+              <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
+            </div>
+          </div>
+        )}
         <div className="flex items-center justify-center gap-4 p-4">
           <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-white">
             <Shuffle className="h-5 w-5" />

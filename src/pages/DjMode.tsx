@@ -365,6 +365,7 @@ const DjMode = () => {
                 onClick={() => {
                   setIsSelectingTracks(false);
                   setSelectedTracks(new Set());
+                  setHasUsedFilters(false);
                 }}
                 className="border-neutral-700 text-white bg-neutral-700 hover:bg-neutral-600"
               >
@@ -525,6 +526,7 @@ const DjMode = () => {
               onClick={() => {
                 setShowPlaylistNameDialog(false);
                 setPlaylistName("");
+                setHasUsedFilters(false);
               }}
               className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
             >

@@ -214,13 +214,15 @@ const DjMode = () => {
                     <h4 className="font-medium">BPM Range</h4>
                     <div className="flex items-center gap-4">
                       <input 
-                        inputMode="numeric"
-                        pattern="[0-9]*"
+                        type="number"
                         value={tempBpmRange[0]}
-                        onChange={(e) => setTempBpmRange([Number(e.target.value), tempBpmRange[1]])}
+                        onChange={(e) => {
+                          const value = Math.min(Math.max(Number(e.target.value), 60), tempBpmRange[1]);
+                          setTempBpmRange([value, tempBpmRange[1]]);
+                        }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        onFocus={(e) => e.target.blur()}
-                        autoFocus={false}
+                        min={60}
+                        max={tempBpmRange[1]}
                       />
                       <div className="flex-1 px-2">
                         <Slider
@@ -234,13 +236,15 @@ const DjMode = () => {
                         />
                       </div>
                       <input 
-                        inputMode="numeric"
-                        pattern="[0-9]*"
+                        type="number"
                         value={tempBpmRange[1]}
-                        onChange={(e) => setTempBpmRange([tempBpmRange[0], Number(e.target.value)])}
+                        onChange={(e) => {
+                          const value = Math.min(Math.max(Number(e.target.value), tempBpmRange[0]), 160);
+                          setTempBpmRange([tempBpmRange[0], value]);
+                        }}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        onFocus={(e) => e.target.blur()}
-                        autoFocus={false}
+                        min={tempBpmRange[0]}
+                        max={160}
                       />
                     </div>
                   </div>

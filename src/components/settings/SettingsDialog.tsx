@@ -9,7 +9,7 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose: () =
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="fixed w-screen h-screen p-0 bg-neutral-900 text-white overflow-y-auto inset-0 max-w-none rounded-none border-none">
+      <DialogContent className="fixed w-screen h-screen p-0 bg-neutral-900 text-white overflow-y-auto inset-0 max-w-none rounded-none border-none m-0">
         {currentView === "main" ? (
           <div className="h-full">
             <div className="p-6 flex items-center gap-4">

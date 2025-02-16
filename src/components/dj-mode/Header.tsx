@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { ChevronLeft, Filter } from "lucide-react";
+import { ChevronLeft, Filter, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,19 @@ type HeaderProps = {
   onFilterClick: () => void;
   onAvatarClick: () => void;
   title?: string;
+  onPlayClick?: () => void;
+  showPlayButton?: boolean;
 };
 
-export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarClick, title = "Library" }: HeaderProps) {
+export function Header({ 
+  hasActiveFilters, 
+  selectedKey, 
+  onFilterClick, 
+  onAvatarClick, 
+  title = "Library",
+  onPlayClick,
+  showPlayButton = false
+}: HeaderProps) {
   const { showBpmKey } = useSettings();
   const navigate = useNavigate();
   
@@ -54,6 +64,16 @@ export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarC
                 </Button>
               </DialogTrigger>
             </Dialog>
+          )}
+
+          {showPlayButton && (
+            <Button
+              size="icon"
+              className="h-12 w-12 rounded-full bg-green-500 hover:bg-green-600 hover:scale-105 transition-all"
+              onClick={onPlayClick}
+            >
+              <Play className="h-6 w-6 fill-current" />
+            </Button>
           )}
 
           <button 

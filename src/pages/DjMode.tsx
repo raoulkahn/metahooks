@@ -22,7 +22,7 @@ export default function DjMode() {
       id: "1",
       title: "Adams Hill",
       artist: "Tensnake",
-      albumArt: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 128,
       key: "1A",
       duration: "3:00",
@@ -32,7 +32,7 @@ export default function DjMode() {
       id: "2",
       title: "Cielo - Fulltone Remix",
       artist: "Double Touch, Bross (RO), Fulltone",
-      albumArt: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 130,
       key: "2A",
       duration: "3:30",
@@ -42,7 +42,7 @@ export default function DjMode() {
       id: "3",
       title: "Without - Tim Green Remix",
       artist: "BAILE, Tim Green, Felicia Douglass",
-      albumArt: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 132,
       key: "3A",
       duration: "4:00",
@@ -52,7 +52,7 @@ export default function DjMode() {
       id: "4",
       title: "Liberator - Extended Mix",
       artist: "Marsh",
-      albumArt: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 125,
       key: "4A",
       duration: "3:45",
@@ -62,7 +62,7 @@ export default function DjMode() {
       id: "5",
       title: "Le Saint Graal - Original Mix",
       artist: "Volen Sentir",
-      albumArt: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 126,
       key: "5A",
       duration: "3:15",
@@ -71,8 +71,38 @@ export default function DjMode() {
     {
       id: "6",
       title: "Reborn - Volen Sentir Sunset Mix",
-      artist: "Volen Sentir",
-      albumArt: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
+      artist: "Armen Miran, Volen Sentir",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      bpm: 124,
+      key: "6A",
+      duration: "3:50",
+      energy: 6
+    },
+    {
+      id: "7",
+      title: "Alas",
+      artist: "Matias Fittipaldi",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      bpm: 124,
+      key: "6A",
+      duration: "3:50",
+      energy: 6
+    },
+    {
+      id: "8",
+      title: "Moss",
+      artist: "Tim Green",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
+      bpm: 124,
+      key: "6A",
+      duration: "3:50",
+      energy: 6
+    },
+    {
+      id: "9",
+      title: "Adam - Kamilo Sanclemente Remix",
+      artist: "Jiminy Hop, Kamilo Sanclemente",
+      albumArt: "/lovable-uploads/45bab25d-b8b0-4bd4-a2a4-03423e158332.png",
       bpm: 124,
       key: "6A",
       duration: "3:50",
@@ -126,6 +156,12 @@ export default function DjMode() {
         onFilterClick={() => setHasActiveFilters(!hasActiveFilters)}
         onAvatarClick={handleAvatarClick}
         title={view === "grid" ? "Library" : (selectedPlaylist?.name || "Library")}
+        showPlayButton={view === "list" && selectedPlaylist !== null}
+        onPlayClick={() => {
+          if (displayedTracks.length > 0) {
+            handleTrackPlay(displayedTracks[0]);
+          }
+        }}
       />
       
       <div className="flex-1 relative overflow-auto p-4">

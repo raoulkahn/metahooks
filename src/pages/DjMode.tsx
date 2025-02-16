@@ -92,7 +92,7 @@ const DjMode = () => {
                     "h-5 w-5 mr-2",
                     hasActiveFilters && "text-white"
                   )} />
-                  Filter{hasActiveFilters ? ` (${selectedKey || "BPM"})` : ""}
+                  Filter{selectedKey ? ` (${selectedKey})` : ""}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">

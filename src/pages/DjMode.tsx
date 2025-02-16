@@ -359,12 +359,13 @@ const DjMode = () => {
               <div className="text-sm font-medium truncate">{currentlyPlaying.title}</div>
               <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
             </div>
-            <div className="flex items-center gap-2">
-              <AudioWaveform className="h-8 w-8 text-white" />
-              <Button size="icon" className="rounded-full bg-white hover:bg-white/90 text-black h-8 w-8">
-                <Play className="h-5 w-5 fill-current" />
-              </Button>
-            </div>
+            <Button 
+              size="icon" 
+              variant="ghost"
+              className="h-8 w-8 text-white hover:text-white/90"
+            >
+              <Play className="h-5 w-5 fill-current" />
+            </Button>
           </div>
         )}
         <div className="flex justify-around p-4">

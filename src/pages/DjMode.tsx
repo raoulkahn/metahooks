@@ -6,11 +6,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowUpDown, Search } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
+import { ArrowUpDown, Search, Filter } from "lucide-react";
 import { useState } from "react";
-import { Track } from "@/types/music";
+import { Track, MusicalKey } from "@/types/music";
 
 // Static demo data
 const demoTracks: Track[] = [
@@ -49,6 +61,15 @@ const demoTracks: Track[] = [
 const DjMode = () => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
+  const [bpmRange, setBpmRange] = useState([90, 140]);
+  const [selectedKey, setSelectedKey] = useState<string>("");
+  const [showFilters, setShowFilters] = useState(false);
+
+  const filteredTracks = demoTracks.filter((track) => {
+    const matchesBpm = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
+    const matchesKey = !selectedKey || track.key === selectedKey;
+    return matchesBpm && matchesKey;
+  });
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -66,6 +87,67 @@ const DjMode = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="ghost" className="px-3">
+                <Filter className="h-5 w-5" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
+              <DialogHeader>
+                <DialogTitle>Filter Tracks</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium">BPM Range</h4>
+                  <div className="flex items-center gap-4">
+                    <span>{bpmRange[0]}</span>
+                    <Slider
+                      defaultValue={bpmRange}
+                      max={200}
+                      min={60}
+                      step={1}
+                      value={bpmRange}
+                      onValueChange={setBpmRange}
+                      className="flex-1"
+                    />
+                    <span>{bpmRange[1]}</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-medium">Key</h4>
+                  <div className="grid grid-cols-7 gap-2">
+                    {["C", "D♭", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"].map((note) => (
+                      <Button
+                        key={note}
+                        variant={selectedKey === note ? "default" : "outline"}
+                        onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
+                        className="h-8 px-2"
+                      >
+                        {note}
+                      </Button>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 mt-2">
+                    <Button
+                      variant={selectedKey.includes("m") ? "default" : "outline"}
+                      onClick={() => setSelectedKey(selectedKey + "m")}
+                      className="flex-1"
+                    >
+                      Minor
+                    </Button>
+                    <Button
+                      variant={!selectedKey.includes("m") ? "default" : "outline"}
+                      onClick={() => setSelectedKey(selectedKey.replace("m", ""))}
+                      className="flex-1"
+                    >
+                      Major
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="px-3">
@@ -85,7 +167,7 @@ const DjMode = () => {
 
       {/* Track List */}
       <div className="px-4">
-        {demoTracks.map((track) => (
+        {filteredTracks.map((track) => (
           <div
             key={track.id}
             className="flex items-center gap-3 p-2 hover:bg-neutral-800 rounded-md cursor-pointer group"

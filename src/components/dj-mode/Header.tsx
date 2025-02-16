@@ -32,13 +32,13 @@ export function Header({
   const navigate = useNavigate();
   
   return (
-    <header className="sticky top-0 bg-black p-4">
-      <div className="flex items-center justify-between">
+    <header className="sticky top-0 bg-black/95 z-10">
+      <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-3">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-white hover:bg-neutral-800"
+            className="text-white hover:bg-neutral-800 -ml-3"
             onClick={() => navigate('/')}
           >
             <ChevronLeft className="h-6 w-6" />
@@ -51,7 +51,7 @@ export function Header({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 bg-neutral-800 hover:bg-neutral-700 border-none text-white font-medium px-4"
+                className="h-8 bg-neutral-800/50 hover:bg-neutral-700 border-none text-white font-medium px-4 rounded-3xl text-sm"
               >
                 BPM KEY
               </Button>
@@ -62,10 +62,10 @@ export function Header({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-8 px-4 font-medium",
+                      "h-8 px-4 font-medium rounded-3xl text-sm",
                       hasActiveFilters 
                         ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
-                        : "bg-neutral-800 hover:bg-neutral-700 border-none text-white"
+                        : "bg-neutral-800/50 hover:bg-neutral-700 border-none text-white"
                     )}
                     onClick={onFilterClick}
                   >

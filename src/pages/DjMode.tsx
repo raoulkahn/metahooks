@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -118,38 +117,26 @@ const demoTracks: Track[] = [
 const demoPLaylists: Playlist[] = [
   {
     id: "1",
-    name: "Liked Songs",
+    name: "Running",
     tracks: new Set(["1", "2", "3"]),
     createdAt: new Date()
   },
   {
     id: "2",
-    name: "Discover Weekly",
+    name: "Morning Coffee",
     tracks: new Set(["4", "5", "6"]),
     createdAt: new Date()
   },
   {
     id: "3",
-    name: "U2",
+    name: "Evening Chill",
     tracks: new Set(["7", "8", "9"]),
     createdAt: new Date()
   },
   {
     id: "4",
-    name: "The Cure",
+    name: "Weekend Vibes",
     tracks: new Set(["1", "4", "7", "10"]),
-    createdAt: new Date()
-  },
-  {
-    id: "5",
-    name: "Retro 80s",
-    tracks: new Set(["2", "5", "8"]),
-    createdAt: new Date()
-  },
-  {
-    id: "6",
-    name: "Release Radar",
-    tracks: new Set(["3", "6", "9"]),
     createdAt: new Date()
   }
 ];

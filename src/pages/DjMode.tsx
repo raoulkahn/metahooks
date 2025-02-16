@@ -1,16 +1,14 @@
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Label } from "@/components/ui/label";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ArrowUpDown, Search } from "lucide-react";
 import { useState } from "react";
 import { Track } from "@/types/music";
 
@@ -18,8 +16,8 @@ import { Track } from "@/types/music";
 const demoTracks: Track[] = [
   {
     id: "1",
-    title: "Deep House Voyage",
-    artist: "Luna Spirit",
+    title: "Adams Hill",
+    artist: "Tensnake",
     bpm: 124,
     key: "8A",
     duration: "6:45",
@@ -28,8 +26,8 @@ const demoTracks: Track[] = [
   },
   {
     id: "2",
-    title: "Midnight Groove",
-    artist: "Tech Masters",
+    title: "Cielo - Fulltone Remix",
+    artist: "Double Touch, Bross (RO), Fulltone",
     bpm: 126,
     key: "3A",
     duration: "7:15",
@@ -38,8 +36,8 @@ const demoTracks: Track[] = [
   },
   {
     id: "3",
-    title: "Bass Culture",
-    artist: "Underground Collective",
+    title: "Without - Tim Green Remix",
+    artist: "BAILE, Tim Green, Felicia Douglass",
     bpm: 128,
     key: "11B",
     duration: "6:30",
@@ -50,120 +48,89 @@ const demoTracks: Track[] = [
 
 const DjMode = () => {
   const isMobile = useIsMobile();
-  const [bpmRange, setBpmRange] = useState({ min: 120, max: 130 });
-  const [selectedKey, setSelectedKey] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="container mx-auto p-4 animate-fade-up">
-      <h1 className="text-3xl font-bold mb-6">DJ Mode</h1>
-      
-      {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>BPM Range</CardTitle>
-          </CardHeader>
-          <CardContent className="flex gap-4">
-            <div>
-              <Label htmlFor="minBpm">Min</Label>
-              <Input
-                id="minBpm"
-                type="number"
-                value={bpmRange.min}
-                onChange={(e) =>
-                  setBpmRange({ ...bpmRange, min: parseInt(e.target.value) })
-                }
-              />
-            </div>
-            <div>
-              <Label htmlFor="maxBpm">Max</Label>
-              <Input
-                id="maxBpm"
-                type="number"
-                value={bpmRange.max}
-                onChange={(e) =>
-                  setBpmRange({ ...bpmRange, max: parseInt(e.target.value) })
-                }
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Key</CardTitle>
-          </CardHeader>
-          <CardContent>
+    <div className="min-h-screen bg-black text-white">
+      {/* Header */}
+      <header className="sticky top-0 bg-gradient-to-b from-neutral-900 to-black p-4">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" className="p-2">
+            <Search className="h-5 w-5" />
+          </Button>
+          <div className="flex-1">
             <Input
-              type="text"
-              placeholder="e.g. 8A"
-              value={selectedKey}
-              onChange={(e) => setSelectedKey(e.target.value)}
+              className="bg-neutral-800 border-none text-white placeholder:text-neutral-400"
+              placeholder="Find on this page"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </CardContent>
-        </Card>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="px-3">
+                Sort
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Sort by Title</DropdownMenuItem>
+              <DropdownMenuItem>Sort by Artist</DropdownMenuItem>
+              <DropdownMenuItem>Sort by BPM</DropdownMenuItem>
+              <DropdownMenuItem>Sort by Key</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </header>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Set Duration</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Input type="number" placeholder="Set duration in hours" />
-          </CardContent>
-        </Card>
+      {/* Track List */}
+      <div className="px-4">
+        {demoTracks.map((track) => (
+          <div
+            key={track.id}
+            className="flex items-center gap-3 p-2 hover:bg-neutral-800 rounded-md cursor-pointer group"
+          >
+            <img
+              src={track.albumArt}
+              alt={track.title}
+              className="w-12 h-12 rounded"
+            />
+            <div className="flex-1 min-w-0">
+              <div className="text-base font-normal truncate">{track.title}</div>
+              <div className="text-sm text-neutral-400 flex items-center gap-2">
+                <span>{track.artist}</span>
+                <span className="text-emerald-500">• {track.bpm} BPM</span>
+                <span className="text-emerald-500">• {track.key}</span>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              className="opacity-0 group-hover:opacity-100"
+              size="icon"
+            >
+              •••
+            </Button>
+          </div>
+        ))}
       </div>
 
-      {/* Tracks Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Library</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Track</TableHead>
-                <TableHead>Artist</TableHead>
-                <TableHead>BPM</TableHead>
-                <TableHead>Key</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Energy</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {demoTracks.map((track) => (
-                <TableRow key={track.id} className="cursor-pointer hover:bg-accent">
-                  <TableCell className="font-medium">{track.title}</TableCell>
-                  <TableCell>{track.artist}</TableCell>
-                  <TableCell>{track.bpm}</TableCell>
-                  <TableCell>{track.key}</TableCell>
-                  <TableCell>{track.duration}</TableCell>
-                  <TableCell>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div
-                        className="bg-primary h-2.5 rounded-full"
-                        style={{ width: `${(track.energy / 10) * 100}%` }}
-                      ></div>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      {/* Set Planning Timeline */}
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Set Timeline</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-32 border rounded-md p-4 flex items-center justify-center text-muted-foreground">
-            Drag and drop tracks here to build your set
-          </div>
-        </CardContent>
-      </Card>
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-neutral-800 p-4">
+        <div className="flex justify-around">
+          <Button variant="ghost" className="flex flex-col items-center">
+            <span>Home</span>
+          </Button>
+          <Button variant="ghost" className="flex flex-col items-center">
+            <span>Search</span>
+          </Button>
+          <Button variant="ghost" className="flex flex-col items-center">
+            <span>Your Library</span>
+          </Button>
+          <Button variant="ghost" className="flex flex-col items-center">
+            <span>Create</span>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

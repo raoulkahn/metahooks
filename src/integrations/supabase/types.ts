@@ -45,6 +45,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_settings: {
+        Row: {
+          created_at: string
+          id: number
+          show_bpm_key: boolean | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id: number
+          show_bpm_key?: boolean | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          show_bpm_key?: boolean | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

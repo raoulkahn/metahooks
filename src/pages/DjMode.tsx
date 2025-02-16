@@ -175,7 +175,7 @@ const DjMode = () => {
                   Filter{selectedKey ? ` (${selectedKey})` : ""}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
+              <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white" onOpenAutoFocus={(e) => e.preventDefault()}>
                 <DialogHeader>
                   <DialogTitle>Filter Tracks</DialogTitle>
                 </DialogHeader>
@@ -189,6 +189,8 @@ const DjMode = () => {
                         value={tempBpmRange[0]}
                         onChange={(e) => setTempBpmRange([Number(e.target.value), tempBpmRange[1]])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                        onFocus={(e) => e.target.blur()}
+                        autoFocus={false}
                       />
                       <div className="flex-1 px-2">
                         <Slider
@@ -207,6 +209,8 @@ const DjMode = () => {
                         value={tempBpmRange[1]}
                         onChange={(e) => setTempBpmRange([tempBpmRange[0], Number(e.target.value)])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                        onFocus={(e) => e.target.blur()}
+                        autoFocus={false}
                       />
                     </div>
                   </div>

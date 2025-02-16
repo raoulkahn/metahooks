@@ -9,7 +9,7 @@ import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Play } from "lucide-react";
+import { Play, ChevronLeft } from "lucide-react";
 
 const demoTracks: Track[] = [
   {
@@ -184,6 +184,16 @@ const DjMode = () => {
     setShowPlaylists(false);
   };
 
+  const handleBackToLibrary = () => {
+    setShowPlaylists(true);
+    setSelectedPlaylist(null);
+    setHasUsedFilters(false);
+    setBpmRange([90, 140]);
+    setSelectedKey("");
+    setTempBpmRange([90, 140]);
+    setTempKey("");
+  };
+
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
     setTempKey("");
@@ -249,13 +259,27 @@ const DjMode = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
       <Header 
-        hasActiveFilters={hasActiveFilters}
+        hasActiveFilters={!showPlaylists && hasActiveFilters}
         selectedKey={selectedKey}
         onFilterClick={() => {}}
       />
 
       <div className="px-4 pb-32">
-        {hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && !selectedPlaylist && (
+        {!showPlaylists && (
+          <div className="mb-6">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-neutral-400 hover:text-white -ml-2 mb-4"
+              onClick={handleBackToLibrary}
+            >
+              <ChevronLeft className="mr-1 h-5 w-5" />
+              Back to Library
+            </Button>
+          </div>
+        )}
+
+        {!showPlaylists && hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">
@@ -279,13 +303,18 @@ const DjMode = () => {
           </div>
         )}
 
-        {!showPlaylists ? (
+        {showPlaylists ? (
+          <PlaylistGrid 
+            playlists={playlists} 
+            onPlaylistClick={handlePlaylistClick}
+          />
+        ) : (
           <>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-4xl font-bold">{selectedPlaylist?.name || "Running"}</h1>
+                <h1 className="text-4xl font-bold">{selectedPlaylist?.name}</h1>
                 <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
-                  <span>{selectedPlaylist ? `${filteredTracks.length} tracks` : "DJ Mode • 1h 45m"}</span>
+                  <span>{filteredTracks.length} tracks</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -321,11 +350,6 @@ const DjMode = () => {
               onTrackPlay={setCurrentlyPlaying}
             />
           </>
-        ) : (
-          <PlaylistGrid 
-            playlists={playlists} 
-            onPlaylistClick={handlePlaylistClick}
-          />
         )}
       </div>
 

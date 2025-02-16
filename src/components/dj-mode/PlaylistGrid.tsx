@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Library } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "@/components/ui/image";
 
 type PlaylistGridProps = {
   playlists: Playlist[];
@@ -25,37 +24,6 @@ export function PlaylistGrid({ playlists, onPlaylistClick }: PlaylistGridProps) 
             <p className="text-sm text-neutral-400">{playlists.length} playlists</p>
           </div>
         </div>
-      </div>
-
-      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
-        <Button 
-          variant="default" 
-          size="sm" 
-          className="bg-green-500 hover:bg-green-600 rounded-full px-6"
-        >
-          Playlists
-        </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="bg-neutral-800/50 border-none rounded-full px-6"
-        >
-          By you
-        </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="bg-neutral-800/50 border-none rounded-full px-6"
-        >
-          By Spotify
-        </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="bg-neutral-800/50 border-none rounded-full px-6"
-        >
-          Downloaded
-        </Button>
       </div>
 
       <div className="space-y-2">

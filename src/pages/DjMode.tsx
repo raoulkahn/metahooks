@@ -338,33 +338,16 @@ const DjMode = () => {
               <h3 className="font-medium">Found {filteredTracks.length} matching tracks</h3>
               <p className="text-sm text-neutral-400">Create a new playlist with these tracks?</p>
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="bg-emerald-600 hover:bg-emerald-700">
-                  <ListPlus className="h-5 w-5 mr-2" />
-                  Create Playlist
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
-                <DialogHeader>
-                  <DialogTitle>Create New Playlist</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                  <Button 
-                    onClick={() => handleCreatePlaylist('all')} 
-                    className="w-full bg-neutral-700 hover:bg-neutral-600 text-white border border-neutral-600"
-                  >
-                    Add all {filteredTracks.length} tracks
-                  </Button>
-                  <Button 
-                    onClick={() => handleCreatePlaylist('select')} 
-                    className="w-full bg-white text-black hover:bg-neutral-200"
-                  >
-                    Select tracks to remove
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <Button 
+              onClick={() => {
+                setSelectedTracks(new Set(filteredTracks.map(track => track.id)));
+                setIsSelectingTracks(true);
+              }}
+              className="bg-emerald-600 hover:bg-emerald-700"
+            >
+              <ListPlus className="h-5 w-5 mr-2" />
+              Create Playlist
+            </Button>
           </div>
         )}
 
@@ -386,7 +369,11 @@ const DjMode = () => {
                 Cancel
               </Button>
               <Button 
-                onClick={handleSaveSelection}
+                onClick={() => {
+                  toast.success(`Created new playlist with ${selectedTracks.size} tracks`);
+                  setIsSelectingTracks(false);
+                  setSelectedTracks(new Set());
+                }}
                 disabled={selectedTracks.size === 0}
                 className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50"
               >

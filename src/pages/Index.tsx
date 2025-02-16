@@ -40,7 +40,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
       <div className="flex items-center justify-center gap-2 pt-8">
         <svg
           width="32"
@@ -48,7 +48,7 @@ const Index = () => {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="text-gray-600"
+          className="text-primary"
         >
           <path
             d="M10.5 3.75H7.5C6.67157 3.75 6 4.42157 6 5.25V18.75C6 19.5784 6.67157 20.25 7.5 20.25H10.5C11.3284 20.25 12 19.5784 12 18.75V5.25C12 4.42157 11.3284 3.75 10.5 3.75Z"
@@ -59,14 +59,14 @@ const Index = () => {
             fill="currentColor"
           />
         </svg>
-        <span className="text-blue-600 font-medium">Powered by OpenAI</span>
+        <span className="text-primary font-medium">Powered by OpenAI</span>
       </div>
       <div className="max-w-4xl mx-auto pt-8 pb-24 animate-fade-up">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-primary mb-4">
             Meta Video Hook Optimizer
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-primary/80">
             Create engaging hooks for Reels and Stories across Meta platforms
           </p>
         </div>
@@ -80,12 +80,12 @@ const Index = () => {
           <div className="space-y-4">
             <Textarea
               placeholder="Describe your video content or topic..."
-              className="min-h-[150px] text-lg p-4 resize-none"
+              className="min-h-[150px] text-lg p-4 resize-none bg-background/50"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
             <div className="flex justify-end">
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-primary/70">
                 {content.length}/500 characters
               </span>
             </div>

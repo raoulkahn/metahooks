@@ -12,7 +12,7 @@ const PlatformButton = ({ platform }: PlatformButtonProps) => {
       className={`
         relative flex items-center justify-center gap-3 px-6 py-8
         bg-primary/5 rounded-lg border border-primary/10
-        transition-all duration-300
+        transition-all duration-300 hover:bg-primary/10
       `}
     >
       {platform === 'instagram' ? (

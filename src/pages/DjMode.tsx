@@ -12,10 +12,11 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check } from "lucide-react";
+import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check, Upload } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const demoTracks: Track[] = [
   {
@@ -128,11 +129,44 @@ const DjMode = () => {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
+  const [isUploading, setIsUploading] = useState(false);
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('video/')) {
+      toast.error('Please select a video file');
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('videos')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      toast.success('Video uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading video:', error);
+      toast.error('Failed to upload video');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
@@ -355,6 +389,24 @@ const DjMode = () => {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
+
+            <label className="cursor-pointer">
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileUpload}
+                className="hidden"
+              />
+              <Button 
+                variant="outline" 
+                className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+                disabled={isUploading}
+              >
+                <Upload className="h-5 w-5 mr-2" />
+                {isUploading ? 'Uploading...' : 'Upload Video'}
+              </Button>
+            </label>
+
             <Avatar className="h-8 w-8">
               <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
               <AvatarFallback>DJ</AvatarFallback>

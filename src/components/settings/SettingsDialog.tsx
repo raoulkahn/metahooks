@@ -28,7 +28,7 @@ export function SettingsDialog({ open, onClose }: { open: boolean; onClose: () =
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <h2 className="text-[17px] font-semibold">DJ User</h2>
+                <h2 className="text-[17px] font-semibold">Raoul</h2>
                 <p className="text-sm text-neutral-400">View Profile</p>
               </div>
             </div>

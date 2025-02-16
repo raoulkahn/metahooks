@@ -1,13 +1,28 @@
+
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send, Video, MoreHorizontal, X } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Image, Type, Music, Video, Heart, MessageCircle, Bookmark, Send, MoreHorizontal, X } from "lucide-react";
 
 const Index = () => {
+  const [selectedFormats, setSelectedFormats] = useState({
+    image: true,
+    video: false,
+    text: false,
+    audio: false
+  });
+  const [mainDescription, setMainDescription] = useState('');
+  const [formatDetails, setFormatDetails] = useState({
+    image: '',
+    video: '',
+    text: '',
+    audio: ''
+  });
   const [activeTab, setActiveTab] = useState('image');
-  const [audioText, setAudioText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState('alloy');
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [generatedAudioUrl, setGeneratedAudioUrl] = useState('');
@@ -25,11 +40,6 @@ const Index = () => {
       preview: "✍️ AI-Generated Caption Example:\n\nChasing sunsets and dreams 🌅\nNature's daily masterpiece painted across the sky.\nWhere golden hours meet infinite possibilities.\n\n#SunsetLover #NatureMoments #GoldenHour",
       caption: "Let AI craft the perfect words for your content"
     },
-    style: {
-      before: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-      after: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-      caption: "Transform your photos with AI style transfer"
-    },
     audio: {
       preview: "Use AI to generate audio narration or background music for your content. Perfect for adding voiceovers, sound effects, or atmospheric music to your stories.",
       caption: "Create the perfect audio with AI or upload your own",
@@ -46,31 +56,25 @@ const Index = () => {
     { id: 'shimmer', name: 'Shimmer (Female)' },
   ];
 
-  const generateAudio = async () => {
-    try {
-      setIsGeneratingAudio(true);
-      const response = await fetch('/functions/v1/text-to-speech', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: audioText, voice: selectedVoice }),
-      });
+  const handleFormatChange = (format: keyof typeof selectedFormats) => {
+    setSelectedFormats(prev => ({
+      ...prev,
+      [format]: !prev[format]
+    }));
+  };
 
-      if (!response.ok) {
-        throw new Error('Failed to generate audio');
-      }
+  const handleDetailChange = (format: keyof typeof formatDetails, value: string) => {
+    setFormatDetails(prev => ({
+      ...prev,
+      [format]: value
+    }));
+  };
 
-      const { audioContent } = await response.json();
-      const audioBlob = new Blob(
-        [Uint8Array.from(atob(audioContent), c => c.charCodeAt(0))],
-        { type: 'audio/mp3' }
-      );
-      const audioUrl = URL.createObjectURL(audioBlob);
-      setGeneratedAudioUrl(audioUrl);
-    } catch (error) {
-      console.error('Error generating audio:', error);
-    } finally {
-      setIsGeneratingAudio(false);
-    }
+  const generateContent = () => {
+    // This will be implemented later with API integration
+    console.log('Generating content for:', selectedFormats);
+    console.log('Main description:', mainDescription);
+    console.log('Format details:', formatDetails);
   };
 
   return (
@@ -85,11 +89,94 @@ const Index = () => {
             Generate content optimized for maximum engagement across all formats.
           </p>
 
-          <div className="mb-8">
-            <span className="inline-block bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">
-              Search: "sunset"
-            </span>
-          </div>
+          <Card className="max-w-2xl mx-auto mb-8">
+            <CardContent className="p-6">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h2 className="text-lg font-semibold">What would you like to create?</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="image" 
+                        checked={selectedFormats.image}
+                        onCheckedChange={() => handleFormatChange('image')}
+                      />
+                      <Label htmlFor="image" className="flex items-center">
+                        <Image className="w-4 h-4 mr-2" />
+                        Image
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="video" 
+                        checked={selectedFormats.video}
+                        onCheckedChange={() => handleFormatChange('video')}
+                      />
+                      <Label htmlFor="video" className="flex items-center">
+                        <Video className="w-4 h-4 mr-2" />
+                        Video
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="text" 
+                        checked={selectedFormats.text}
+                        onCheckedChange={() => handleFormatChange('text')}
+                      />
+                      <Label htmlFor="text" className="flex items-center">
+                        <Type className="w-4 h-4 mr-2" />
+                        Text
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="audio" 
+                        checked={selectedFormats.audio}
+                        onCheckedChange={() => handleFormatChange('audio')}
+                      />
+                      <Label htmlFor="audio" className="flex items-center">
+                        <Music className="w-4 h-4 mr-2" />
+                        Audio
+                      </Label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <Label htmlFor="main-description">Main Description</Label>
+                  <Textarea
+                    id="main-description"
+                    placeholder="Describe what you want to create. Be specific about the scene, mood, and style..."
+                    className="min-h-[100px]"
+                    value={mainDescription}
+                    onChange={(e) => setMainDescription(e.target.value)}
+                  />
+                </div>
+
+                {Object.entries(selectedFormats).map(([format, isSelected]) => (
+                  isSelected && (
+                    <div key={format} className="space-y-2">
+                      <Label htmlFor={`${format}-details`}>Additional {format} details (optional)</Label>
+                      <Textarea
+                        id={`${format}-details`}
+                        placeholder={`Add specific details for ${format} generation...`}
+                        value={formatDetails[format as keyof typeof formatDetails]}
+                        onChange={(e) => handleDetailChange(format as keyof typeof formatDetails, e.target.value)}
+                      />
+                    </div>
+                  )
+                ))}
+
+                <Button 
+                  className="w-full py-6 text-lg"
+                  onClick={generateContent}
+                  disabled={!Object.values(selectedFormats).some(Boolean) || !mainDescription.trim()}
+                >
+                  Generate Content
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="flex flex-row md:flex-col gap-4">
@@ -251,7 +338,7 @@ const Index = () => {
         </div>
 
         <Tabs defaultValue="image" className="space-y-8" onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-4 bg-transparent h-auto p-0">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-transparent h-auto p-0">
             <TabsTrigger 
               value="image" 
               className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-8 py-3"
@@ -272,13 +359,6 @@ const Index = () => {
             >
               <Type className="mr-2 h-4 w-4" />
               Text
-            </TabsTrigger>
-            <TabsTrigger 
-              value="style" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-8 py-3"
-            >
-              <Wand2 className="mr-2 h-4 w-4" />
-              Style
             </TabsTrigger>
             <TabsTrigger 
               value="audio" 
@@ -442,3 +522,4 @@ const Index = () => {
 };
 
 export default Index;
+

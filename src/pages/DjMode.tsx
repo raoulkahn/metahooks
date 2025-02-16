@@ -218,16 +218,16 @@ const DjMode = () => {
               alt={track.title}
               className="w-10 h-10 rounded"
             />
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 pr-8">
               <div className={cn(
                 "text-base font-normal truncate",
                 currentlyPlaying?.id === track.id && "text-green-500"
               )}>{track.title}</div>
               <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
             </div>
-            <div className="flex items-center gap-3 text-sm">
-              <span className="text-emerald-500">{track.bpm} BPM</span>
-              <span className="text-emerald-500">{track.key}</span>
+            <div className="flex items-center gap-4 text-sm ml-auto">
+              <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
+              <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
               <Button
                 variant="ghost"
                 className="opacity-0 group-hover:opacity-100"

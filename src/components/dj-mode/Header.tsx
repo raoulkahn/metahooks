@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { ChevronLeft, Filter, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
@@ -46,26 +46,44 @@ export function Header({
           <span className="text-white font-medium">{title}</span>
         </div>
         <div className="flex items-center gap-4">
-          {showBpmKey && view === "list" && (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button 
-                  variant={hasActiveFilters ? "default" : "outline"}
-                  className={cn(
-                    "px-3",
-                    hasActiveFilters 
-                      ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
-                      : "bg-neutral-800/50 hover:bg-neutral-700/50 border-none"
-                  )}
-                >
-                  <Filter className={cn(
-                    "h-5 w-5 mr-2",
-                    hasActiveFilters && "text-white"
-                  )} />
-                  Filter{selectedKey ? ` (${selectedKey})` : ""}
-                </Button>
-              </DialogTrigger>
-            </Dialog>
+          {view === "list" && (
+            <>
+              <Button
+                variant="outline"
+                className="bg-neutral-800/50 hover:bg-neutral-700/50 border-none text-white"
+                onClick={() => null} // This would toggle BPM/KEY visibility
+              >
+                BPM KEY
+              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant={hasActiveFilters ? "default" : "outline"}
+                    className={cn(
+                      "px-3",
+                      hasActiveFilters 
+                        ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+                        : "bg-neutral-800/50 hover:bg-neutral-700/50 border-none"
+                    )}
+                    onClick={onFilterClick}
+                  >
+                    <Filter className={cn(
+                      "h-5 w-5 mr-2",
+                      hasActiveFilters && "text-white"
+                    )} />
+                    Filter{selectedKey ? ` (${selectedKey})` : ""}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-neutral-900 text-white border-neutral-800">
+                  <div className="p-4">
+                    <h2 className="text-lg font-medium mb-4">Filter Tracks</h2>
+                    {/* Filter content would go here */}
+                    <p className="text-neutral-400">Filter options coming soon...</p>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </>
           )}
 
           {showPlayButton && (

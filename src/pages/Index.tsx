@@ -198,7 +198,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="w-16 flex flex-row md:flex-col gap-4 invisible">
               {activeTab === 'image' && mediaResults && mediaResults.slice(1, 4).map((media) => (
-                <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer hover:ring-2 ring-primary">
+                <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden gradient-purple cursor-pointer hover:ring-2 ring-primary">
                   <img 
                     src={media.preview_url || media.thumbnail_url}
                     alt={media.title}
@@ -207,7 +207,7 @@ const Index = () => {
                 </div>
               ))}
               {activeTab === 'video' && mediaResults && mediaResults.slice(1, 2).map((media) => (
-                <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                <div key={media.pixabay_id} className="w-16 h-24 rounded-lg overflow-hidden gradient-purple cursor-pointer">
                   <img 
                     src={media.preview_url || media.thumbnail_url}
                     alt={media.title}
@@ -218,35 +218,37 @@ const Index = () => {
             </div>
 
             <div className="flex-1 w-full max-w-2xl">
-              <div className="aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500">
-                {activeTab === 'image' && mediaResults && mediaResults[0] && (
-                  <img 
-                    src={mediaResults[0].url}
-                    alt={mediaResults[0].title}
-                    className="w-full h-full object-cover"
-                  />
-                )}
-                {activeTab === 'video' && mediaResults && mediaResults[0] && (
-                  <video
-                    controls
-                    className="w-full h-full object-cover"
-                    poster={mediaResults[0].preview_url || mediaResults[0].thumbnail_url}
-                  >
-                    <source src={mediaResults[0].url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
-                {isLoadingMedia && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-                  </div>
-                )}
+              <div className="content-card">
+                <div className="aspect-video gradient-purple">
+                  {activeTab === 'image' && mediaResults && mediaResults[0] && (
+                    <img 
+                      src={mediaResults[0].url}
+                      alt={mediaResults[0].title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {activeTab === 'video' && mediaResults && mediaResults[0] && (
+                    <video
+                      controls
+                      className="w-full h-full object-cover"
+                      poster={mediaResults[0].preview_url || mediaResults[0].thumbnail_url}
+                    >
+                      <source src={mediaResults[0].url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                  {isLoadingMedia && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
-                <div className="h-full w-full bg-black rounded-[32px] overflow-hidden">
-                  <div className="flex justify-between items-center px-4 py-2 text-white text-xs">
+              <div className="mobile-frame mt-8">
+                <div className="mobile-notch"></div>
+                <div className="mobile-screen">
+                  <div className="mobile-status-bar">
                     <span>9:41</span>
                     <div className="flex items-center gap-1">
                       <div className="w-4 h-1 bg-white rounded-full" />
@@ -254,11 +256,12 @@ const Index = () => {
                       <div className="w-4 h-1 bg-white rounded-full" />
                     </div>
                   </div>
+                  
                   <div className="absolute top-8 left-0 right-0 z-10 flex items-center justify-between px-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-[2px]">
+                      <div className="w-8 h-8 rounded-full gradient-purple p-[2px]">
                         <div className="w-full h-full rounded-full bg-black p-[2px]">
-                          <div className="w-full h-full rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600" />
+                          <div className="w-full h-full rounded-full gradient-purple" />
                         </div>
                       </div>
                       <div className="text-white text-sm flex items-center">
@@ -272,11 +275,19 @@ const Index = () => {
                       <X className="w-5 h-5 text-white" />
                     </div>
                   </div>
-                  <div className="h-full relative">
+
+                  <div className="mobile-content">
+                    {activeTab === 'text' && (
+                      <div className="text-content">
+                        <p className="text-white text-center text-sm leading-relaxed">
+                          {sampleContent.text.preview}
+                        </p>
+                      </div>
+                    )}
                     {activeTab === 'image' && (
                       <img 
                         src={sampleContent.image.preview}
-                        alt="Generated sunset"
+                        alt="Generated content"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -287,75 +298,53 @@ const Index = () => {
                         className="w-full h-full object-cover"
                       />
                     )}
-                    {activeTab === 'text' && (
-                      <div className="w-full h-full relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-500" />
-                        <div className="relative h-full flex items-center justify-center px-8 py-32">
-                          <div className="bg-black/40 backdrop-blur-sm rounded-xl p-6 w-full max-w-[280px]">
-                            <p className="text-white text-center text-sm leading-relaxed">
-                              {sampleContent.text.preview}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                     {activeTab === 'audio' && (
-                      <div className="w-full h-full relative">
+                      <>
                         <img 
                           src={sampleContent.audio.background}
-                          alt="Sunset background"
-                          className="w-full h-full object-cover"
+                          alt="Audio background"
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-8">
+                        <div className="gradient-overlay" />
+                        <div className="relative z-10 w-full max-w-md space-y-4">
                           {generatedAudioUrl ? (
-                            <div className="w-full max-w-md space-y-4">
-                              <audio 
-                                controls 
-                                className="w-full" 
-                                src={generatedAudioUrl}
-                              />
+                            <>
+                              <audio controls className="w-full">
+                                <source src={generatedAudioUrl} type="audio/mpeg" />
+                              </audio>
                               <p className="text-white text-center text-sm">{audioText}</p>
-                            </div>
+                            </>
                           ) : (
-                            <p className="text-white text-center whitespace-pre-line text-lg mb-4">
+                            <p className="text-white text-center text-lg">
                               {sampleContent.audio.preview}
                             </p>
                           )}
                         </div>
-                      </div>
+                      </>
                     )}
+                  </div>
 
-                    <div className="absolute bottom-24 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                      <p className="text-white text-sm">
-                        {activeTab === 'image' && sampleContent.image.caption}
-                        {activeTab === 'video' && sampleContent.video.caption}
-                        {activeTab === 'text' && sampleContent.text.caption}
-                        {activeTab === 'audio' && sampleContent.audio.caption}
-                      </p>
-                    </div>
+                  <div className="social-buttons">
+                    <button className="social-button">
+                      <Heart className="w-7 h-7" />
+                    </button>
+                    <button className="social-button">
+                      <MessageCircle className="w-7 h-7" />
+                    </button>
+                    <button className="social-button">
+                      <Send className="w-7 h-7" />
+                    </button>
+                    <button className="social-button">
+                      <Bookmark className="w-7 h-7" />
+                    </button>
+                  </div>
 
-                    <div className="absolute bottom-32 right-4 flex flex-col items-center gap-6">
-                      <button className="text-white flex flex-col items-center gap-1">
-                        <Heart className="w-7 h-7" />
-                      </button>
-                      <button className="text-white flex flex-col items-center gap-1">
-                        <MessageCircle className="w-7 h-7" />
-                      </button>
-                      <button className="text-white flex flex-col items-center gap-1">
-                        <Send className="w-7 h-7" />
-                      </button>
-                      <button className="text-white flex flex-col items-center gap-1">
-                        <Bookmark className="w-7 h-7" />
-                      </button>
-                    </div>
-
-                    <div className="absolute bottom-6 left-0 right-0 px-4 flex items-center gap-2">
-                      <input
-                        type="text"
-                        placeholder="Send message..."
-                        className="w-full bg-transparent border border-white/20 rounded-full px-4 py-2 text-white text-sm placeholder-white/60"
-                      />
-                    </div>
+                  <div className="message-input">
+                    <input
+                      type="text"
+                      placeholder="Send message..."
+                      className="message-input-field"
+                    />
                   </div>
                 </div>
               </div>

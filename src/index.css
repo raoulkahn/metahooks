@@ -61,3 +61,56 @@
     transform: translateY(0);
   }
 }
+
+.gradient-purple {
+  @apply bg-gradient-to-br from-[#F97316] via-[#D946EF] to-[#8B5CF6];
+}
+
+.gradient-overlay {
+  @apply absolute inset-0 bg-gradient-to-br from-purple-600/90 to-pink-500/90 backdrop-blur-sm;
+}
+
+.content-card {
+  @apply relative overflow-hidden rounded-lg shadow-xl;
+}
+
+.mobile-frame {
+  @apply relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl overflow-hidden;
+}
+
+.mobile-notch {
+  @apply absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20;
+}
+
+.mobile-screen {
+  @apply h-full w-full bg-black rounded-[32px] overflow-hidden;
+}
+
+.mobile-status-bar {
+  @apply flex justify-between items-center px-4 py-2 text-white text-xs;
+}
+
+.mobile-content {
+  @apply relative h-full flex items-center justify-center p-8;
+}
+
+.text-content {
+  @apply bg-black/40 backdrop-blur-sm rounded-xl p-6 w-full max-w-[280px];
+}
+
+.social-buttons {
+  @apply absolute bottom-32 right-4 flex flex-col items-center gap-6;
+}
+
+.social-button {
+  @apply text-white flex flex-col items-center gap-1;
+}
+
+.message-input {
+  @apply absolute bottom-6 left-0 right-0 px-4;
+}
+
+.message-input-field {
+  @apply w-full bg-transparent border border-white/20 rounded-full px-4 py-2 text-white text-sm placeholder-white/60;
+}
+

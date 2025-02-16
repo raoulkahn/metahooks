@@ -1,4 +1,5 @@
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/ui/radio-group";
 import { ArrowUpDown, Search, Filter } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
@@ -71,7 +68,6 @@ const DjMode = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header with search and filters */}
       <header className="sticky top-0 bg-gradient-to-b from-neutral-900 to-black p-4">
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="p-2">
@@ -207,7 +203,6 @@ const DjMode = () => {
         </div>
       </header>
 
-      {/* Track List */}
       <div className="px-4">
         {filteredTracks.map((track) => (
           <div
@@ -238,7 +233,6 @@ const DjMode = () => {
         ))}
       </div>
 
-      {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-neutral-800 p-4">
         <div className="flex justify-around">
           <Button variant="ghost" className="flex flex-col items-center">

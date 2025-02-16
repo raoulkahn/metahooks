@@ -17,3 +17,10 @@ export type Track = {
 export type SetTrack = Track & {
   position: number;
 };
+
+export type Playlist = {
+  id: string;
+  name: string;
+  tracks: Set<string>;
+  createdAt: Date;
+};

@@ -1,29 +1,16 @@
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useState } from "react";
+import { Track } from "@/types/music";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogClose, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Header } from "@/components/dj-mode/Header";
+import { TrackList } from "@/components/dj-mode/TrackList";
+import { PlaylistGrid } from "@/components/dj-mode/PlaylistGrid";
+import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
-import { Track, MusicalKey } from "@/types/music";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-
-type Playlist = {
-  id: string;
-  name: string;
-  tracks: Set<string>;
-  createdAt: Date;
-};
+import { Play } from "lucide-react";
 
 const demoTracks: Track[] = [
   {
@@ -129,10 +116,8 @@ const demoTracks: Track[] = [
 ];
 
 const DjMode = () => {
-  const isMobile = useIsMobile();
   const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
-  const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
@@ -142,7 +127,6 @@ const DjMode = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [showPlaylists, setShowPlaylists] = useState(false);
-  
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
 
@@ -153,8 +137,6 @@ const DjMode = () => {
     const matchesKey = !selectedKey || track.key === selectedKey;
     return matchesBpm && matchesKey;
   });
-
-  const hasMatchingTracks = filteredTracks.length > 0;
 
   const handleResetFilters = () => {
     setTempBpmRange([90, 140]);
@@ -220,147 +202,14 @@ const DjMode = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
-      <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4">
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="icon" className="text-white">
-            <ChevronLeft className="h-6 w-6" />
-          </Button>
-          <div className="flex items-center gap-4">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button 
-                  variant={hasActiveFilters ? "default" : "outline"}
-                  className={cn(
-                    "px-3",
-                    hasActiveFilters 
-                      ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
-                      : "bg-neutral-800/50 hover:bg-neutral-700/50 border-none"
-                  )}
-                >
-                  <Filter className={cn(
-                    "h-5 w-5 mr-2",
-                    hasActiveFilters && "text-white"
-                  )} />
-                  Filter{selectedKey ? ` (${selectedKey})` : ""}
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white" onOpenAutoFocus={(e) => e.preventDefault()}>
-                <DialogHeader>
-                  <DialogTitle>Filter Tracks</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="space-y-2">
-                    <h4 className="font-medium">BPM Range</h4>
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 bg-neutral-800 border-none text-white text-center rounded-md py-2">
-                        {tempBpmRange[0]}
-                      </div>
-                      <div className="flex-1 px-2">
-                        <Slider
-                          defaultValue={tempBpmRange}
-                          max={160}
-                          min={60}
-                          step={1}
-                          value={tempBpmRange}
-                          onValueChange={(value: [number, number]) => setTempBpmRange(value)}
-                          className="flex-1"
-                        />
-                      </div>
-                      <div className="w-16 bg-neutral-800 border-none text-white text-center rounded-md py-2">
-                        {tempBpmRange[1]}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="font-medium">Key</h4>
-                    <div className="space-y-2">
-                      <div className="flex gap-1.5">
-                        {["D♭", "E♭", "G♭", "A♭", "B♭"].map((note) => (
-                          <Button
-                            key={note}
-                            variant={tempKey.startsWith(note) ? "default" : "outline"}
-                            onClick={() => setTempKey(tempKey === note ? "" : note)}
-                            size="sm"
-                            className={cn(
-                              "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                              tempKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
-                            )}
-                          >
-                            {note}
-                          </Button>
-                        ))}
-                      </div>
-                      <div className="flex gap-1.5">
-                        {["C", "D", "E", "F", "G", "A", "B"].map((note) => (
-                          <Button
-                            key={note}
-                            variant={tempKey.startsWith(note) ? "default" : "outline"}
-                            onClick={() => setTempKey(tempKey === note ? "" : note)}
-                            size="sm"
-                            className={cn(
-                              "h-8 flex-1 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                              tempKey.startsWith(note) && "bg-blue-500 hover:bg-blue-600 border-none"
-                            )}
-                          >
-                            {note}
-                          </Button>
-                        ))}
-                      </div>
-                      <div className="flex gap-1.5 mt-2">
-                        <Button
-                          variant={!tempKey.includes("m") && tempKey ? "default" : "outline"}
-                          onClick={() => setTempKey(prev => prev.replace("m", ""))}
-                          className={cn(
-                            "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                            !tempKey.includes("m") && tempKey && "bg-blue-500 hover:bg-blue-600 border-none"
-                          )}
-                        >
-                          Major
-                        </Button>
-                        <Button
-                          variant={tempKey.includes("m") ? "default" : "outline"}
-                          onClick={() => setTempKey(prev => prev ? prev + "m" : "")}
-                          className={cn(
-                            "flex-1 h-8 bg-neutral-800 hover:bg-neutral-700 border-neutral-700",
-                            tempKey.includes("m") && "bg-blue-500 hover:bg-blue-600 border-none"
-                          )}
-                        >
-                          Minor
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <DialogFooter className="flex justify-between sm:justify-between border-t border-neutral-800 pt-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleResetFilters}
-                    className="bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
-                  >
-                    Reset
-                  </Button>
-                  <DialogClose asChild>
-                    <Button
-                      onClick={handleApplyFilters}
-                      className="bg-emerald-600 hover:bg-emerald-700"
-                    >
-                      Apply Filters
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
-              <AvatarFallback>DJ</AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </header>
+      <Header 
+        hasActiveFilters={hasActiveFilters}
+        selectedKey={selectedKey}
+        onFilterClick={() => {}}
+      />
 
       <div className="px-4 pb-32">
-        {hasUsedFilters && hasMatchingTracks && !isSelectingTracks && (
+        {hasUsedFilters && filteredTracks.length > 0 && !isSelectingTracks && (
           <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div>
               <h3 className="font-medium">
@@ -379,38 +228,8 @@ const DjMode = () => {
               }}
               className="bg-emerald-600 hover:bg-emerald-700"
             >
-              <ListPlus className="h-5 w-5 mr-2" />
               Create Playlist
             </Button>
-          </div>
-        )}
-
-        {isSelectingTracks && (
-          <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
-            <div>
-              <h3 className="font-medium">Select tracks for your new playlist</h3>
-              <p className="text-sm text-neutral-400">{selectedTracks.size} tracks selected</p>
-            </div>
-            <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setIsSelectingTracks(false);
-                  setSelectedTracks(new Set());
-                  setHasUsedFilters(false);
-                }}
-                className="border-neutral-700 text-white bg-neutral-700 hover:bg-neutral-600"
-              >
-                Cancel
-              </Button>
-              <Button 
-                onClick={() => setShowPlaylistNameDialog(true)}
-                disabled={selectedTracks.size === 0}
-                className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50"
-              >
-                Create Playlist
-              </Button>
-            </div>
           </div>
         )}
 
@@ -420,10 +239,6 @@ const DjMode = () => {
               <div>
                 <h1 className="text-4xl font-bold">Running</h1>
                 <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
-                    <AvatarFallback>DJ</AvatarFallback>
-                  </Avatar>
                   <span>DJ Mode • 1h 45m</span>
                 </div>
               </div>
@@ -450,166 +265,26 @@ const DjMode = () => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              {filteredTracks.map((track) => (
-                <div
-                  key={track.id}
-                  className={cn(
-                    "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
-                    currentlyPlaying?.id === track.id && "bg-white/10",
-                    isSelectingTracks && selectedTracks.has(track.id) && "bg-emerald-500/20 border border-emerald-500/50"
-                  )}
-                  onClick={() => isSelectingTracks ? handleTrackSelection(track.id) : setCurrentlyPlaying(track)}
-                >
-                  <div className="relative">
-                    <img
-                      src={track.albumArt}
-                      alt={track.title}
-                      className="w-12 h-12 rounded object-cover"
-                    />
-                    {isSelectingTracks && selectedTracks.has(track.id) && (
-                      <div className="absolute inset-0 bg-emerald-500/80 rounded flex items-center justify-center">
-                        <Check className="h-6 w-6 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className={cn(
-                      "text-base font-medium truncate",
-                      currentlyPlaying?.id === track.id && "text-green-500"
-                    )}>
-                      {track.title}
-                    </div>
-                    <div className="text-sm text-neutral-400 truncate">
-                      {track.artist}
-                    </div>
-                  </div>
-                  {showTechnicalDetails && (
-                    <div className="flex items-center gap-4 text-sm ml-auto">
-                      <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
-                      <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
-                      {!isSelectingTracks && (
-                        <span className="text-neutral-400">•••</span>
-                      )}
-                    </div>
-                  )}
-                  {!showTechnicalDetails && !isSelectingTracks && (
-                    <span className="text-neutral-400 ml-auto">•••</span>
-                  )}
-                </div>
-              ))}
-            </div>
+            <TrackList
+              tracks={filteredTracks}
+              currentlyPlaying={currentlyPlaying}
+              showTechnicalDetails={showTechnicalDetails}
+              isSelectingTracks={isSelectingTracks}
+              selectedTracks={selectedTracks}
+              onTrackSelect={handleTrackSelection}
+              onTrackPlay={setCurrentlyPlaying}
+            />
           </>
         ) : (
-          <>
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-4xl font-bold">Your Playlists</h1>
-                <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
-                    <AvatarFallback>DJ</AvatarFallback>
-                  </Avatar>
-                  <span>{playlists.length} Playlists</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-              <Button 
-                variant="default" 
-                size="sm" 
-                className="bg-green-500 hover:bg-green-600 rounded-full px-4"
-              >
-                All Playlists
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="bg-neutral-800/50 border-none rounded-full px-4"
-              >
-                Recently Added
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="bg-neutral-800/50 border-none rounded-full px-4 whitespace-nowrap"
-              >
-                Recently Played
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {playlists.map((playlist) => (
-                <div
-                  key={playlist.id}
-                  className="group bg-neutral-800/30 hover:bg-neutral-800/50 rounded-lg p-3 transition-colors cursor-pointer"
-                >
-                  <div className="aspect-square bg-neutral-800 rounded-md mb-4 group-hover:bg-neutral-700/80 transition-colors flex items-center justify-center">
-                    <Library className="h-10 w-10 text-white/70" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="font-medium truncate">{playlist.name}</h3>
-                    <p className="text-sm text-neutral-400">{playlist.tracks.size} tracks</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
+          <PlaylistGrid playlists={playlists} />
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-black/90 border-t border-neutral-800">
-        {currentlyPlaying && (
-          <div className="flex items-center gap-4 px-4 py-2 border-b border-neutral-800">
-            <img
-              src={currentlyPlaying.albumArt}
-              alt={currentlyPlaying.title}
-              className="w-14 h-14 rounded"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium truncate">{currentlyPlaying.title}</div>
-              <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
-            </div>
-            <Button 
-              size="icon" 
-              variant="ghost"
-              className="h-8 w-8 text-white hover:text-white/90"
-            >
-              <Play className="h-5 w-5 fill-current" />
-            </Button>
-          </div>
-        )}
-        <div className="flex justify-around p-4">
-          <Button variant="ghost" className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
-              <path d="M12.5 3.247a1 1 0 0 0-1 0L4 7.577V20h4.5v-6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v6H20V7.577l-7.5-4.33zm-2-1.732a3 3 0 0 1 3 0l7.5 4.33a2 2 0 0 1 1 1.732V21a1 1 0 0 1-1 1h-6.5a1 1 0 0 1-1-1v-6h-3v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.577a2 2 0 0 1 1-1.732l7.5-4.33z" fill="currentColor"/>
-            </svg>
-            <span className="text-xs">Home</span>
-          </Button>
-          <Button variant="ghost" className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
-              <path d="M10.533 1.279c-5.18 0-9.407 4.14-9.407 9.279s4.226 9.279 9.407 9.279c2.234 0 4.29-.77 5.907-2.058l4.353 4.353a1 1 0 1 0 1.414-1.414l-4.344-4.344a9.157 9.157 0 0 0 2.077-5.816c0-5.14-4.226-9.28-9.407-9.28zm-7.407 9.279c0-4.006 3.302-7.28 7.407-7.28s7.407 3.274 7.407 7.28-3.302 7.279-7.407 7.279-7.407-3.273-7.407-7.28z" fill="currentColor"/>
-            </svg>
-            <span className="text-xs">Search</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            className={cn(
-              "flex flex-col items-center gap-1 hover:bg-transparent",
-              showPlaylists ? "text-white" : "text-neutral-400 hover:text-white"
-            )}
-            onClick={() => setShowPlaylists(!showPlaylists)}
-          >
-            <Library className="h-6 w-6" />
-            <span className="text-xs">Your Library</span>
-          </Button>
-          <Button variant="ghost" className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent">
-            <FilePlus className="h-6 w-6" />
-            <span className="text-xs">Create</span>
-          </Button>
-        </div>
-      </div>
+      <BottomBar
+        currentlyPlaying={currentlyPlaying}
+        showPlaylists={showPlaylists}
+        onLibraryClick={() => setShowPlaylists(!showPlaylists)}
+      />
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>
         <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">

@@ -89,8 +89,12 @@ const DjMode = () => {
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" className="px-3">
-                <Filter className="h-5 w-5" />
+              <Button 
+                variant="outline" 
+                className="px-3 bg-neutral-800 hover:bg-neutral-700 border-neutral-700"
+              >
+                <Filter className="h-5 w-5 mr-2" />
+                Filter
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
@@ -101,7 +105,12 @@ const DjMode = () => {
                 <div className="space-y-2">
                   <h4 className="font-medium">BPM Range</h4>
                   <div className="flex items-center gap-4">
-                    <span>{bpmRange[0]}</span>
+                    <input 
+                      type="number"
+                      value={bpmRange[0]}
+                      onChange={(e) => setBpmRange([Number(e.target.value), bpmRange[1]])}
+                      className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                    />
                     <Slider
                       defaultValue={bpmRange}
                       max={200}
@@ -109,37 +118,49 @@ const DjMode = () => {
                       step={1}
                       value={bpmRange}
                       onValueChange={setBpmRange}
-                      className="flex-1"
+                      className="flex-1 [&>[role=slider]]:h-4 [&>[role=slider]]:w-4 [&>[role=slider]]:bg-emerald-500 [&>[role=slider]]:border-none [&_[data-orientation=horizontal]]:h-2 [&_[data-orientation=horizontal]]:bg-neutral-700 [&_[class*=SliderRange]]:bg-emerald-500"
                     />
-                    <span>{bpmRange[1]}</span>
+                    <input 
+                      type="number"
+                      value={bpmRange[1]}
+                      onChange={(e) => setBpmRange([bpmRange[0], Number(e.target.value)])}
+                      className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-medium">Key</h4>
-                  <div className="grid grid-cols-7 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {["C", "D♭", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"].map((note) => (
                       <Button
                         key={note}
-                        variant={selectedKey === note ? "default" : "outline"}
+                        variant={selectedKey.startsWith(note) ? "default" : "outline"}
                         onClick={() => setSelectedKey(selectedKey === note ? "" : note)}
-                        className="h-8 px-2"
+                        className="relative h-20 group"
                       >
-                        {note}
+                        <div className="text-lg">{note}</div>
+                        <div className="text-xs text-neutral-400 mt-1">
+                          <div>{note}maj</div>
+                          <div>{note}min</div>
+                        </div>
+                        {selectedKey.startsWith(note) && (
+                          <div className="absolute inset-0 bg-emerald-500/10 rounded-md" />
+                        )}
                       </Button>
                     ))}
                   </div>
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex gap-2 mt-4">
                     <Button
                       variant={selectedKey.includes("m") ? "default" : "outline"}
-                      onClick={() => setSelectedKey(selectedKey + "m")}
-                      className="flex-1"
+                      onClick={() => setSelectedKey(prev => prev ? prev + "m" : "")}
+                      className="flex-1 bg-neutral-800 hover:bg-neutral-700"
                     >
                       Minor
                     </Button>
                     <Button
-                      variant={!selectedKey.includes("m") ? "default" : "outline"}
-                      onClick={() => setSelectedKey(selectedKey.replace("m", ""))}
-                      className="flex-1"
+                      variant={!selectedKey.includes("m") && selectedKey ? "default" : "outline"}
+                      onClick={() => setSelectedKey(prev => prev.replace("m", ""))}
+                      className="flex-1 bg-neutral-800 hover:bg-neutral-700"
                     >
                       Major
                     </Button>

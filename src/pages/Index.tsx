@@ -9,6 +9,7 @@ import { Image, Type, Music, Video, Heart, MessageCircle, Bookmark, Send, MoreHo
 import { useQuery } from '@tanstack/react-query';
 import { searchPixabayMedia } from '@/services/pixabay';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [query, setQuery] = useState('');
@@ -99,32 +100,33 @@ const Index = () => {
     setError(null);
     
     try {
-      // const { data, error } = await supabase.functions.invoke('generate-video', {
-      //   body: { prompt }
-      // });
+      const { data, error } = await supabase.functions.invoke('generate-video', {
+        body: { prompt }
+      });
 
-      // if (error) {
-      //   throw error;
-      // }
+      if (error) {
+        throw error;
+      }
 
-      // if (data.error) {
-      //   throw new Error(data.error);
-      // }
+      if (data.error) {
+        throw new Error(data.error);
+      }
 
-      // Process successful response
-      // setGeneratedVideoUrl(data.output);
-      // toast({
-      //   title: "Video Generated!",
-      //   description: "Your AI-generated video is ready to view.",
-      // });
+      setGeneratedVideoUrl(data.output);
+      const { toast } = useToast();
+      toast({
+        title: "Video Generated!",
+        description: "Your AI-generated video is ready to view.",
+      });
 
     } catch (err: any) {
       console.error('Video generation error:', err);
       
-      const errorMessage = err.message?.includes('credit') 
-        ? "You've exceeded your free credits. Please add a payment method in Replicate to continue generating videos."
+      const errorMessage = err.message?.includes('auth')
+        ? "Please add a valid payment method in Replicate to generate videos. Video generation costs approximately $0.10-$0.50 per video."
         : err.message || 'Failed to generate video';
       
+      const { toast } = useToast();
       toast({
         title: "Video Generation Failed",
         description: errorMessage,

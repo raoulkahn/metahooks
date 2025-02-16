@@ -16,7 +16,7 @@ serve(async (req) => {
   try {
     const REPLICATE_API_KEY = Deno.env.get('REPLICATE_API_KEY')
     if (!REPLICATE_API_KEY) {
-      throw new Error('REPLICATE_API_KEY is not set')
+      throw new Error('A valid Replicate API key with payment method is required')
     }
 
     const replicate = new Replicate({
@@ -55,12 +55,9 @@ serve(async (req) => {
     let status = 500
     let message = 'An unexpected error occurred'
     
-    if (error.message?.includes('credit')) {
+    if (error.message?.includes('payment') || error.message?.includes('auth')) {
       status = 402 // Payment Required
-      message = 'Account credits exhausted. Please add a payment method in Replicate.'
-    } else if (error.message?.includes('auth')) {
-      status = 401
-      message = 'Invalid or expired API key'
+      message = 'A valid payment method is required in Replicate. Video generation costs approximately $0.10-$0.50 per video.'
     }
     
     return new Response(

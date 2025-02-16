@@ -35,7 +35,7 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are an expert at creating engaging hooks for social media videos. Generate two hooks for the given content: one visual-focused hook perfect for video captions, and one verbal hook ideal for speaking at the start of the video. Keep each hook under 150 characters. Format as JSON array with 'type' (visual/verbal) and 'content' fields."
+            content: "You are an expert at creating engaging hooks for social media videos. Your task is to generate two hooks and return them in a specific JSON format. You must ONLY return a JSON array containing exactly two objects with 'type' and 'content' fields. Example format: [{\"type\":\"visual\",\"content\":\"hook text\"},{\"type\":\"verbal\",\"content\":\"hook text\"}]. Keep each hook under 150 characters. The visual hook should be perfect for video captions, and the verbal hook should be ideal for speaking at the start of the video."
           },
           {
             role: "user",
@@ -56,17 +56,27 @@ serve(async (req) => {
     console.log('OpenAI API response:', data);
     
     const hookText = data.choices[0].message.content;
+    console.log('Raw hook text:', hookText);
     
     // Parse the JSON string from GPT's response
     let hooks;
     try {
       hooks = JSON.parse(hookText);
+      if (!Array.isArray(hooks) || hooks.length !== 2) {
+        throw new Error('Invalid response format');
+      }
     } catch (e) {
       console.error('Error parsing GPT response:', e);
-      // If parsing fails, format the response manually
+      // Provide default hooks if parsing fails
       hooks = [
-        { type: 'visual', content: hookText.split('\n')[0] },
-        { type: 'verbal', content: hookText.split('\n')[1] || hookText.split('\n')[0] }
+        { 
+          type: 'visual', 
+          content: 'Unable to generate hook. Please try again.' 
+        },
+        { 
+          type: 'verbal', 
+          content: 'Unable to generate hook. Please try again.' 
+        }
       ];
     }
 

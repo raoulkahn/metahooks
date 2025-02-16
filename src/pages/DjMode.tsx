@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -124,8 +125,15 @@ const DjMode = () => {
   const [hasUsedFilters, setHasUsedFilters] = useState(false);
   const [showPlaylistNameDialog, setShowPlaylistNameDialog] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [showPlaylists, setShowPlaylists] = useState(false);
+  const [playlists, setPlaylists] = useState<Playlist[]>([
+    {
+      id: "1",
+      name: "Running",
+      tracks: new Set(["1", "2", "3"]),
+      createdAt: new Date()
+    }
+  ]);
+  const [showPlaylists, setShowPlaylists] = useState(true); // Set to true by default
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);

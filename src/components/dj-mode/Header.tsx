@@ -45,17 +45,15 @@ export function Header({ hasActiveFilters, selectedKey, onFilterClick, onAvatarC
             </Dialog>
           )}
 
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="p-0 hover:bg-transparent"
+          <button 
             onClick={onAvatarClick}
+            className="p-0 hover:bg-transparent"
           >
             <Avatar className="h-8 w-8">
               <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
               <AvatarFallback>DJ</AvatarFallback>
             </Avatar>
-          </Button>
+          </button>
         </div>
       </div>
     </header>

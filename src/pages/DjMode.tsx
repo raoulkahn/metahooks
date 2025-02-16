@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Track, Playlist } from "@/types/music";
 import { Button } from "@/components/ui/button";
@@ -164,7 +163,6 @@ const demoPLaylists: Playlist[] = [
 
 export default function DjMode() {
   const { showBpmKey } = useSettings();
-  const [showSettings, setShowSettings] = useState(false);
   const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);

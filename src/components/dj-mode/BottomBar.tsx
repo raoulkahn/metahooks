@@ -20,8 +20,9 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
             className="w-12 h-12 rounded object-cover"
           />
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium truncate">{currentlyPlaying.title}</div>
-            <div className="flex items-center gap-2">
+            <div className="text-sm font-medium text-white truncate">{currentlyPlaying.title}</div>
+            <div className="text-xs text-neutral-400 truncate">{currentlyPlaying.artist}</div>
+            <div className="flex items-center gap-2 mt-1">
               <div className="h-4 w-4 rounded-full bg-[#1DB954] flex items-center justify-center">
                 <div className="text-[8px] text-black font-medium">♪</div>
               </div>
@@ -29,12 +30,20 @@ export function BottomBar({ currentlyPlaying, showPlaylists, onLibraryClick }: B
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="text-white hover:text-white/80">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:text-white/80"
+            >
               <Laptop2 className="h-5 w-5" />
-            </button>
-            <button className="h-8 w-8 flex items-center justify-center bg-white rounded-full hover:scale-105 transition-transform">
-              <Play className="h-4 w-4 fill-black text-black" />
-            </button>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full bg-white hover:bg-white/90 text-black"
+            >
+              <Play className="h-4 w-4 fill-current" />
+            </Button>
           </div>
         </div>
       )}

@@ -184,11 +184,11 @@ const DjMode = () => {
                     <h4 className="font-medium">BPM Range</h4>
                     <div className="flex items-center gap-4">
                       <input 
-                        type="number"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={tempBpmRange[0]}
                         onChange={(e) => setTempBpmRange([Number(e.target.value), tempBpmRange[1]])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        onClick={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                       />
                       <div className="flex-1 px-2">
                         <Slider
@@ -202,11 +202,11 @@ const DjMode = () => {
                         />
                       </div>
                       <input 
-                        type="number"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={tempBpmRange[1]}
                         onChange={(e) => setTempBpmRange([tempBpmRange[0], Number(e.target.value)])}
                         className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
-                        onClick={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                       />
                     </div>
                   </div>

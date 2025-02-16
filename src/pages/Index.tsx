@@ -7,8 +7,11 @@ import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('image');
+  const [audioText, setAudioText] = useState('');
+  const [selectedVoice, setSelectedVoice] = useState('alloy');
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [generatedAudioUrl, setGeneratedAudioUrl] = useState('');
 
-  // Sample content for each tab type
   const sampleContent = {
     image: {
       preview: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
@@ -28,16 +31,51 @@ const Index = () => {
       caption: "Transform your photos with AI style transfer"
     },
     audio: {
-      preview: "🎵 Sample Transcription:\n'The gentle sounds of waves crashing against the shore, as the sun sets on another beautiful day...'",
-      caption: "Convert speech to text with AI accuracy",
+      preview: "Use AI to generate audio narration or background music for your content. Perfect for adding voiceovers, sound effects, or atmospheric music to your stories.",
+      caption: "Create the perfect audio with AI or upload your own",
       background: "https://images.unsplash.com/photo-1472396961693-142e6e269027"
+    }
+  };
+
+  const voices = [
+    { id: 'alloy', name: 'Alloy (Neutral)' },
+    { id: 'echo', name: 'Echo (Male)' },
+    { id: 'fable', name: 'Fable (Male)' },
+    { id: 'onyx', name: 'Onyx (Male)' },
+    { id: 'nova', name: 'Nova (Female)' },
+    { id: 'shimmer', name: 'Shimmer (Female)' },
+  ];
+
+  const generateAudio = async () => {
+    try {
+      setIsGeneratingAudio(true);
+      const response = await fetch('/functions/v1/text-to-speech', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: audioText, voice: selectedVoice }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate audio');
+      }
+
+      const { audioContent } = await response.json();
+      const audioBlob = new Blob(
+        [Uint8Array.from(atob(audioContent), c => c.charCodeAt(0))],
+        { type: 'audio/mp3' }
+      );
+      const audioUrl = URL.createObjectURL(audioBlob);
+      setGeneratedAudioUrl(audioUrl);
+    } catch (error) {
+      console.error('Error generating audio:', error);
+    } finally {
+      setIsGeneratingAudio(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
       <div className="max-w-6xl mx-auto pt-8 pb-20">
-        {/* Header Section with iPhone Mockup */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-primary mb-3">
             AI Content Studio
@@ -47,16 +85,13 @@ const Index = () => {
             Generate content optimized for maximum engagement across all formats.
           </p>
 
-          {/* Search Term Display */}
           <div className="mb-8">
             <span className="inline-block bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">
               Search: "sunset"
             </span>
           </div>
 
-          {/* Layout for Thumbnails and Phone */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            {/* Thumbnails Column */}
             <div className="flex flex-row md:flex-col gap-4">
               {activeTab === 'image' && (
                 <>
@@ -96,14 +131,9 @@ const Index = () => {
               )}
             </div>
 
-            {/* iPhone Mockup */}
             <div className="relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl">
-              {/* iPhone Notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
-              
-              {/* Screen Content */}
               <div className="h-full w-full bg-black rounded-[32px] overflow-hidden">
-                {/* Status Bar */}
                 <div className="flex justify-between items-center px-4 py-2 text-white text-xs">
                   <span>9:41</span>
                   <div className="flex items-center gap-1">
@@ -112,8 +142,6 @@ const Index = () => {
                     <div className="w-4 h-1 bg-white rounded-full" />
                   </div>
                 </div>
-
-                {/* Story Header */}
                 <div className="absolute top-8 left-0 right-0 z-10 flex items-center justify-between px-4">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-[2px]">
@@ -132,8 +160,6 @@ const Index = () => {
                     <X className="w-5 h-5 text-white" />
                   </div>
                 </div>
-
-                {/* Main Content - Full Screen */}
                 <div className="h-full relative">
                   {activeTab === 'image' && (
                     <img 
@@ -168,12 +194,24 @@ const Index = () => {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-8">
-                        <p className="text-white text-center whitespace-pre-line text-lg">{sampleContent.audio.preview}</p>
+                        {generatedAudioUrl ? (
+                          <div className="w-full max-w-md space-y-4">
+                            <audio 
+                              controls 
+                              className="w-full" 
+                              src={generatedAudioUrl}
+                            />
+                            <p className="text-white text-center text-sm">{audioText}</p>
+                          </div>
+                        ) : (
+                          <p className="text-white text-center whitespace-pre-line text-lg mb-4">
+                            {sampleContent.audio.preview}
+                          </p>
+                        )}
                       </div>
                     </div>
                   )}
 
-                  {/* Caption Overlay */}
                   <div className="absolute bottom-24 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
                     <p className="text-white text-sm">
                       {activeTab === 'image' && sampleContent.image.caption}
@@ -184,7 +222,6 @@ const Index = () => {
                     </p>
                   </div>
 
-                  {/* Story Actions */}
                   <div className="absolute bottom-32 right-4 flex flex-col items-center gap-6">
                     <button className="text-white flex flex-col items-center gap-1">
                       <Heart className="w-7 h-7" />
@@ -200,7 +237,6 @@ const Index = () => {
                     </button>
                   </div>
 
-                  {/* Message Input */}
                   <div className="absolute bottom-6 left-0 right-0 px-4 flex items-center gap-2">
                     <input
                       type="text"
@@ -214,7 +250,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Main Content Area */}
         <Tabs defaultValue="image" className="space-y-8" onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-2 sm:grid-cols-5 gap-4 bg-transparent h-auto p-0">
             <TabsTrigger 
@@ -343,19 +378,57 @@ const Index = () => {
 
               <TabsContent value="audio" className="m-0">
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-semibold">Audio Enhancement</h2>
+                  <h2 className="text-2xl font-semibold">Generate Audio Content</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
-                      <div className="flex flex-col items-center justify-center min-h-[200px] bg-secondary/50 rounded-lg border-2 border-dashed">
-                        <Upload className="h-12 w-12 text-primary/40 mb-4" />
-                        <p className="text-primary/60">Upload audio file</p>
+                      <Textarea 
+                        placeholder="Enter the text you want to convert to speech..."
+                        className="min-h-[120px] text-lg"
+                        value={audioText}
+                        onChange={(e) => setAudioText(e.target.value)}
+                      />
+                      <div className="flex gap-4">
+                        <select
+                          className="flex-1 rounded-md border border-input bg-background px-3 py-2"
+                          value={selectedVoice}
+                          onChange={(e) => setSelectedVoice(e.target.value)}
+                        >
+                          {voices.map(voice => (
+                            <option key={voice.id} value={voice.id}>
+                              {voice.name}
+                            </option>
+                          ))}
+                        </select>
+                        <Button 
+                          className="flex-1 py-6 text-lg"
+                          onClick={generateAudio}
+                          disabled={isGeneratingAudio || !audioText.trim()}
+                        >
+                          {isGeneratingAudio ? "Generating..." : "Generate Audio"}
+                        </Button>
                       </div>
-                      <Button className="w-full py-6 text-lg">
-                        Transcribe Audio
-                      </Button>
+                      <div className="flex items-center justify-center">
+                        <span className="px-4 text-sm text-gray-500">or</span>
+                      </div>
+                      <div className="flex flex-col items-center justify-center min-h-[100px] bg-secondary/50 rounded-lg border-2 border-dashed cursor-pointer">
+                        <Upload className="h-8 w-8 text-primary/40 mb-2" />
+                        <p className="text-primary/60 text-sm">Upload your own audio file</p>
+                      </div>
                     </div>
-                    <div className="bg-secondary/50 rounded-lg p-6">
-                      <p className="text-primary/60">Transcription will appear here</p>
+                    <div className="flex flex-col items-center justify-center min-h-[300px] bg-secondary/50 rounded-lg">
+                      {generatedAudioUrl ? (
+                        <div className="w-full p-6 space-y-4">
+                          <audio controls className="w-full" src={generatedAudioUrl} />
+                          <p className="text-center text-sm text-primary/60">
+                            Generated audio preview
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="text-center p-6">
+                          <Music className="h-12 w-12 text-primary/40 mx-auto mb-4" />
+                          <p className="text-primary/60">Generated audio will appear here</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -359,28 +359,28 @@ const Index = () => {
           <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-transparent h-auto p-0">
             <TabsTrigger 
               value="image" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 w-[120px]"
             >
               <Image className="mr-2 h-4 w-4" />
               Image
             </TabsTrigger>
             <TabsTrigger 
               value="video" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 w-[120px]"
             >
               <Video className="mr-2 h-4 w-4" />
               Video
             </TabsTrigger>
             <TabsTrigger 
               value="text" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 w-[120px]"
             >
               <Type className="mr-2 h-4 w-4" />
               Text
             </TabsTrigger>
             <TabsTrigger 
               value="audio" 
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 w-[120px]"
             >
               <Music className="mr-2 h-4 w-4" />
               Audio

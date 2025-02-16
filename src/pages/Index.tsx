@@ -37,7 +37,7 @@ const Index = () => {
       caption: "Stunning sunset timelapse created with AI 🌅✨ Watch how the colors transform! #Timelapse #AIVideo #SunsetMagic"
     },
     text: {
-      preview: "✍️ AI-Generated Caption Example:\n\nChasing sunsets and dreams 🌅\nNature's daily masterpiece painted across the sky.\nWhere golden hours meet infinite possibilities.\n\n#SunsetLover #NatureMoments #GoldenHour",
+      preview: "Chasing sunsets and dreams 🌅\nNature's daily masterpiece painted across the sky.\nWhere golden hours meet infinite possibilities.\n\n#SunsetLover #NatureMoments #GoldenHour",
       caption: "Let AI craft the perfect words for your content"
     },
     audio: {
@@ -267,8 +267,12 @@ const Index = () => {
                     />
                   )}
                   {activeTab === 'text' && (
-                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-orange-400 to-purple-500">
-                      <p className="text-white text-center whitespace-pre-line">{sampleContent.text.preview}</p>
+                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-purple-600/90 to-pink-500/90">
+                      <div className="bg-black/30 backdrop-blur-sm rounded-xl p-8 max-w-md w-full">
+                        <p className="text-white/90 text-center whitespace-pre-line text-lg leading-relaxed font-medium">
+                          {sampleContent.text.preview}
+                        </p>
+                      </div>
                     </div>
                   )}
                   {activeTab === 'audio' && (

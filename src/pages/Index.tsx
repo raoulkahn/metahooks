@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import PlatformButton from '@/components/PlatformButton';
 
 const Index = () => {
   const [platform, setPlatform] = useState<'instagram' | 'facebook'>('instagram');
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showExample, setShowExample] = useState(true);
   const { toast } = useToast();
 
   const handleSubmit = async () => {
@@ -50,6 +51,47 @@ const Index = () => {
           <p className="text-lg text-gray-600">
             Create engaging hooks for Reels and Stories across Meta platforms
           </p>
+        </div>
+
+        <div className="glass rounded-2xl p-8 space-y-8 mb-8">
+          <Button
+            variant="ghost"
+            className="w-full flex items-center justify-between py-4"
+            onClick={() => setShowExample(!showExample)}
+          >
+            <span className="font-medium text-lg">See an example</span>
+            {showExample ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5" />
+            )}
+          </Button>
+
+          {showExample && (
+            <div className="space-y-6 p-6 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="space-y-2">
+                <h3 className="font-semibold text-gray-900">Input:</h3>
+                <p className="text-gray-600">
+                  "I'm creating a video showcasing my morning routine as a software engineer, including my productivity hacks and how I stay energized throughout the day."
+                </p>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="font-semibold text-gray-900">Generated Hooks:</h3>
+                <div className="space-y-3">
+                  <p className="text-gray-600">
+                    "🚀 Want to 10x your productivity as a developer? My morning routine changed everything..."
+                  </p>
+                  <p className="text-gray-600">
+                    "The 5AM routine that helped me land my dream tech job (productivity hacks included) 💻"
+                  </p>
+                  <p className="text-gray-600">
+                    "POV: You're about to discover the morning habits of a software engineer 👩‍💻 #techlife #coding"
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="glass rounded-2xl p-8 space-y-8">

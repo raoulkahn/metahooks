@@ -61,7 +61,7 @@ const Index = () => {
 
           <div className="space-y-4">
             <Textarea
-              placeholder="Describe your video content or topic..."
+              placeholder='Describe your video content, e.g. "5 minute alfredo pasta dish"'
               className="min-h-[150px] text-lg p-4 resize-none bg-background/50"
               value={content}
               onChange={(e) => setContent(e.target.value)}

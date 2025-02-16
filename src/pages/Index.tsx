@@ -267,11 +267,14 @@ const Index = () => {
                     />
                   )}
                   {activeTab === 'text' && (
-                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-purple-600/90 to-pink-500/90">
-                      <div className="bg-black/30 backdrop-blur-sm rounded-xl p-8 max-w-md w-full">
-                        <p className="text-white/90 text-center whitespace-pre-line text-lg leading-relaxed font-medium">
-                          {sampleContent.text.preview}
-                        </p>
+                    <div className="w-full h-full relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-500" />
+                      <div className="relative h-full flex items-center justify-center px-8 py-32">
+                        <div className="bg-black/40 backdrop-blur-sm rounded-xl p-6 w-full max-w-[280px]">
+                          <p className="text-white text-center text-sm leading-relaxed">
+                            {sampleContent.text.preview}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}

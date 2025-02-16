@@ -115,6 +115,33 @@ const demoTracks: Track[] = [
   }
 ];
 
+const demoPLaylists: Playlist[] = [
+  {
+    id: "1",
+    name: "Running",
+    tracks: new Set(["1", "2", "3"]),
+    createdAt: new Date()
+  },
+  {
+    id: "2",
+    name: "Morning Coffee",
+    tracks: new Set(["4", "5", "6"]),
+    createdAt: new Date()
+  },
+  {
+    id: "3",
+    name: "Evening Chill",
+    tracks: new Set(["7", "8", "9"]),
+    createdAt: new Date()
+  },
+  {
+    id: "4",
+    name: "Weekend Vibes",
+    tracks: new Set(["1", "4", "7", "10"]),
+    createdAt: new Date()
+  }
+];
+
 const DjMode = () => {
   const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
   const [selectedKey, setSelectedKey] = useState<string>("");
@@ -125,15 +152,8 @@ const DjMode = () => {
   const [hasUsedFilters, setHasUsedFilters] = useState(false);
   const [showPlaylistNameDialog, setShowPlaylistNameDialog] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
-  const [playlists, setPlaylists] = useState<Playlist[]>([
-    {
-      id: "1",
-      name: "Running",
-      tracks: new Set(["1", "2", "3"]),
-      createdAt: new Date()
-    }
-  ]);
-  const [showPlaylists, setShowPlaylists] = useState(true); // Set to true by default
+  const [playlists, setPlaylists] = useState<Playlist[]>(demoPLaylists);
+  const [showPlaylists, setShowPlaylists] = useState(true);
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);

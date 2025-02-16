@@ -108,6 +108,34 @@ const Index = () => {
             </Button>
           </div>
         </div>
+
+        {/* Examples Section */}
+        <div className="mt-24 space-y-12">
+          <h2 className="text-3xl font-bold text-center text-primary">Examples</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="glass p-6 rounded-xl space-y-4">
+              <h3 className="text-xl font-semibold text-primary">Food & Recipe</h3>
+              <p className="text-primary/80">Quick and easy 5-ingredient pasta recipe perfect for busy weeknights! 🍝 #cooking #foodie</p>
+            </div>
+            <div className="glass p-6 rounded-xl space-y-4">
+              <h3 className="text-xl font-semibold text-primary">Fitness</h3>
+              <p className="text-primary/80">3 exercises to build strong core muscles without equipment! 💪 #fitness #workout</p>
+            </div>
+            <div className="glass p-6 rounded-xl space-y-4">
+              <h3 className="text-xl font-semibold text-primary">Travel</h3>
+              <p className="text-primary/80">Hidden gems in Bali you won't find in tourist guides! 🌴 #travel #wanderlust</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile App Preview */}
+        <div className="mt-24 text-center">
+          <img
+            src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+            alt="Mobile App Preview"
+            className="mx-auto rounded-2xl shadow-2xl max-w-md"
+          />
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send, Video } from "lucide-react";
+import { Image, Wand2, Type, Music, Upload, Heart, MessageCircle, Bookmark, Send, Video, MoreHorizontal, X } from "lucide-react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('image');
@@ -102,17 +102,39 @@ const Index = () => {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
               
               {/* Screen Content */}
-              <div className="h-full w-full bg-white rounded-[32px] overflow-hidden">
-                {/* Instagram Header */}
-                <div className="flex items-center p-4 border-b">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600"></div>
-                    <span className="font-semibold">aicontentstudio</span>
+              <div className="h-full w-full bg-black rounded-[32px] overflow-hidden">
+                {/* Status Bar */}
+                <div className="flex justify-between items-center px-4 py-2 text-white text-xs">
+                  <span>9:41</span>
+                  <div className="flex items-center gap-1">
+                    <div className="w-4 h-1 bg-white rounded-full" />
+                    <div className="w-4 h-1 bg-white rounded-full" />
+                    <div className="w-4 h-1 bg-white rounded-full" />
                   </div>
                 </div>
 
-                {/* Post Content - Changes based on active tab */}
-                <div className="aspect-[4/5] bg-gradient-to-br from-orange-400 to-purple-500 relative overflow-hidden">
+                {/* Story Header */}
+                <div className="absolute top-8 left-0 right-0 z-10 flex items-center justify-between px-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600 p-[2px]">
+                      <div className="w-full h-full rounded-full bg-black p-[2px]">
+                        <div className="w-full h-full rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600" />
+                      </div>
+                    </div>
+                    <div className="text-white text-sm flex items-center">
+                      <span className="font-semibold">aicontentstudio</span>
+                      <span className="mx-1">•</span>
+                      <span className="text-white/80">17h</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <MoreHorizontal className="w-5 h-5 text-white" />
+                    <X className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+
+                {/* Main Content - Full Screen */}
+                <div className="h-full relative">
                   {activeTab === 'image' && (
                     <img 
                       src={sampleContent.image.preview}
@@ -128,8 +150,8 @@ const Index = () => {
                     />
                   )}
                   {activeTab === 'text' && (
-                    <div className="w-full h-full flex items-center justify-center p-6 text-white text-center">
-                      <p className="whitespace-pre-line">{sampleContent.text.preview}</p>
+                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-orange-400 to-purple-500">
+                      <p className="text-white text-center whitespace-pre-line">{sampleContent.text.preview}</p>
                     </div>
                   )}
                   {activeTab === 'style' && (
@@ -139,30 +161,46 @@ const Index = () => {
                     </div>
                   )}
                   {activeTab === 'audio' && (
-                    <div className="w-full h-full flex items-center justify-center p-6 text-white text-center bg-gradient-to-br from-blue-400 to-purple-500">
-                      <p className="whitespace-pre-line">{sampleContent.audio.preview}</p>
+                    <div className="w-full h-full flex items-center justify-center p-6 bg-gradient-to-br from-blue-400 to-purple-500">
+                      <p className="text-white text-center whitespace-pre-line">{sampleContent.audio.preview}</p>
                     </div>
                   )}
-                </div>
 
-                {/* Post Actions */}
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-4">
-                      <Heart className="w-6 h-6" />
-                      <MessageCircle className="w-6 h-6" />
-                      <Send className="w-6 h-6" />
-                    </div>
-                    <Bookmark className="w-6 h-6" />
+                  {/* Caption Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                    <p className="text-white text-sm">
+                      {activeTab === 'image' && sampleContent.image.caption}
+                      {activeTab === 'video' && sampleContent.video.caption}
+                      {activeTab === 'text' && sampleContent.text.caption}
+                      {activeTab === 'style' && sampleContent.style.caption}
+                      {activeTab === 'audio' && sampleContent.audio.caption}
+                    </p>
                   </div>
-                  <p className="text-sm">
-                    <span className="font-semibold">aicontentstudio</span>{' '}
-                    {activeTab === 'image' && sampleContent.image.caption}
-                    {activeTab === 'video' && sampleContent.video.caption}
-                    {activeTab === 'text' && sampleContent.text.caption}
-                    {activeTab === 'style' && sampleContent.style.caption}
-                    {activeTab === 'audio' && sampleContent.audio.caption}
-                  </p>
+
+                  {/* Story Actions */}
+                  <div className="absolute bottom-20 right-4 flex flex-col items-center gap-6">
+                    <button className="text-white flex flex-col items-center gap-1">
+                      <Heart className="w-7 h-7" />
+                    </button>
+                    <button className="text-white flex flex-col items-center gap-1">
+                      <MessageCircle className="w-7 h-7" />
+                    </button>
+                    <button className="text-white flex flex-col items-center gap-1">
+                      <Send className="w-7 h-7" />
+                    </button>
+                    <button className="text-white flex flex-col items-center gap-1">
+                      <Bookmark className="w-7 h-7" />
+                    </button>
+                  </div>
+
+                  {/* Message Input */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="Send message..."
+                      className="w-full bg-transparent border border-white/20 rounded-full px-4 py-2 text-white text-sm placeholder-white/60"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,41 +20,42 @@ const Index = () => {
   const handleSubmit = async () => {
     if (!content.trim()) {
       toast({
-        title: "Please enter your video content or topic",
+        title: "Content required",
+        description: "Please describe your video content first.",
         variant: "destructive",
       });
       return;
     }
 
     setIsLoading(true);
+
     try {
-      // TODO: Implement AI hook generation
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulated delay
-      
-      // Simulated response - this will be replaced with actual AI-generated content
-      setGeneratedHooks([
-        {
-          type: 'visual',
-          content: '🍝 "From pantry to plate in 5 minutes! This creamy alfredo pasta will change your weeknight dinner game forever #quickmeals #pasta"'
+      const response = await fetch('/functions/v1/generate-hooks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          type: 'verbal',
-          content: '"Want to know the secret to the creamiest 5-minute alfredo pasta? Watch till the end for the game-changing tip that makes this recipe pure magic! 🤫✨"'
-        },
-        {
-          type: 'visual',
-          content: '"This 5-minute alfredo hack went viral for a reason! 😱 Simple ingredients, restaurant-quality results #foodhacks #easyrecipes"'
-        }
-      ]);
+        body: JSON.stringify({
+          content: content.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate hooks');
+      }
+
+      const data = await response.json();
+      setGeneratedHooks(data.hooks);
       
       toast({
-        title: "Hooks generated successfully!",
-        description: "Your platform-optimized hooks are ready.",
+        title: "Hooks generated!",
+        description: "Scroll down to see your new hooks.",
       });
     } catch (error) {
+      console.error('Error generating hooks:', error);
       toast({
-        title: "Error generating hooks",
-        description: "Please try again later.",
+        title: "Generation failed",
+        description: "There was an error generating your hooks. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -64,8 +66,8 @@ const Index = () => {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: "Copied to clipboard!",
-      description: "You can now paste your hook anywhere.",
+      title: "Copied to clipboard",
+      description: "The hook has been copied to your clipboard.",
     });
   };
 

@@ -18,14 +18,14 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
       </button>
 
       <div className="px-4 pt-4 pb-8">
-        <h2 className="text-2xl font-bold mb-8">Content preferences</h2>
+        <h2 className="text-2xl font-bold mb-8 text-neutral-400">Content preferences</h2>
 
         <div className="space-y-8">
           <div className="space-y-6">
-            <h2 className="text-xl">Canvas</h2>
+            <h2 className="text-xl text-neutral-400">Canvas</h2>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[15px]">Displays short, looping visuals in the Now Playing View.</p>
+                <p className="text-[15px] text-neutral-400">Displays short, looping visuals in the Now Playing View.</p>
               </div>
               <Switch checked={true} className="data-[state=checked]:bg-green-500" />
             </div>
@@ -34,7 +34,7 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl mb-1">Allow explicit content</h2>
+                <h2 className="text-xl mb-1 text-neutral-400">Allow explicit content</h2>
                 <p className="text-[15px] text-neutral-400">
                   Explicit content (labeled with the E tag) is playable.
                 </p>
@@ -46,7 +46,7 @@ export function ContentSettings({ onBack }: { onBack: () => void }) {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl mb-1">Show unplayable songs</h2>
+                <h2 className="text-xl mb-1 text-neutral-400">Show unplayable songs</h2>
                 <p className="text-[15px] text-neutral-400">
                   Songs that aren't available (e.g., due to artist removal or region) are still visible.
                 </p>

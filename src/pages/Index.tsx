@@ -183,7 +183,7 @@ const Index = () => {
           </Card>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <div className="flex flex-row md:flex-col gap-4">
+            <div className="w-16 flex flex-row md:flex-col gap-4 invisible">
               {activeTab === 'image' && (
                 <>
                   <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer hover:ring-2 ring-primary">
@@ -210,15 +210,13 @@ const Index = () => {
                 </>
               )}
               {activeTab === 'video' && (
-                <>
-                  <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
-                    <img 
-                      src={sampleContent.video.preview}
-                      alt="Video preview"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </>
+                <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                  <img 
+                    src={sampleContent.video.preview}
+                    alt="Video preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               )}
             </div>
 
@@ -337,6 +335,10 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="w-16 invisible">
+              <div className="w-16 h-24" />
             </div>
           </div>
         </div>

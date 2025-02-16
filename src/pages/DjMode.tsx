@@ -161,7 +161,7 @@ const demoPLaylists: Playlist[] = [
   }
 ];
 
-const DjMode = () => {
+export default function DjMode() {
   const { showBpmKey } = useSettings();
   const [showSettings, setShowSettings] = useState(false);
   const [bpmRange, setBpmRange] = useState<[number, number]>([90, 140]);
@@ -178,6 +178,7 @@ const DjMode = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(demoPLaylists[0]);
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const hasActiveFilters = selectedKey !== "" || bpmRange[0] !== 90 || bpmRange[1] !== 140;
 
@@ -267,7 +268,7 @@ const DjMode = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
+    <div className="h-screen bg-neutral-900 text-white">
       <Header 
         hasActiveFilters={!showPlaylists && hasActiveFilters && showBpmKey}
         selectedKey={selectedKey}
@@ -421,6 +422,4 @@ const DjMode = () => {
       </Dialog>
     </div>
   );
-};
-
-export default DjMode;
+}

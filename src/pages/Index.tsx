@@ -130,17 +130,53 @@ const Index = () => {
                   <h4 className="text-sm font-medium text-gray-700">For On-Screen Text:</h4>
                   <div className="relative aspect-[9/16] bg-gray-100 rounded-lg overflow-hidden">
                     <img 
-                      src="/placeholder.svg" 
-                      alt="Video thumbnail example" 
-                      className="object-cover w-full h-full"
+                      src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
+                      alt="Person working on laptop" 
+                      className="object-cover w-full h-full brightness-90"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                    <div className="absolute top-4 left-4 flex items-center space-x-2">
+                      <div className="h-10 w-10 rounded-full overflow-hidden ring-2 ring-white">
+                        <img 
+                          src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
+                          alt="Profile" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="text-white text-sm font-medium">
+                        <p>techcreator</p>
+                        <p className="opacity-75 text-xs">Original audio</p>
+                      </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 via-black/50 to-transparent">
                       <p className="text-white text-center font-medium">
                         The 5AM routine that helped me land my dream tech job 💻
                       </p>
                       <p className="text-white/80 text-sm text-center mt-1">
-                        #techlife #coding #productivity
+                        #techlife #coding #productivity #developer
                       </p>
+                    </div>
+                    <div className="absolute right-4 bottom-20 flex flex-col items-center space-y-4">
+                      <div className="bg-black/20 backdrop-blur-sm p-2 rounded-full">
+                        <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M21.593 7.203a2.506 2.506 0 0 0-1.762-1.766C18.265 5.007 12 5 12 5s-6.264-.007-7.831.404a2.56 2.56 0 0 0-1.766 1.778c-.413 1.566-.417 4.814-.417 4.814s-.004 3.264.406 4.814c.23.857.905 1.534 1.763 1.765 1.582.43 7.83.437 7.83.437s6.265.007 7.831-.403a2.515 2.515 0 0 0 1.767-1.763c.414-1.565.417-4.812.417-4.812s.02-3.265-.407-4.831zM9.996 15.005l.005-6 5.207 3.005-5.212 2.995z" />
+                        </svg>
+                      </div>
+                      <div className="flex flex-col items-center space-y-1">
+                        <div className="bg-black/20 backdrop-blur-sm p-2 rounded-full">
+                          <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                          </svg>
+                        </div>
+                        <span className="text-white text-sm">23.4k</span>
+                      </div>
+                      <div className="flex flex-col items-center space-y-1">
+                        <div className="bg-black/20 backdrop-blur-sm p-2 rounded-full">
+                          <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z" />
+                          </svg>
+                        </div>
+                        <span className="text-white text-sm">1.2k</span>
+                      </div>
                     </div>
                   </div>
                 </div>

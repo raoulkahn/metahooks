@@ -274,7 +274,7 @@ export default function DjMode() {
         hasActiveFilters={!showPlaylists && hasActiveFilters && showBpmKey}
         selectedKey={selectedKey}
         onFilterClick={() => {}}
-        onAvatarClick={() => setShowSettings(true)}
+        onAvatarClick={() => setSettingsOpen(true)}
       />
 
       <div className="px-4 pb-32">
@@ -378,8 +378,8 @@ export default function DjMode() {
       />
 
       <SettingsDialog 
-        open={showSettings} 
-        onClose={() => setShowSettings(false)} 
+        open={settingsOpen} 
+        onClose={() => setSettingsOpen(false)} 
       />
 
       <Dialog open={showPlaylistNameDialog} onOpenChange={setShowPlaylistNameDialog}>

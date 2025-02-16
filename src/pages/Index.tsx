@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Loader2, Copy } from "lucide-react";
+import { Loader2, Copy, RefreshCw } from "lucide-react";
 import PlatformButton from '@/components/PlatformButton';
 
 interface Hook {
@@ -69,6 +69,15 @@ const Index = () => {
     });
   };
 
+  const handleReset = () => {
+    setContent('');
+    setGeneratedHooks([]);
+    toast({
+      title: "Content cleared",
+      description: "You can now start a new generation.",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/80 px-4">
       <div className="flex items-center justify-center gap-2 pt-6">
@@ -104,7 +113,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <Button
               className="py-2 sm:py-5 text-base sm:text-lg font-medium px-8 sm:px-12"
               onClick={handleSubmit}
@@ -119,6 +128,16 @@ const Index = () => {
                 'Generate Hooks'
               )}
             </Button>
+            {generatedHooks.length > 0 && (
+              <Button
+                variant="outline"
+                className="py-2 sm:py-5 text-base sm:text-lg font-medium px-8"
+                onClick={handleReset}
+              >
+                <RefreshCw className="mr-2 h-5 w-5" />
+                Reset
+              </Button>
+            )}
           </div>
         </div>
 

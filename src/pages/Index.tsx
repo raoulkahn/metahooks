@@ -148,6 +148,9 @@ const Index = () => {
                 </div>
               ))}
             </div>
+            <p className="text-center text-primary/70 mt-8">
+              Not quite what you're looking for? Click "Generate Hooks" again to get new suggestions!
+            </p>
           </div>
         )}
 

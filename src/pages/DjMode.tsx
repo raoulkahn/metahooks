@@ -184,6 +184,7 @@ const DjMode = () => {
     setPlaylistName("");
     setIsSelectingTracks(false);
     setSelectedTracks(new Set());
+    setHasUsedFilters(false);
   };
 
   return (

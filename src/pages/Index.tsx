@@ -22,39 +22,78 @@ const Index = () => {
             Generate images, captions, and more - all optimized for maximum engagement.
           </p>
 
-          {/* iPhone Mockup */}
-          <div className="relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl">
-            {/* iPhone Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
-            
-            {/* Screen Content */}
-            <div className="h-full w-full bg-white rounded-[32px] overflow-hidden">
-              {/* Instagram Header */}
-              <div className="flex items-center p-4 border-b">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600"></div>
-                  <span className="font-semibold">aicontentstudio</span>
-                </div>
-              </div>
+          {/* Search Term Display */}
+          <div className="mb-8">
+            <span className="inline-block bg-secondary/50 px-4 py-2 rounded-full text-sm font-medium">
+              Search: "sunset"
+            </span>
+          </div>
 
-              {/* Post Image */}
-              <div className="aspect-square bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                <Image className="w-16 h-16 text-white" />
+          {/* Layout for Thumbnails and Phone */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+            {/* Thumbnails Column */}
+            <div className="flex flex-row md:flex-col gap-4">
+              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer hover:ring-2 ring-primary">
+                <img 
+                  src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" 
+                  alt="Sunset option 1"
+                  className="w-full h-full object-cover"
+                />
               </div>
+              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                <img 
+                  src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" 
+                  alt="Sunset option 2"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-16 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-purple-500 cursor-pointer">
+                <img 
+                  src="https://images.unsplash.com/photo-1472396961693-142e6e269027" 
+                  alt="Sunset option 3"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
 
-              {/* Post Actions */}
-              <div className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-4">
-                    <Heart className="w-6 h-6" />
-                    <MessageCircle className="w-6 h-6" />
-                    <Send className="w-6 h-6" />
+            {/* iPhone Mockup */}
+            <div className="relative mx-auto w-[280px] h-[572px] bg-black rounded-[45px] border-[14px] border-black shadow-xl">
+              {/* iPhone Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-40 bg-black rounded-b-3xl z-20"></div>
+              
+              {/* Screen Content */}
+              <div className="h-full w-full bg-white rounded-[32px] overflow-hidden">
+                {/* Instagram Header */}
+                <div className="flex items-center p-4 border-b">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600"></div>
+                    <span className="font-semibold">aicontentstudio</span>
                   </div>
-                  <Bookmark className="w-6 h-6" />
                 </div>
-                <p className="text-sm">
-                  <span className="font-semibold">aicontentstudio</span> Create engaging content with AI-powered tools 🚀 #AIContent #SocialMedia
-                </p>
+
+                {/* Post Image (now in portrait) */}
+                <div className="aspect-[4/5] bg-gradient-to-br from-orange-400 to-purple-500 relative overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1469474968028-56623f02e42e" 
+                    alt="Generated sunset"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Post Actions */}
+                <div className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-4">
+                      <Heart className="w-6 h-6" />
+                      <MessageCircle className="w-6 h-6" />
+                      <Send className="w-6 h-6" />
+                    </div>
+                    <Bookmark className="w-6 h-6" />
+                  </div>
+                  <p className="text-sm">
+                    <span className="font-semibold">aicontentstudio</span> Beautiful sunset captured by AI 🌅 Perfect moment where nature meets technology ✨ #Sunset #AIArt #NatureMagic
+                  </p>
+                </div>
               </div>
             </div>
           </div>

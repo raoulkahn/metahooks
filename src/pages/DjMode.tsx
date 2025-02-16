@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
@@ -18,7 +19,7 @@ export default function DjMode() {
       id: "1",
       title: "Adams Hill",
       artist: "Tensnake",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
       bpm: 128,
       key: "1A",
       duration: "3:00",
@@ -28,7 +29,7 @@ export default function DjMode() {
       id: "2",
       title: "Cielo - Fulltone Remix",
       artist: "Double Touch, Bross (RO), Fulltone",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
       bpm: 130,
       key: "2A",
       duration: "3:30",
@@ -38,7 +39,7 @@ export default function DjMode() {
       id: "3",
       title: "Without - Tim Green Remix",
       artist: "BAILE, Tim Green, Felicia Douglass",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
       bpm: 132,
       key: "3A",
       duration: "4:00",
@@ -48,7 +49,7 @@ export default function DjMode() {
       id: "4",
       title: "Liberator - Extended Mix",
       artist: "Marsh",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
       bpm: 125,
       key: "4A",
       duration: "3:45",
@@ -58,7 +59,7 @@ export default function DjMode() {
       id: "5",
       title: "Le Saint Graal - Original Mix",
       artist: "Volen Sentir",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d",
       bpm: 126,
       key: "5A",
       duration: "3:15",
@@ -68,7 +69,7 @@ export default function DjMode() {
       id: "6",
       title: "Reborn - Volen Sentir Sunset Mix",
       artist: "Volen Sentir",
-      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
+      albumArt: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
       bpm: 124,
       key: "6A",
       duration: "3:50",

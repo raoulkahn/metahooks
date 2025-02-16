@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
@@ -17,9 +16,9 @@ export default function DjMode() {
   const tracks: Track[] = [
     {
       id: "1",
-      title: "Running Up That Hill",
-      artist: "Kate Bush",
-      albumArt: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=300",
+      title: "Adams Hill",
+      artist: "Tensnake",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 128,
       key: "1A",
       duration: "3:00",
@@ -27,9 +26,9 @@ export default function DjMode() {
     },
     {
       id: "2",
-      title: "Run the World (Girls)",
-      artist: "Beyoncé",
-      albumArt: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300",
+      title: "Cielo - Fulltone Remix",
+      artist: "Double Touch, Bross (RO), Fulltone",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 130,
       key: "2A",
       duration: "3:30",
@@ -37,9 +36,9 @@ export default function DjMode() {
     },
     {
       id: "3",
-      title: "Run",
-      artist: "Foo Fighters",
-      albumArt: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300",
+      title: "Without - Tim Green Remix",
+      artist: "BAILE, Tim Green, Felicia Douglass",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 132,
       key: "3A",
       duration: "4:00",
@@ -47,9 +46,9 @@ export default function DjMode() {
     },
     {
       id: "4",
-      title: "Born to Run",
-      artist: "Bruce Springsteen",
-      albumArt: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=300",
+      title: "Liberator - Extended Mix",
+      artist: "Marsh",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 125,
       key: "4A",
       duration: "3:45",
@@ -57,9 +56,9 @@ export default function DjMode() {
     },
     {
       id: "5",
-      title: "Run to You",
-      artist: "Bryan Adams",
-      albumArt: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300",
+      title: "Le Saint Graal - Original Mix",
+      artist: "Volen Sentir",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 126,
       key: "5A",
       duration: "3:15",
@@ -67,33 +66,13 @@ export default function DjMode() {
     },
     {
       id: "6",
-      title: "Running to Stand Still",
-      artist: "U2",
-      albumArt: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=300",
+      title: "Reborn - Volen Sentir Sunset Mix",
+      artist: "Volen Sentir",
+      albumArt: "/lovable-uploads/ab42ae7d-f9b7-4a1e-8c6a-f45bf587f712.png",
       bpm: 124,
       key: "6A",
       duration: "3:50",
       energy: 6
-    },
-    {
-      id: "7",
-      title: "I Ran",
-      artist: "A Flock of Seagulls",
-      albumArt: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300",
-      bpm: 128,
-      key: "7A",
-      duration: "3:20",
-      energy: 8
-    },
-    {
-      id: "8",
-      title: "Run Away With Me",
-      artist: "Carly Rae Jepsen",
-      albumArt: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=300",
-      bpm: 127,
-      key: "8A",
-      duration: "3:40",
-      energy: 9
     }
   ];
 

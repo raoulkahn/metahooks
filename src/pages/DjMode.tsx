@@ -18,6 +18,13 @@ import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 import { toast } from "sonner";
 
+type Playlist = {
+  id: string;
+  name: string;
+  tracks: Set<string>;
+  createdAt: Date;
+};
+
 const demoTracks: Track[] = [
   {
     id: "1",
@@ -133,6 +140,8 @@ const DjMode = () => {
   const [hasUsedFilters, setHasUsedFilters] = useState(false);
   const [showPlaylistNameDialog, setShowPlaylistNameDialog] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [showPlaylists, setShowPlaylists] = useState(false);
   
   const [tempBpmRange, setTempBpmRange] = useState<[number, number]>([90, 140]);
   const [tempKey, setTempKey] = useState(selectedKey);
@@ -189,6 +198,14 @@ const DjMode = () => {
       return;
     }
     
+    const newPlaylist: Playlist = {
+      id: crypto.randomUUID(),
+      name: playlistName,
+      tracks: selectedTracks,
+      createdAt: new Date()
+    };
+    
+    setPlaylists(prev => [newPlaylist, ...prev]);
     toast.success(`Created new playlist "${playlistName}" with ${selectedTracks.size} tracks`);
     setShowPlaylistNameDialog(false);
     setPlaylistName("");
@@ -397,80 +414,142 @@ const DjMode = () => {
           </div>
         )}
 
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold">Running</h1>
-            <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
-                <AvatarFallback>DJ</AvatarFallback>
-              </Avatar>
-              <span>DJ Mode • 1h 45m</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-              className={cn(
-                "text-sm",
-                showTechnicalDetails 
-                  ? "bg-neutral-800 text-white border-neutral-700" 
-                  : "bg-transparent text-neutral-400 border-neutral-700"
-              )}
-            >
-              BPM-Key
-            </Button>
-            <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
-              <Play className="h-8 w-8 fill-current" />
-            </Button>
-          </div>
-        </div>
-
-        {filteredTracks.map((track) => (
-          <div
-            key={track.id}
-            className={cn(
-              "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
-              currentlyPlaying?.id === track.id && "bg-white/20",
-              isSelectingTracks && selectedTracks.has(track.id) && "bg-emerald-500/20 border border-emerald-500/50"
-            )}
-            onClick={() => isSelectingTracks ? handleTrackSelection(track.id) : setCurrentlyPlaying(track)}
-          >
-            <div className="relative">
-              <img
-                src={track.albumArt}
-                alt={track.title}
-                className="w-10 h-10 rounded"
-              />
-              {isSelectingTracks && selectedTracks.has(track.id) && (
-                <div className="absolute inset-0 bg-emerald-500/80 rounded flex items-center justify-center">
-                  <Check className="h-6 w-6 text-white" />
+        {!showPlaylists ? (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl font-bold">Running</h1>
+                <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
+                    <AvatarFallback>DJ</AvatarFallback>
+                  </Avatar>
+                  <span>DJ Mode • 1h 45m</span>
                 </div>
-              )}
-            </div>
-            <div className="flex-1 min-w-0 pr-8">
-              <div className={cn(
-                "text-base font-normal truncate",
-                currentlyPlaying?.id === track.id && "text-green-500"
-              )}>{track.title}</div>
-              <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
-            </div>
-            {showTechnicalDetails && (
-              <div className="flex items-center gap-4 text-sm ml-auto">
-                <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
-                <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
-                {!isSelectingTracks && (
-                  <span className="text-neutral-400">•••</span>
-                )}
               </div>
-            )}
-            {!showTechnicalDetails && !isSelectingTracks && (
-              <span className="text-neutral-400 ml-auto">•••</span>
-            )}
-          </div>
-        ))}
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
+                  className={cn(
+                    "text-sm",
+                    showTechnicalDetails 
+                      ? "bg-neutral-800 text-white border-neutral-700" 
+                      : "bg-transparent text-neutral-400 border-neutral-700"
+                  )}
+                >
+                  BPM-Key
+                </Button>
+                <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
+                  <Play className="h-8 w-8 fill-current" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mb-6">
+              {filteredTracks.map((track) => (
+                <div
+                  key={track.id}
+                  className={cn(
+                    "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
+                    currentlyPlaying?.id === track.id && "bg-white/20",
+                    isSelectingTracks && selectedTracks.has(track.id) && "bg-emerald-500/20 border border-emerald-500/50"
+                  )}
+                  onClick={() => isSelectingTracks ? handleTrackSelection(track.id) : setCurrentlyPlaying(track)}
+                >
+                  <div className="relative">
+                    <img
+                      src={track.albumArt}
+                      alt={track.title}
+                      className="w-10 h-10 rounded"
+                    />
+                    {isSelectingTracks && selectedTracks.has(track.id) && (
+                      <div className="absolute inset-0 bg-emerald-500/80 rounded flex items-center justify-center">
+                        <Check className="h-6 w-6 text-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0 pr-8">
+                    <div className={cn(
+                      "text-base font-normal truncate",
+                      currentlyPlaying?.id === track.id && "text-green-500"
+                    )}>{track.title}</div>
+                    <div className="text-sm text-neutral-400 truncate">{track.artist}</div>
+                  </div>
+                  {showTechnicalDetails && (
+                    <div className="flex items-center gap-4 text-sm ml-auto">
+                      <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
+                      <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
+                      {!isSelectingTracks && (
+                        <span className="text-neutral-400">•••</span>
+                      )}
+                    </div>
+                  )}
+                  {!showTechnicalDetails && !isSelectingTracks && (
+                    <span className="text-neutral-400 ml-auto">•••</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl font-bold">Your Library</h1>
+                <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
+                    <AvatarFallback>DJ</AvatarFallback>
+                  </Avatar>
+                  <span>{playlists.length} Playlists</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+              <Button 
+                variant="default" 
+                size="sm" 
+                className="bg-green-500 hover:bg-green-600 rounded-full"
+              >
+                Playlists
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="bg-neutral-800/50 border-none rounded-full"
+              >
+                By you
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="bg-neutral-800/50 border-none rounded-full whitespace-nowrap"
+              >
+                Downloaded
+              </Button>
+            </div>
+
+            {playlists.map((playlist) => (
+              <div
+                key={playlist.id}
+                className="flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group"
+              >
+                <div className="relative w-12 h-12 bg-gradient-to-br from-neutral-700 to-neutral-800 rounded flex items-center justify-center">
+                  <Library className="h-6 w-6 text-white/70" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-base font-medium">{playlist.name}</div>
+                  <div className="text-sm text-neutral-400">
+                    {playlist.tracks.size} tracks
+                  </div>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-black/90 border-t border-neutral-800">
@@ -507,7 +586,14 @@ const DjMode = () => {
             </svg>
             <span className="text-xs">Search</span>
           </Button>
-          <Button variant="ghost" className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white hover:bg-transparent">
+          <Button 
+            variant="ghost" 
+            className={cn(
+              "flex flex-col items-center gap-1 hover:bg-transparent",
+              showPlaylists ? "text-white" : "text-neutral-400 hover:text-white"
+            )}
+            onClick={() => setShowPlaylists(!showPlaylists)}
+          >
             <Library className="h-6 w-6" />
             <span className="text-xs">Your Library</span>
           </Button>

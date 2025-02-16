@@ -12,9 +12,10 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus } from "lucide-react";
+import { ArrowUpDown, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat, AudioWaveform, Library, FilePlus, ListPlus, Check } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
+import { toast } from "sonner";
 
 const demoTracks: Track[] = [
   {
@@ -125,6 +126,8 @@ const DjMode = () => {
   const [selectedKey, setSelectedKey] = useState<string>("");
   const [showFilters, setShowFilters] = useState(false);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>(demoTracks[0]);
+  const [isSelectingTracks, setIsSelectingTracks] = useState(false);
+  const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   
   const [tempBpmRange, setTempBpmRange] = useState(bpmRange);
   const [tempKey, setTempKey] = useState(selectedKey);
@@ -148,6 +151,33 @@ const DjMode = () => {
     const matchesKey = !selectedKey || track.key === selectedKey;
     return matchesBpm && matchesKey;
   });
+
+  const handleCreatePlaylist = (mode: 'all' | 'select') => {
+    if (mode === 'all') {
+      toast.success(`Created new playlist with ${filteredTracks.length} tracks`);
+    } else {
+      setIsSelectingTracks(true);
+      setSelectedTracks(new Set());
+    }
+  };
+
+  const handleTrackSelection = (trackId: string) => {
+    setSelectedTracks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(trackId)) {
+        newSet.delete(trackId);
+      } else {
+        newSet.add(trackId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleSaveSelection = () => {
+    toast.success(`Created new playlist with ${selectedTracks.size} tracks`);
+    setIsSelectingTracks(false);
+    setSelectedTracks(new Set());
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
@@ -302,6 +332,71 @@ const DjMode = () => {
       </header>
 
       <div className="px-4 pb-32">
+        {hasActiveFilters && filteredTracks.length > 0 && !isSelectingTracks && (
+          <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
+            <div>
+              <h3 className="font-medium">Found {filteredTracks.length} matching tracks</h3>
+              <p className="text-sm text-neutral-400">Create a new playlist with these tracks?</p>
+            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-emerald-600 hover:bg-emerald-700">
+                  <ListPlus className="h-5 w-5 mr-2" />
+                  Create Playlist
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white">
+                <DialogHeader>
+                  <DialogTitle>Create New Playlist</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <Button 
+                    onClick={() => handleCreatePlaylist('all')} 
+                    className="w-full bg-neutral-800 hover:bg-neutral-700"
+                  >
+                    Add all {filteredTracks.length} tracks
+                  </Button>
+                  <Button 
+                    onClick={() => handleCreatePlaylist('select')} 
+                    variant="outline" 
+                    className="w-full border-neutral-700"
+                  >
+                    Select individual tracks
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
+
+        {isSelectingTracks && (
+          <div className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-4 mb-6 flex items-center justify-between">
+            <div>
+              <h3 className="font-medium">Select tracks for your new playlist</h3>
+              <p className="text-sm text-neutral-400">{selectedTracks.size} tracks selected</p>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setIsSelectingTracks(false);
+                  setSelectedTracks(new Set());
+                }}
+                className="border-neutral-700"
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleSaveSelection}
+                disabled={selectedTracks.size === 0}
+                className="bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50"
+              >
+                Create Playlist
+              </Button>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold">Running</h1>
@@ -317,20 +412,29 @@ const DjMode = () => {
             <Play className="h-8 w-8 fill-current" />
           </Button>
         </div>
+
         {filteredTracks.map((track) => (
           <div
             key={track.id}
             className={cn(
               "flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group",
-              currentlyPlaying?.id === track.id && "bg-white/20"
+              currentlyPlaying?.id === track.id && "bg-white/20",
+              isSelectingTracks && selectedTracks.has(track.id) && "bg-emerald-500/20 border border-emerald-500/50"
             )}
-            onClick={() => setCurrentlyPlaying(track)}
+            onClick={() => isSelectingTracks ? handleTrackSelection(track.id) : setCurrentlyPlaying(track)}
           >
-            <img
-              src={track.albumArt}
-              alt={track.title}
-              className="w-10 h-10 rounded"
-            />
+            <div className="relative">
+              <img
+                src={track.albumArt}
+                alt={track.title}
+                className="w-10 h-10 rounded"
+              />
+              {isSelectingTracks && selectedTracks.has(track.id) && (
+                <div className="absolute inset-0 bg-emerald-500/80 rounded flex items-center justify-center">
+                  <Check className="h-6 w-6 text-white" />
+                </div>
+              )}
+            </div>
             <div className="flex-1 min-w-0 pr-8">
               <div className={cn(
                 "text-base font-normal truncate",
@@ -341,13 +445,15 @@ const DjMode = () => {
             <div className="flex items-center gap-4 text-sm ml-auto">
               <span className="text-emerald-500 whitespace-nowrap">{track.bpm} BPM</span>
               <span className="text-emerald-500 whitespace-nowrap">{track.key}</span>
-              <Button
-                variant="ghost"
-                className="text-neutral-400"
-                size="icon"
-              >
-                •••
-              </Button>
+              {!isSelectingTracks && (
+                <Button
+                  variant="ghost"
+                  className="text-neutral-400"
+                  size="icon"
+                >
+                  •••
+                </Button>
+              )}
             </div>
           </div>
         ))}

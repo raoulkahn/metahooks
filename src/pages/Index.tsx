@@ -269,7 +269,7 @@ const Index = () => {
                     </div>
                   </div>
 
-                  <div className="mobile-content">
+                  <div className="mobile-content p-0">
                     {activeTab === 'text' && (
                       <div className="text-content">
                         <p className="text-white text-center text-sm leading-relaxed">
@@ -278,28 +278,34 @@ const Index = () => {
                       </div>
                     )}
                     {activeTab === 'image' && (
-                      <img 
-                        src={sampleContent.image.preview}
-                        alt="Generated content"
-                        className="w-full h-full object-cover"
-                      />
+                      <div className="absolute inset-0">
+                        <img 
+                          src={sampleContent.image.preview}
+                          alt="Generated content"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     )}
                     {activeTab === 'video' && (
-                      <img 
-                        src={sampleContent.video.preview}
-                        alt="Video preview"
-                        className="w-full h-full object-cover"
-                      />
+                      <div className="absolute inset-0">
+                        <img 
+                          src={sampleContent.video.preview}
+                          alt="Video preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     )}
                     {activeTab === 'audio' && (
                       <>
-                        <img 
-                          src={sampleContent.audio.background}
-                          alt="Audio background"
-                          className="absolute inset-0 w-full h-full object-cover"
-                        />
+                        <div className="absolute inset-0">
+                          <img 
+                            src={sampleContent.audio.background}
+                            alt="Audio background"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                         <div className="gradient-overlay" />
-                        <div className="relative z-10 w-full max-w-md space-y-4">
+                        <div className="relative z-10 w-full max-w-md p-8 space-y-4">
                           {generatedAudioUrl ? (
                             <>
                               <audio controls className="w-full">

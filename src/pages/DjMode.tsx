@@ -225,7 +225,7 @@ const DjMode = () => {
                       <div className="flex-1 px-2">
                         <Slider
                           defaultValue={tempBpmRange}
-                          max={200}
+                          max={160}
                           min={60}
                           step={1}
                           value={tempBpmRange}

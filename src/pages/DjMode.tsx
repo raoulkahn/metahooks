@@ -1,3 +1,4 @@
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {
@@ -13,10 +14,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { ArrowUpDown, Search, Filter } from "lucide-react";
+import { ArrowUpDown, Search, Filter, ChevronLeft, Shuffle, SkipBack, Play, SkipForward, Repeat } from "lucide-react";
 import { useState } from "react";
 import { Track, MusicalKey } from "@/types/music";
 
@@ -67,8 +69,17 @@ const DjMode = () => {
   });
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="sticky top-0 bg-gradient-to-b from-neutral-900 to-black p-4">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-black text-white">
+      <header className="sticky top-0 bg-gradient-to-b from-neutral-900/90 to-black/90 backdrop-blur-md p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <Button variant="ghost" size="icon" className="text-white">
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <Avatar className="h-8 w-8">
+            <AvatarImage src="/placeholder.svg" alt="User" />
+            <AvatarFallback>DJ</AvatarFallback>
+          </Avatar>
+        </div>
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="p-2">
             <Search className="h-5 w-5" />
@@ -76,7 +87,7 @@ const DjMode = () => {
           <div className="flex-1">
             <Input
               className="bg-neutral-800 border-none text-white placeholder:text-neutral-400"
-              placeholder="Find on this page"
+              placeholder="Search tracks"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -203,11 +214,26 @@ const DjMode = () => {
         </div>
       </header>
 
-      <div className="px-4">
+      <div className="px-4 pb-32">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold">Running</h1>
+            <div className="flex items-center gap-2 text-neutral-400 text-sm mt-1">
+              <Avatar className="h-6 w-6">
+                <AvatarImage src="/placeholder.svg" alt="User" />
+                <AvatarFallback>DJ</AvatarFallback>
+              </Avatar>
+              <span>DJ Mode • 1h 45m</span>
+            </div>
+          </div>
+          <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-400 h-14 w-14">
+            <Play className="h-8 w-8 fill-current" />
+          </Button>
+        </div>
         {filteredTracks.map((track) => (
           <div
             key={track.id}
-            className="flex items-center gap-3 p-2 hover:bg-neutral-800 rounded-md cursor-pointer group"
+            className="flex items-center gap-3 p-2 hover:bg-white/10 rounded-md cursor-pointer group"
           >
             <img
               src={track.albumArt}
@@ -233,18 +259,35 @@ const DjMode = () => {
         ))}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-neutral-800 p-4">
-        <div className="flex justify-around">
-          <Button variant="ghost" className="flex flex-col items-center">
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black to-black/90 border-t border-neutral-800">
+        <div className="flex items-center justify-center gap-4 p-4">
+          <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-white">
+            <Shuffle className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-white">
+            <SkipBack className="h-5 w-5" />
+          </Button>
+          <Button size="icon" className="rounded-full bg-white hover:bg-white/90 text-black h-10 w-10">
+            <Play className="h-6 w-6 fill-current" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-white">
+            <SkipForward className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-neutral-400 hover:text-white">
+            <Repeat className="h-5 w-5" />
+          </Button>
+        </div>
+        <div className="flex justify-around p-4 pt-0">
+          <Button variant="ghost" className="flex flex-col items-center text-neutral-400 hover:text-white">
             <span>Home</span>
           </Button>
-          <Button variant="ghost" className="flex flex-col items-center">
+          <Button variant="ghost" className="flex flex-col items-center text-neutral-400 hover:text-white">
             <span>Search</span>
           </Button>
-          <Button variant="ghost" className="flex flex-col items-center">
+          <Button variant="ghost" className="flex flex-col items-center text-neutral-400 hover:text-white">
             <span>Your Library</span>
           </Button>
-          <Button variant="ghost" className="flex flex-col items-center">
+          <Button variant="ghost" className="flex flex-col items-center text-neutral-400 hover:text-white">
             <span>Create</span>
           </Button>
         </div>

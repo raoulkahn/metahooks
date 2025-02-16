@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -40,17 +41,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 px-4">
-      <div className="max-w-4xl mx-auto pt-16 pb-24 animate-fade-up">
+      <div className="flex items-center justify-center gap-2 pt-8">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.0321 14.4783L7.45669 26.5217H24.6075L17.0321 14.4783M15.9998 3.47826L23.5751 15.5217L31.1505 27.5652H16.9998H2.84912L10.4245 15.5217L15.9998 3.47826Z" stroke="#303235"/>
+        </svg>
+        <span className="text-gray-600">Powered by OpenAI</span>
+      </div>
+      <div className="max-w-4xl mx-auto pt-8 pb-24 animate-fade-up">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Meta Video Hook Optimizer
           </h1>
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15.0321 14.4783L7.45669 26.5217H24.6075L17.0321 14.4783M15.9998 3.47826L23.5751 15.5217L31.1505 27.5652H16.9998H2.84912L10.4245 15.5217L15.9998 3.47826Z" stroke="#303235"/>
-            </svg>
-            <span className="text-gray-600">Powered by OpenAI</span>
-          </div>
           <p className="text-lg text-gray-600">
             Create engaging hooks for Reels and Stories across Meta platforms
           </p>

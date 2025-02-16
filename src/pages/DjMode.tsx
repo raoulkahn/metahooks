@@ -187,8 +187,8 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[0]}
                         onChange={(e) => setTempBpmRange([Number(e.target.value), tempBpmRange[1]])}
-                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md select-none"
-                        onFocus={(e) => e.target.select()}
+                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                        onClick={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                       />
                       <div className="flex-1 px-2">
                         <Slider
@@ -205,8 +205,8 @@ const DjMode = () => {
                         type="number"
                         value={tempBpmRange[1]}
                         onChange={(e) => setTempBpmRange([tempBpmRange[0], Number(e.target.value)])}
-                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md select-none"
-                        onFocus={(e) => e.target.select()}
+                        className="w-16 bg-neutral-800 border-none text-white text-center rounded-md"
+                        onClick={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                       />
                     </div>
                   </div>

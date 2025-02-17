@@ -18,10 +18,8 @@ type HeaderProps = {
   view?: "list" | "grid";
 };
 
-const MUSICAL_KEYS = [
-  "1A", "2A", "3A", "4A", "5A", "6A", "7A", "8A",
-  "1B", "2B", "3B", "4B", "5B", "6B", "7B", "8B"
-];
+const FLAT_KEYS = ["Db", "Eb", "Gb", "Ab", "Bb"];
+const NATURAL_KEYS = ["C", "D", "E", "F", "G", "A", "B"];
 
 export function Header({ 
   hasActiveFilters, 
@@ -33,8 +31,9 @@ export function Header({
 }: HeaderProps) {
   const { showBpmKey } = useSettings();
   const navigate = useNavigate();
-  const [bpmRange, setBpmRange] = useState([120, 130]);
+  const [bpmRange, setBpmRange] = useState([90, 140]);
   const [selectedMusicKey, setSelectedMusicKey] = useState<string>("");
+  const [keyType, setKeyType] = useState<"major" | "minor">("major");
   
   return (
     <header className="sticky top-0 bg-gradient-to-b from-black/95 via-black/95 to-black/0 z-10">
@@ -96,35 +95,42 @@ export function Header({
             <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-md w-full">
               <div className="p-6 space-y-6">
                 <div>
-                  <h2 className="text-lg font-medium mb-4">Filter Tracks</h2>
+                  <h2 className="text-lg font-medium mb-6">Filter Tracks</h2>
                   
                   {/* BPM Range Filter */}
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-4 mb-8">
                     <h3 className="text-sm font-medium text-neutral-200">BPM Range</h3>
-                    <Slider
-                      defaultValue={bpmRange}
-                      max={160}
-                      min={80}
-                      step={1}
-                      onValueChange={setBpmRange}
-                      className="w-full"
-                    />
-                    <div className="text-sm text-neutral-400">
-                      {bpmRange[0]} - {bpmRange[1]} BPM
+                    <div className="flex items-center gap-4">
+                      <div className="bg-black/50 rounded-md px-3 py-1 text-sm text-white">
+                        {bpmRange[0]}
+                      </div>
+                      <Slider
+                        defaultValue={bpmRange}
+                        max={140}
+                        min={80}
+                        step={1}
+                        onValueChange={setBpmRange}
+                        className="flex-1"
+                      />
+                      <div className="bg-black/50 rounded-md px-3 py-1 text-sm text-white">
+                        {bpmRange[1]}
+                      </div>
                     </div>
                   </div>
 
                   {/* Musical Key Filter */}
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-neutral-200">Musical Key</h3>
-                    <div className="grid grid-cols-4 gap-2">
-                      {MUSICAL_KEYS.map((key) => (
+                    <h3 className="text-sm font-medium text-neutral-200">Key</h3>
+                    
+                    {/* Flat Keys */}
+                    <div className="grid grid-cols-5 gap-2">
+                      {FLAT_KEYS.map((key) => (
                         <Button
                           key={key}
                           variant="outline"
                           size="sm"
                           className={cn(
-                            "h-8 text-sm",
+                            "h-8 text-sm rounded-md",
                             selectedMusicKey === key
                               ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none"
                               : "bg-black/50 hover:bg-black/70 border-none text-white"
@@ -135,27 +141,78 @@ export function Header({
                         </Button>
                       ))}
                     </div>
+
+                    {/* Natural Keys */}
+                    <div className="grid grid-cols-7 gap-2">
+                      {NATURAL_KEYS.map((key) => (
+                        <Button
+                          key={key}
+                          variant="outline"
+                          size="sm"
+                          className={cn(
+                            "h-8 text-sm rounded-md",
+                            selectedMusicKey === key
+                              ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none"
+                              : "bg-black/50 hover:bg-black/70 border-none text-white"
+                          )}
+                          onClick={() => setSelectedMusicKey(key === selectedMusicKey ? "" : key)}
+                        >
+                          {key}
+                        </Button>
+                      ))}
+                    </div>
+
+                    {/* Major/Minor Toggle */}
+                    <div className="grid grid-cols-2 gap-2 mt-4">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className={cn(
+                          "h-8 text-sm rounded-md",
+                          keyType === "major"
+                            ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none"
+                            : "bg-black/50 hover:bg-black/70 border-none text-white"
+                        )}
+                        onClick={() => setKeyType("major")}
+                      >
+                        Major
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className={cn(
+                          "h-8 text-sm rounded-md",
+                          keyType === "minor"
+                            ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none"
+                            : "bg-black/50 hover:bg-black/70 border-none text-white"
+                        )}
+                        onClick={() => setKeyType("minor")}
+                      >
+                        Minor
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
                 {/* Apply and Reset Buttons */}
-                <div className="flex gap-3 justify-end mt-6">
+                <div className="space-y-2">
+                  <Button
+                    size="sm"
+                    className="w-full h-10 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-md"
+                  >
+                    Apply Filters
+                  </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9 px-4 bg-transparent border-neutral-700 text-white hover:bg-neutral-800"
+                    className="w-full h-10 bg-black/50 hover:bg-black/70 border-none text-white rounded-md"
                     onClick={() => {
-                      setBpmRange([120, 130]);
+                      setBpmRange([90, 140]);
                       setSelectedMusicKey("");
+                      setKeyType("major");
                     }}
                   >
                     Reset
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="h-9 px-4 bg-emerald-600 hover:bg-emerald-700 text-white border-none"
-                  >
-                    Apply Filters
                   </Button>
                 </div>
               </div>

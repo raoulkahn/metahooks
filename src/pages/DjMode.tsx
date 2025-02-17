@@ -1,9 +1,12 @@
+
 import { useState, useEffect } from "react";
 import { Header } from "@/components/dj-mode/Header";
 import { BottomBar } from "@/components/dj-mode/BottomBar";
 import { TrackList } from "@/components/dj-mode/TrackList";
 import { Track, Playlist } from "@/types/music";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function DjMode() {
   const [searchParams] = useSearchParams();
@@ -14,6 +17,9 @@ export default function DjMode() {
   const [selectedTracks, setSelectedTracks] = useState<Set<string>>(new Set());
   const [isSelectingTracks, setIsSelectingTracks] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
+  const [filterBpmRange, setFilterBpmRange] = useState<[number, number]>([90, 140]);
+  const [filterKey, setFilterKey] = useState("");
+  const [filterKeyType, setFilterKeyType] = useState<"major" | "minor">("major");
   const navigate = useNavigate();
 
   const tracks: Track[] = [
@@ -146,6 +152,41 @@ export default function DjMode() {
     navigate('/settings');
   };
 
+  const handleApplyFilters = (bpmRange: [number, number], key: string, keyType: "major" | "minor") => {
+    setFilterBpmRange(bpmRange);
+    setFilterKey(key);
+    setFilterKeyType(keyType);
+    setHasActiveFilters(true);
+    
+    // Filter tracks based on criteria
+    const filteredTracks = tracks.filter(track => {
+      const bpmInRange = track.bpm >= bpmRange[0] && track.bpm <= bpmRange[1];
+      const keyMatches = key ? track.key === key : true;
+      return bpmInRange && keyMatches;
+    });
+
+    // Auto-select filtered tracks
+    setSelectedTracks(new Set(filteredTracks.map(track => track.id)));
+    setIsSelectingTracks(true);
+
+    // Show toast with number of matches
+    toast.success(`${filteredTracks.length} tracks match your criteria`);
+  };
+
+  const handleCreatePlaylist = () => {
+    // Create new playlist logic here
+    toast.success("New playlist created with selected tracks");
+    setIsSelectingTracks(false);
+    setSelectedTracks(new Set());
+    setHasActiveFilters(false);
+  };
+
+  const handleCancelSelection = () => {
+    setIsSelectingTracks(false);
+    setSelectedTracks(new Set());
+    setHasActiveFilters(false);
+  };
+
   const displayedTracks = selectedPlaylist
     ? tracks.filter(track => selectedPlaylist.tracks.has(track.id))
     : tracks;
@@ -159,9 +200,38 @@ export default function DjMode() {
         onAvatarClick={handleAvatarClick}
         title={selectedPlaylist?.name || "Library"}
         view={view}
+        onApplyFilters={handleApplyFilters}
       />
       
       <div className="flex-1 relative overflow-auto p-4 pb-32">
+        {isSelectingTracks && (
+          <div className="fixed bottom-24 left-0 right-0 bg-neutral-900 p-4 border-t border-neutral-800 z-10">
+            <div className="flex items-center justify-between max-w-lg mx-auto">
+              <div>
+                <h3 className="text-base font-medium">Select tracks for your new playlist</h3>
+                <p className="text-sm text-neutral-400">{selectedTracks.size} tracks selected</p>
+              </div>
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-neutral-800 text-white border-none hover:bg-neutral-700"
+                  onClick={handleCancelSelection}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white border-none"
+                  onClick={handleCreatePlaylist}
+                >
+                  Create Playlist
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <TrackList
           tracks={displayedTracks}
           currentlyPlaying={currentlyPlaying}

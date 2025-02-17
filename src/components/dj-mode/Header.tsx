@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
@@ -14,6 +13,7 @@ type HeaderProps = {
   selectedKey: string;
   onFilterClick: () => void;
   onAvatarClick: () => void;
+  onApplyFilters: (bpmRange: [number, number], key: string, keyType: "major" | "minor") => void;
   title?: string;
   view?: "list" | "grid";
 };
@@ -25,7 +25,8 @@ export function Header({
   hasActiveFilters, 
   selectedKey, 
   onFilterClick, 
-  onAvatarClick, 
+  onAvatarClick,
+  onApplyFilters,
   title = "Library",
   view = "grid"
 }: HeaderProps) {
@@ -34,7 +35,8 @@ export function Header({
   const [bpmRange, setBpmRange] = useState([90, 140]);
   const [selectedMusicKey, setSelectedMusicKey] = useState<string>("");
   const [keyType, setKeyType] = useState<"major" | "minor">("major");
-  
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="sticky top-0 bg-gradient-to-b from-black/95 via-black/95 to-black/0 z-10">
       {/* First row: Title and Avatar */}
@@ -199,6 +201,10 @@ export function Header({
                   <Button
                     size="sm"
                     className="w-full h-10 bg-emerald-600 hover:bg-emerald-700 text-white border-none rounded-md"
+                    onClick={() => {
+                      onApplyFilters(bpmRange as [number, number], selectedMusicKey, keyType);
+                      setOpen(false);
+                    }}
                   >
                     Apply Filters
                   </Button>

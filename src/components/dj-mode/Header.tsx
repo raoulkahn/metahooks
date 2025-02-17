@@ -13,8 +13,6 @@ type HeaderProps = {
   onFilterClick: () => void;
   onAvatarClick: () => void;
   title?: string;
-  onPlayClick?: () => void;
-  showPlayButton?: boolean;
   view?: "list" | "grid";
 };
 
@@ -30,8 +28,9 @@ export function Header({
   const navigate = useNavigate();
   
   return (
-    <header className="sticky top-0 bg-gradient-to-b from-black/95 to-black/0 z-10">
-      <div className="flex items-center justify-between px-4 py-3">
+    <header className="sticky top-0 bg-gradient-to-b from-black/95 via-black/95 to-black/0 z-10">
+      {/* First row: Title and Avatar */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800/50">
         <div className="flex items-center gap-3">
           <Button 
             variant="ghost" 
@@ -43,58 +42,57 @@ export function Header({
           </Button>
           <span className="text-white text-lg font-medium">{title}</span>
         </div>
-        <div className="flex items-center gap-3">
-          {view === "list" && (
-            <>
-              <Button
+        <button 
+          onClick={onAvatarClick}
+          className="p-0 hover:bg-transparent"
+        >
+          <Avatar className="h-8 w-8">
+            <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
+            <AvatarFallback>DJ</AvatarFallback>
+          </Avatar>
+        </button>
+      </div>
+
+      {/* Second row: BPM KEY and Filter buttons */}
+      {view === "list" && (
+        <div className="flex items-center justify-end gap-3 px-4 py-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 bg-black/50 hover:bg-black/70 border-none text-white font-medium px-4 rounded-3xl text-sm"
+          >
+            BPM KEY
+          </Button>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
                 variant="outline"
                 size="sm"
-                className="h-8 bg-black/50 hover:bg-black/70 border-none text-white font-medium px-4 rounded-3xl text-sm"
+                className={cn(
+                  "h-8 px-4 font-medium rounded-3xl text-sm",
+                  hasActiveFilters 
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
+                    : "bg-black/50 hover:bg-black/70 border-none text-white"
+                )}
+                onClick={onFilterClick}
               >
-                BPM KEY
+                <Filter className={cn(
+                  "h-4 w-4 mr-2",
+                  hasActiveFilters ? "text-white" : "text-neutral-400"
+                )} />
+                Filter{selectedKey ? ` (${selectedKey})` : ""}
               </Button>
-
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button 
-                    variant="outline"
-                    size="sm"
-                    className={cn(
-                      "h-8 px-4 font-medium rounded-3xl text-sm",
-                      hasActiveFilters 
-                        ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none" 
-                        : "bg-black/50 hover:bg-black/70 border-none text-white"
-                    )}
-                    onClick={onFilterClick}
-                  >
-                    <Filter className={cn(
-                      "h-4 w-4 mr-2",
-                      hasActiveFilters ? "text-white" : "text-neutral-400"
-                    )} />
-                    Filter{selectedKey ? ` (${selectedKey})` : ""}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-neutral-900 text-white border-neutral-800">
-                  <div className="p-4">
-                    <h2 className="text-lg font-medium mb-4">Filter Tracks</h2>
-                    <p className="text-neutral-400">Filter options coming soon...</p>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </>
-          )}
-
-          <button 
-            onClick={onAvatarClick}
-            className="p-0 hover:bg-transparent"
-          >
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/lovable-uploads/f75af7f8-0b9b-47bf-89de-ab905456d08b.png" alt="DJ" />
-              <AvatarFallback>DJ</AvatarFallback>
-            </Avatar>
-          </button>
+            </DialogTrigger>
+            <DialogContent className="bg-neutral-900 text-white border-neutral-800">
+              <div className="p-4">
+                <h2 className="text-lg font-medium mb-4">Filter Tracks</h2>
+                <p className="text-neutral-400">Filter options coming soon...</p>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
-      </div>
+      )}
     </header>
   );
 }

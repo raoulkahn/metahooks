@@ -158,12 +158,6 @@ export default function DjMode() {
         onFilterClick={() => setHasActiveFilters(!hasActiveFilters)}
         onAvatarClick={handleAvatarClick}
         title={selectedPlaylist?.name || "Library"}
-        showPlayButton={selectedPlaylist !== null}
-        onPlayClick={() => {
-          if (displayedTracks.length > 0) {
-            handleTrackPlay(displayedTracks[0]);
-          }
-        }}
         view={view}
       />
       

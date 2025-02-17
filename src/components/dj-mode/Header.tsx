@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { ChevronLeft, Filter, Play } from "lucide-react";
+import { ChevronLeft, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useNavigate } from "react-router-dom";
@@ -24,8 +24,6 @@ export function Header({
   onFilterClick, 
   onAvatarClick, 
   title = "Library",
-  onPlayClick,
-  showPlayButton = false,
   view = "grid"
 }: HeaderProps) {
   const { showBpmKey } = useSettings();
@@ -79,23 +77,11 @@ export function Header({
                 <DialogContent className="bg-neutral-900 text-white border-neutral-800">
                   <div className="p-4">
                     <h2 className="text-lg font-medium mb-4">Filter Tracks</h2>
-                    {/* Filter content would go here */}
                     <p className="text-neutral-400">Filter options coming soon...</p>
                   </div>
                 </DialogContent>
               </Dialog>
             </>
-          )}
-
-          {showPlayButton && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onPlayClick}
-              className="h-12 w-12 rounded-full bg-[#1DB954] hover:bg-[#1DB954]/90 text-black transition-colors"
-            >
-              <Play className="h-6 w-6 fill-current" />
-            </Button>
           )}
 
           <button 
